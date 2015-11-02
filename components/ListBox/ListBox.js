@@ -5,6 +5,7 @@
 import ElementBase from '../../../element-base/src/ElementBase';
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ContentItems from '../../mixins/ContentItems';
+import ItemSelection from '../../mixins/ItemSelection';
 
 // We'd like to just subclass ElementBase, but then we won't have access to
 // this.ListBox.super. That only gets created by Extensible.extend(), so we have
@@ -15,13 +16,13 @@ import ContentItems from '../../mixins/ContentItems';
 
 class ListBox {
 
-  createdCallback() {
-    let base = this.ListBox.super.createdCallback;
-    if (base) {
-      base.call(this);
-    }
-    this.log("createdCallback");
-  }
+  // createdCallback() {
+  //   let base = this.ListBox.super.createdCallback;
+  //   if (base) {
+  //     base.call(this);
+  //   }
+  //   this.log("createdCallback");
+  // }
 
   get template() {
     return `
@@ -36,6 +37,7 @@ class ListBox {
 ListBox = ElementBase.extend(
   ChildrenContent,
   ContentItems,
+  ItemSelection,
   ListBox
 );
 

@@ -9,7 +9,7 @@
 // TODO: Don't respond to changes in attributes, or at least offer that as an
 // option.
 
-class ChildrenContent {
+export default class ChildrenContent {
 
   // TODO: Wait to observe changes until we have a shadow DOM host. Right
   // now, the initial collectiveChanged call can happen too early.
@@ -91,5 +91,3 @@ class ChildrenContent {
 //   // HACK: Ensure targetChanged (also) happens after ready.
 //   this.targetChanged(this.target);
 // }
-
-export default ChildrenContent;

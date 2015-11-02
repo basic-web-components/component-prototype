@@ -7,9 +7,13 @@
  * @element basic-content-items
  */
 
-class ContentItems {
+export default class ContentItems {
 
   applySelection(item, selected) {
+    let base = this.ContentItems.super.applySelection;
+    if (base) {
+      base.call(this, item, selected);
+    }
     item.classList.toggle('selected', selected);
   }
 
@@ -32,7 +36,12 @@ class ContentItems {
   // Default implementation does nothing. This will typically be handled by
   // other aspects in the collective.
   // itemAdded: Basic.Collective.defaultMethod,
-  itemAdded(item) {}
+  itemAdded(item) {
+    let base = this.ContentItems.super.itemAdded;
+    if (base) {
+      base.call(this, item);
+    }
+  }
 
   // itemsChanged() {
   //   // Perform per-item initialization.
@@ -92,6 +101,3 @@ function filterAuxiliaryElements(items) {
  *
  * @event items-changed
  */
-
-
-export default ContentItems;
