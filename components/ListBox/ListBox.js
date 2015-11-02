@@ -3,6 +3,7 @@
  */
 
 import ElementBase from '../../../element-base/src/ElementBase';
+import ChildrenContent from '../../mixins/ChildrenContent';
 import ContentItems from '../../mixins/ContentItems';
 
 // We'd like to just subclass ElementBase, but then we won't have access to
@@ -33,6 +34,7 @@ class ListBox {
 
 // See notes above for class declaration.
 ListBox = ElementBase.extend(
+  ChildrenContent,
   ContentItems,
   ListBox
 );

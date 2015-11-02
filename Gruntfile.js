@@ -17,7 +17,7 @@ module.exports = function (grunt) {
       },
       dist: {
         files: {
-          'dist/basic-web-components.js': 'src/**/*.js'
+          'dist/basic-web-components.js': 'components/**/*.js'
         }
       }
       // demos: {
@@ -38,7 +38,8 @@ module.exports = function (grunt) {
           // 'demos/*.js',
           // 'demos/**/*.js',
           // 'extensible/*.js',
-          'src/**/*.js'
+          'components/**/*.js',
+          'mixins/*.js'
           // 'test/*.js'
         ],
         tasks: ['build']
