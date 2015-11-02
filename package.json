@@ -1,0 +1,24 @@
+{
+  "name": "component-prototype",
+  "description": "Prototype new ways of creating Basic Web Components",
+  "version": "0.0.0",
+  "repository": "https://github.com/basic-web-components/component-prototype",
+  "authors": [
+    "Jan Miksovsky <jan@component.kitchen>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.0.15",
+    "babelify": "^7.0.2",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-browserify": "^4.0.1",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "tests"
+  ]
+}
