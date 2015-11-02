@@ -3,6 +3,7 @@
  */
 
 import ElementBase from '../../../element-base/src/ElementBase';
+import ContentItems from '../ContentItems/ContentItems';
 
 // We'd like to just subclass ElementBase, but then we won't have access to
 // this.ListBox.super. That only gets created by Extensible.extend(), so we have
@@ -31,7 +32,10 @@ class ListBox {
 }
 
 // See notes above for class declaration.
-ListBox = ElementBase.extend(ListBox);
+ListBox = ElementBase.extend(
+  ContentItems,
+  ListBox
+);
 
 document.registerElement('basic-list-box', ListBox);
 
