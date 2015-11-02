@@ -58,7 +58,7 @@ export default class ItemSelection {
     if (base) {
       base.call(this);
     }
-    var index = this.items.indexOf(this.selectedItem);
+    let index = this.items.indexOf(this.selectedItem);
     if (index < 0) {
       // Selected item is no longer in the current set of items.
       this.selectedItem = null;
@@ -80,14 +80,14 @@ export default class ItemSelection {
    * @type Number
    */
   get selectedIndex() {
-    var selectedItem = this.selectedItem;
+    let selectedItem = this.selectedItem;
 
     if (selectedItem == null) {
       return -1;
     }
 
     // TODO: Memoize
-    var index = this.indexOfItem(selectedItem);
+    let index = this.indexOfItem(selectedItem);
 
     // If index = -1, selection wasn't found. Most likely cause is that the
     // DOM was manipulated from underneath us.
@@ -96,8 +96,8 @@ export default class ItemSelection {
   }
 
   set selectedIndex(index) {
-    var items = this.items;
-    var item;
+    let items = this.items;
+    let item;
     if (index < 0 || items.length === 0) {
       item = null;
     } else {
@@ -105,9 +105,9 @@ export default class ItemSelection {
     }
     this.selectedItem = item;
 
-    var outermost = this.outermostAttached;
+    let outermost = this.outermostAttached;
     if (outermost) {
-      var event = new CustomEvent('selected-index-changed', {
+      let event = new CustomEvent('selected-index-changed', {
         bubbles: true,
         detail: {
           selectedIndex: index,
@@ -130,7 +130,7 @@ export default class ItemSelection {
    */
   // TODO: Confirm item is in items before selecting.
   set selectedItem(item) {
-    var previousItem = this._selectedItem;
+    let previousItem = this._selectedItem;
     if (previousItem) {
       // Remove previous selection.
       this.applySelection(previousItem, false);
@@ -142,12 +142,12 @@ export default class ItemSelection {
 
     // TODO: Rationalize with selectedIndex so we're not recalculating item
     // or index in each setter.
-    var index = this.indexOfItem(item);
+    let index = this.indexOfItem(item);
     updatePossibleNavigations(this, index);
 
-    var outermost = this.outermostAttached;
+    let outermost = this.outermostAttached;
     if (outermost) {
-      var event = new CustomEvent('selected-item-changed', {
+      let event = new CustomEvent('selected-item-changed', {
         bubbles: true,
         detail: {
           selectedItem: item,
@@ -224,8 +224,8 @@ function ensureSelection(element) {
 // Ensure the given index is within bounds, and select it if it's not already
 // selected.
 function selectIndex(element, index) {
-  var boundedIndex = Math.max(Math.min(index, element.items.length - 1), 0);
-  var previousIndex = element.selectedIndex;
+  let boundedIndex = Math.max(Math.min(index, element.items.length - 1), 0);
+  let previousIndex = element.selectedIndex;
   if (previousIndex !== boundedIndex) {
     element.selectedIndex = boundedIndex;
     return true;
@@ -237,9 +237,9 @@ function selectIndex(element, index) {
 // Following a change in selection, report whether it's now possible to
 // go next/previous from the given index.
 function updatePossibleNavigations(element, index) {
-  var canSelectNext;
-  var canSelectPrevious;
-  var items = element.items;
+  let canSelectNext;
+  let canSelectPrevious;
+  let items = element.items;
   if (items == null || items.length === 0) {
     canSelectNext = false;
     canSelectPrevious = false;

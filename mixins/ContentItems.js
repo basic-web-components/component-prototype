@@ -55,9 +55,9 @@ export default class ContentItems {
   //     }
   //   }.bind(this));
   //
-  //   var outermost = this.collective.outermostAttached;
+  //   let outermost = this.collective.outermostAttached;
   //   if (outermost) {
-  //     var event = new CustomEvent('items-changed', {
+  //     let event = new CustomEvent('items-changed', {
   //       bubbles: true
   //     });
   //     outermost.dispatchEvent(event);
@@ -84,7 +84,7 @@ export default class ContentItems {
 // Return the given elements, filtering out auxiliary elements that aren't
 // typically visible. Items which are not elements are returned as is.
 function filterAuxiliaryElements(items) {
-  var auxiliaryTags = [
+  let auxiliaryTags = [
     'link',
     'script',
     'style',

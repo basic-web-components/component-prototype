@@ -17,8 +17,8 @@ export default class ChildrenContent {
   // attached.
   // collectiveChanged() {
   //   // console.log(this.localName + " collectiveChanged: " + this.collective.aspects.length);
-  //   var innermost = this.collective.innermostElement;
-  //   var innermostHost = Basic.ContentHelpers.getHost(innermost);
+  //   let innermost = this.collective.innermostElement;
+  //   let innermostHost = Basic.ContentHelpers.getHost(innermost);
   //
   //   // Optimize for the case where the collective's changed, but its
   //   // innermost aspect is still the same. In that case, we don't want to
@@ -54,9 +54,9 @@ export default class ChildrenContent {
   // }
 
   // contentChanged() {
-  //   var outermost = this.collective.outermostAttached;
+  //   let outermost = this.collective.outermostAttached;
   //   if (outermost) {
-  //     var event = new CustomEvent('content-changed', {
+  //     let event = new CustomEvent('content-changed', {
   //       bubbles: true
   //     });
   //     outermost.dispatchEvent(event);
@@ -75,7 +75,7 @@ export default class ChildrenContent {
    */
   get content() {
     // if (!this._content) {
-    //   var innermost = this.collective.innermostElement;
+    //   let innermost = this.collective.innermostElement;
     //   if (innermost) {
     //     this._content = Basic.ContentHelpers.flattenChildren(innermost);
     //   }
