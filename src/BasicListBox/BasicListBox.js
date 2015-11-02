@@ -1,7 +1,15 @@
 import ElementBase from '../../../element-base/src/ElementBase';
 
 /* Define a custom element. */
-class ListBox extends ElementBase {
+class ListBox {
+
+  createdCallback() {
+    let base = this.ListBox.super.createdCallback;
+    if (base) {
+      base.call(this);
+    }
+    console.log(`Here we are!!`);
+  }
 
   get template() {
     return `
@@ -11,6 +19,8 @@ class ListBox extends ElementBase {
   }
 
 }
+
+ListBox = ElementBase.extend(ListBox);
 
 document.registerElement('basic-list-box', ListBox);
 
