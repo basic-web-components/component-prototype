@@ -26,10 +26,7 @@
 export default class Generic {
 
   createdCallback() {
-    let base = this.Generic.super.createdCallback;
-    if (base) {
-      base.call(this);
-    }
+    this.superCall(this.Generic, 'createdCallback');
     this.generic = this.getAttribute('generic') || true;
   }
 

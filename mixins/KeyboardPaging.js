@@ -20,11 +20,7 @@
 export default class KeyboardPaging {
 
   keydown(event) {
-    let base = this.KeyboardPaging.super.keydown;
-    let handled = base ?
-      base.call(this, event) :
-      false;
-
+    let handled = this.superCall(this.KeyboardPaging, 'keydown', event);
     if (!handled) {
       switch (event.keyCode) {
         case 33: // Page Up
@@ -35,7 +31,6 @@ export default class KeyboardPaging {
           break;
       }
     }
-
     return handled;
   }
 
@@ -45,10 +40,7 @@ export default class KeyboardPaging {
    * @method pageDown
    */
   pageDown() {
-    let base = this.KeyboardDirection.super.pageDown;
-    if (base) {
-      base.call(this);
-    }
+    this.superCall(this.KeyboardPaging, 'pageDown');
     return scrollOnePage(this, true);
   }
 
@@ -58,10 +50,7 @@ export default class KeyboardPaging {
    * @method pageUp
    */
   pageUp() {
-    let base = this.KeyboardDirection.super.pageUp;
-    if (base) {
-      base.call(this);
-    }
+    this.superCall(this.KeyboardPaging, 'pageUp');
     return scrollOnePage(this, false);
   }
 

@@ -15,11 +15,7 @@ export default class ContentItems {
   }
 
   contentChanged() {
-    let base = this.ContentItems.super.contentChanged;
-    if (base) {
-      base.call(this);
-    }
-
+    this.superCall(this.ContentItems, 'contentChanged');
     this._items = null;
     this.itemsChanged();
   }
@@ -39,17 +35,11 @@ export default class ContentItems {
   // other aspects in the collective.
   // itemAdded: Basic.Collective.defaultMethod,
   itemAdded(item) {
-    let base = this.ContentItems.super.itemAdded;
-    if (base) {
-      base.call(this, item);
-    }
+    this.superCall(this.ContentItems, 'itemAdded', item);
   }
 
   itemsChanged() {
-    let base = this.ContentItems.super.itemsChanged;
-    if (base) {
-      base.call(this);
-    }
+    this.superCall(this.ContentItems, 'itemsChanged');
 
     // Perform per-item initialization.
     this.items.forEach(item => {

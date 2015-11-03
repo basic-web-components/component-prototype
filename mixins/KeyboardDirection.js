@@ -10,53 +10,31 @@ export default class KeyboardDirection {
   // Default implementations. These will typically be handled by other aspects
   // in the collective.
   goDown() {
-    let base = this.KeyboardDirection.super.goDown;
-    if (base) {
-      return base.call(this);
-    }
+    return this.superCall(this.KeyboardDirection, 'goDown');
   }
 
   goEnd() {
-    let base = this.KeyboardDirection.super.goEnd;
-    if (base) {
-      return base.call(this);
-    }
+    return this.superCall(this.KeyboardDirection, 'goEnd');
   }
 
   goLeft() {
-    let base = this.KeyboardDirection.super.goLeft;
-    if (base) {
-      return base.call(this);
-    }
+    return this.superCall(this.KeyboardDirection, 'goLeft');
   }
 
   goRight() {
-    let base = this.KeyboardDirection.super.goRight;
-    if (base) {
-      return base.call(this);
-    }
+    return this.superCall(this.KeyboardDirection, 'goRight');
   }
 
   goStart() {
-    let base = this.KeyboardDirection.super.goStart;
-    if (base) {
-      return base.call(this);
-    }
+    return this.superCall(this.KeyboardDirection, 'goStart');
   }
 
   goUp() {
-    let base = this.KeyboardDirection.super.goUp;
-    if (base) {
-      return base.call(this);
-    }
+    return this.superCall(this.KeyboardDirection, 'goUp');
   }
 
   keydown(event) {
-    let base = this.KeyboardDirection.super.keydown;
-    let handled = base ?
-      base.call(this, event) :
-      false;
-
+    let handled = this.superCall(this.KeyboardDirection, 'keydown', event);
     if (!handled) {
       switch (event.keyCode) {
         case 35: // End
@@ -79,7 +57,6 @@ export default class KeyboardDirection {
           break;
       }
     }
-
     return handled;
   }
 

@@ -17,11 +17,7 @@ export default class KeyboardPrefixSelection {
   // }
 
   keydown(event) {
-    let base = this.KeyboardPrefixSelection.super.keydown;
-    let handled = base ?
-      base.call(this, event) :
-      false;
-
+    let handled = this.superCall(this.KeyboardPrefixSelection, 'keydown', event);
     if (!handled) {
       let resetPrefix = true;
 
@@ -46,7 +42,6 @@ export default class KeyboardPrefixSelection {
         resetTypedPrefix(this);
       }
     }
-
     return handled;
   }
 

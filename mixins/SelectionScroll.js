@@ -7,18 +7,10 @@
 export default class SelectionScroll {
 
   get selectedItem() {
-    // TODO: Standard-compliant way to do this.
-    let base = this.SelectionScroll.super.__lookupGetter__('selectedItem');
-    if (base) {
-      return base.call(this);
-    }
+    return this.superGet(this.SelectionScroll, 'selectedItem');
   }
   set selectedItem(item) {
-    // TODO: Standard-compliant way to do this.
-    let base = this.SelectionScroll.super.__lookupSetter__('selectedItem');
-    if (base) {
-      base.call(this, item);
-    }
+    this.superSet(this.SelectionScroll, 'selectedItem', item);
     if (item) {
       // Keep the selected item in view.
       this.scrollItemIntoView(item);
@@ -36,11 +28,7 @@ export default class SelectionScroll {
    * @method scrollItemIntoView
    */
   scrollItemIntoView(item) {
-
-    let base = this.SelectionScroll.super.scrollItemIntoView;
-    if (base) {
-      base.call(this, item);
-    }
+    this.superCall(this.SelectionScroll, 'scrollItemIntoView');
 
     // Get the relative position of the item with respect to the top of the
     // list's scrollable canvas. An item at the top of the list will have a

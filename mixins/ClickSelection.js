@@ -7,11 +7,7 @@
 export default class ClickSelection {
 
   createdCallback() {
-
-    let base = this.ClickSelection.super.createdCallback;
-    if (base) {
-      base.call(this);
-    }
+    this.superCall(this.ClickSelection, 'createdCallback');
 
     /*
      * REVIEW: Which event should we listen to here?

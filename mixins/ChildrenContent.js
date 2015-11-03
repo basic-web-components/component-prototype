@@ -12,10 +12,7 @@
 export default class ChildrenContent {
 
   createdCallback() {
-    let base = this.ChildrenContent.super.createdCallback;
-    if (base) {
-      base.call(this);
-    }
+    this.superCall(this.ChildrenContent, 'createdCallback');
 
     // Until we have content observing again, force a call to contentChanged().
     // HACK: Do this asynchronously, so other mixins have a chance to set up
@@ -66,10 +63,7 @@ export default class ChildrenContent {
   // }
 
   contentChanged() {
-    let base = this.ChildrenContent.super.contentChanged;
-    if (base) {
-      base.call(this);
-    }
+    this.superCall(this.ChildrenContent, 'contentChanged');
 
     let outermost = this.outermostAttached;
     if (outermost) {

@@ -56,10 +56,7 @@ export default class ItemsAccessible {
   // }
 
   createdCallback() {
-    let base = this.ItemsAccessible.super.createdCallback;
-    if (base) {
-      base.call(this);
-    }
+    this.superCall(this.ItemsAccessible, 'createdCallback');
 
     let outermost = this.outermostAttached;
     outermost.setAttribute('role', 'listbox');
@@ -83,11 +80,7 @@ export default class ItemsAccessible {
   }
 
   itemAdded(item) {
-    let base = this.ItemsAccessible.super.itemAdded;
-    if (base) {
-      base.call(this, item);
-    }
-
+    this.superCall(this.ItemsAccessible, 'itemAdded', item);
     item.setAttribute('role', 'option');
 
     // Ensure each item has an ID so we can set aria-activedescendant on the
@@ -98,19 +91,10 @@ export default class ItemsAccessible {
   }
 
   get selectedItem() {
-    // TODO: Standard-compliant way to do this.
-    let base = this.ItemsAccessible.super.__lookupGetter__('selectedItem');
-    if (base) {
-      return base.call(this);
-    }
+    return this.superGet(this.ItemsAccessible, 'selectedItem');
   }
   set selectedItem(item) {
-    // TODO: Standard-compliant way to do this.
-    let base = this.ItemsAccessible.super.__lookupSetter__('selectedItem');
-    if (base) {
-      base.call(this, item);
-    }
-
+    this.superSet(this.ItemsAccessible, 'selectedItem', item);
     // Catch the case where the selection is removed.
     if (item == null) {
       this.outermostAttached.removeAttribute('aria-activedescendant');

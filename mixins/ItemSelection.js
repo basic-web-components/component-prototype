@@ -43,18 +43,12 @@ export default class ItemSelection {
   }
 
   itemAdded(item) {
-    let base = this.ItemSelection.super.itemAdded;
-    if (base) {
-      base.call(this, item);
-    }
+    this.superCall(this.ItemSelection, 'itemAdded');
     this.applySelection(item, item === this.selectedItem);
   }
 
   itemsChanged() {
-    let base = this.ItemSelection.super.itemsChanged;
-    if (base) {
-      base.call(this);
-    }
+    this.superCall(this.ItemSelection, 'itemsChanged');
     let index = this.items.indexOf(this.selectedItem);
     if (index < 0) {
       // Selected item is no longer in the current set of items.
@@ -93,12 +87,7 @@ export default class ItemSelection {
   }
 
   set selectedIndex(index) {
-
-    // TODO: Standard-compliant way to do this.
-    let base = this.ItemSelection.super.__lookupSetter__('selectedIndex');
-    if (base) {
-      base.call(this, index);
-    }
+    this.superSet(this.ItemSelection, 'selectedIndex', index);
 
     let items = this.items;
     let item;
@@ -134,12 +123,7 @@ export default class ItemSelection {
    */
   // TODO: Confirm item is in items before selecting.
   set selectedItem(item) {
-
-    // TODO: Standard-compliant way to do this.
-    let base = this.ItemSelection.super.__lookupSetter__('selectedItem');
-    if (base) {
-      base.call(this, item);
-    }
+    this.superSet(this.ItemSelection, 'selectedItem', item);
 
     let previousItem = this._selectedItem;
     if (previousItem) {
