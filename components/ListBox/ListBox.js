@@ -6,7 +6,10 @@ import ElementBase from '../../../element-base/src/ElementBase';
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ClickSelection from '../../mixins/ClickSelection';
 import ContentItems from '../../mixins/ContentItems';
+import DirectionSelection from '../../mixins/DirectionSelection';
 import Generic from '../../mixins/Generic';
+import Keyboard from '../../mixins/Keyboard';
+import KeyboardDirection from '../../mixins/KeyboardDirection';
 import ItemSelection from '../../mixins/ItemSelection';
 import SelectionHighlight from '../../mixins/SelectionHighlight';
 
@@ -79,8 +82,11 @@ ListBox = ElementBase.extend(
   ChildrenContent,
   ClickSelection,
   ContentItems,
+  DirectionSelection,
   Generic,
   ItemSelection,
+  Keyboard,
+  KeyboardDirection,
   SelectionHighlight,
   ListBox
 );
