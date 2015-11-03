@@ -12,6 +12,7 @@ import ItemSelection from '../../mixins/ItemSelection';
 import Keyboard from '../../mixins/Keyboard';
 import KeyboardDirection from '../../mixins/KeyboardDirection';
 import KeyboardPaging from '../../mixins/KeyboardPaging';
+import KeyboardPrefixSelection from '../../mixins/KeyboardPrefixSelection';
 import SelectionHighlight from '../../mixins/SelectionHighlight';
 import SelectionScroll from '../../mixins/SelectionScroll';
 
@@ -95,6 +96,7 @@ ListBox = ElementBase.extend(
   Keyboard,
   KeyboardDirection,
   KeyboardPaging,
+  KeyboardPrefixSelection,
   SelectionHighlight,
   SelectionScroll,
   ListBox
