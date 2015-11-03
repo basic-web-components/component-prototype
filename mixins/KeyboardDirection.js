@@ -12,79 +12,75 @@ export default class KeyboardDirection {
   goDown() {
     let base = this.KeyboardDirection.super.goDown;
     if (base) {
-      base.call(this);
+      return base.call(this);
     }
   }
 
   goEnd() {
     let base = this.KeyboardDirection.super.goEnd;
     if (base) {
-      base.call(this);
+      return base.call(this);
     }
   }
 
   goLeft() {
     let base = this.KeyboardDirection.super.goLeft;
     if (base) {
-      base.call(this);
+      return base.call(this);
     }
   }
 
   goRight() {
     let base = this.KeyboardDirection.super.goRight;
     if (base) {
-      base.call(this);
+      return base.call(this);
     }
   }
 
   goStart() {
     let base = this.KeyboardDirection.super.goStart;
     if (base) {
-      base.call(this);
+      return base.call(this);
     }
   }
 
   goUp() {
     let base = this.KeyboardDirection.super.goUp;
     if (base) {
-      base.call(this);
+      return base.call(this);
     }
   }
 
   keydown(event) {
-
     let base = this.KeyboardDirection.super.keydown;
-    if (base) {
-      base.call(this, event);
+    let handled = base ?
+      base.call(this, event) :
+      false;
+
+    if (!handled) {
+      switch (event.keyCode) {
+        case 35: // End
+          handled = this.goEnd();
+          break;
+        case 36: // Home
+          handled = this.goStart();
+          break;
+        case 37: // Left
+          handled = this.goLeft();
+          break;
+        case 38: // Up
+          handled = event.altKey ? this.goStart() : this.goUp();
+          break;
+        case 39: // Right
+          handled = this.goRight();
+          break;
+        case 40: // Down
+          handled = event.altKey ? this.goEnd() : this.goDown();
+          break;
+      }
     }
 
-    let handled = false;
-
-    switch (event.keyCode) {
-      case 35: // End
-        handled = this.goEnd();
-        break;
-      case 36: // Home
-        handled = this.goStart();
-        break;
-      case 37: // Left
-        handled = this.goLeft();
-        break;
-      case 38: // Up
-        handled = event.altKey ? this.goStart() : this.goUp();
-        break;
-      case 39: // Right
-        handled = this.goRight();
-        break;
-      case 40: // Down
-        handled = event.altKey ? this.goEnd() : this.goDown();
-        break;
-    }
-
-    if (handled) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    return handled;
   }
 
 }

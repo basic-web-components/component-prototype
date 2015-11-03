@@ -46,11 +46,10 @@ export default class SelectionScroll {
     // list's scrollable canvas. An item at the top of the list will have a
     // elementTop of 0.
 
-    // let innermost = this.innermostAttached;
-    // if (!innermost) {
-    //   return;
-    // }
-    let innermost = this.$.itemsContainer;
+    let innermost = this.innermostAttached;
+    if (!innermost) {
+      return;
+    }
 
     let elementTop = item.offsetTop - innermost.offsetTop - innermost.clientTop;
     let elementBottom = elementTop + item.offsetHeight;

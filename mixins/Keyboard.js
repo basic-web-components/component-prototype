@@ -64,7 +64,11 @@ export default class Keyboard {
       base.call(this);
     }
     this.addEventListener('keydown', event => {
-      this.keydown(event);
+      let handled = this.keydown(event);
+      if (handled) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
     });
     this.setAttribute('tabIndex', 0);
   }
@@ -74,7 +78,7 @@ export default class Keyboard {
   keydown(event) {
     let base = this.Keyboard.super.keydown;
     if (base) {
-      base.call(this, event);
+      return base.call(this, event);
     }
   }
 

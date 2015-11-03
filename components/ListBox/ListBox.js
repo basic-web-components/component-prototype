@@ -8,9 +8,10 @@ import ClickSelection from '../../mixins/ClickSelection';
 import ContentItems from '../../mixins/ContentItems';
 import DirectionSelection from '../../mixins/DirectionSelection';
 import Generic from '../../mixins/Generic';
+import ItemSelection from '../../mixins/ItemSelection';
 import Keyboard from '../../mixins/Keyboard';
 import KeyboardDirection from '../../mixins/KeyboardDirection';
-import ItemSelection from '../../mixins/ItemSelection';
+import KeyboardPaging from '../../mixins/KeyboardPaging';
 import SelectionHighlight from '../../mixins/SelectionHighlight';
 import SelectionScroll from '../../mixins/SelectionScroll';
 
@@ -30,6 +31,11 @@ class ListBox {
   //   }
   //   this.log("createdCallback");
   // }
+
+  // Stub for collectives for now
+  get innermostAttached() {
+    return this.$.itemsContainer;
+  }
 
   get template() {
     return `
@@ -88,6 +94,7 @@ ListBox = ElementBase.extend(
   ItemSelection,
   Keyboard,
   KeyboardDirection,
+  KeyboardPaging,
   SelectionHighlight,
   SelectionScroll,
   ListBox
