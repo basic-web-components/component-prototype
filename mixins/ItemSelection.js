@@ -25,10 +25,7 @@ export default class ItemSelection {
   // Default implementations. These will typically be handled by other aspects
   // in the collective.
   applySelection(item, selected) {
-    let base = this.ItemSelection.super.applySelection;
-    if (base) {
-      base.call(this, item, selected);
-    }
+    this.superCall(this.ItemSelection, 'applySelection', item, selected);
   }
 
   get canSelectNext() {

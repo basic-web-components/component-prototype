@@ -10,13 +10,8 @@ let idCount = 0;
 export default class ItemsAccessible {
 
   applySelection(item, selected) {
-    let base = this.ItemsAccessible.super.applySelection;
-    if (base) {
-      base.call(this, item, selected);
-    }
-
+    this.superCall(this.ItemsAccessible, 'applySelection', item, selected);
     item.setAttribute('aria-selected', selected);
-
     var itemId = item.getAttribute('id');
     if (itemId) {
       this.outermostAttached.setAttribute('aria-activedescendant', itemId);

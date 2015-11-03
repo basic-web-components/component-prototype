@@ -7,10 +7,7 @@
 export default class SelectionHighlight {
 
   applySelection(item, selected) {
-    let base = this.SelectionHighlight.super.applySelection;
-    if (base) {
-      base.call(this, item, selected);
-    }
+    this.superCall(this.SelectionHighlight, 'applySelection', item, selected);
     item.style.backgroundColor = selected ? 'highlight' : '';
     item.style.color = selected ? 'highlighttext' : '';
   }

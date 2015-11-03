@@ -10,10 +10,7 @@
 export default class ContentItems {
 
   applySelection(item, selected) {
-    let base = this.ContentItems.super.applySelection;
-    if (base) {
-      base.call(this, item, selected);
-    }
+    this.superCall(this.ContentItems, 'applySelection', item, selected);
     item.classList.toggle('selected', selected);
   }
 

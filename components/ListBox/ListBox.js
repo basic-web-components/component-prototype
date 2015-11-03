@@ -3,6 +3,7 @@
  */
 
 import ElementBase from '../../../element-base/src/ElementBase';
+import Super from './Super';
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ClickSelection from '../../mixins/ClickSelection';
 import ContentItems from '../../mixins/ContentItems';
@@ -91,6 +92,7 @@ class ListBox {
 
 // See notes above for class declaration.
 ListBox = ElementBase.extend(
+  Super,
   ChildrenContent,
   ClickSelection,
   ContentItems,
