@@ -17,10 +17,15 @@ export default class ContentItems {
     item.classList.toggle('selected', selected);
   }
 
-  // contentChanged: function() {
-  //   this._items = null;
-  //   this.collective.itemsChanged();
-  // }
+  contentChanged() {
+    let base = this.ContentItems.super.contentChanged;
+    if (base) {
+      base.call(this);
+    }
+
+    this._items = null;
+    this.itemsChanged();
+  }
 
   /**
    * Returns the positional index for the indicated item.
@@ -43,26 +48,31 @@ export default class ContentItems {
     }
   }
 
-  // itemsChanged() {
-  //   // Perform per-item initialization.
-  //   this.collective.items.forEach(function(item) {
-  //     if (!item._itemInitialized) {
-  //       // BUG: If an aspect is assimilated after ContentItems, then all the
-  //       // items are already initialized, and the new aspect won't have an
-  //       // opportunity to do its own per-item initialization in itemAdded.
-  //       this.collective.itemAdded(item);
-  //       item._itemInitialized = true;
-  //     }
-  //   }.bind(this));
-  //
-  //   let outermost = this.collective.outermostAttached;
-  //   if (outermost) {
-  //     let event = new CustomEvent('items-changed', {
-  //       bubbles: true
-  //     });
-  //     outermost.dispatchEvent(event);
-  //   }
-  // }
+  itemsChanged() {
+    let base = this.ContentItems.super.itemsChanged;
+    if (base) {
+      base.call(this);
+    }
+
+    // Perform per-item initialization.
+    this.items.forEach(item => {
+      if (!item._itemInitialized) {
+        // BUG: If an aspect is assimilated after ContentItems, then all the
+        // items are already initialized, and the new aspect won't have an
+        // opportunity to do its own per-item initialization in itemAdded.
+        this.itemAdded(item);
+        item._itemInitialized = true;
+      }
+    });
+
+    let outermost = this.outermostAttached;
+    if (outermost) {
+      let event = new CustomEvent('items-changed', {
+        bubbles: true
+      });
+      outermost.dispatchEvent(event);
+    }
+  }
 
   /**
    * The current set of items in the list.

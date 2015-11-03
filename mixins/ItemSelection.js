@@ -46,7 +46,7 @@ export default class ItemSelection {
   }
 
   itemAdded(item) {
-    let base = this.ContentItems.super.itemAdded;
+    let base = this.ItemSelection.super.itemAdded;
     if (base) {
       base.call(this, item);
     }
@@ -54,7 +54,7 @@ export default class ItemSelection {
   }
 
   itemsChanged() {
-    let base = this.ContentItems.super.itemsChanged;
+    let base = this.ItemSelection.super.itemsChanged;
     if (base) {
       base.call(this);
     }
@@ -96,6 +96,13 @@ export default class ItemSelection {
   }
 
   set selectedIndex(index) {
+
+    // TODO: Standard-compliant way to do this.
+    let base = this.ItemSelection.super.__lookupSetter__('selectedIndex');
+    if (base) {
+      base.call(this, index);
+    }
+
     let items = this.items;
     let item;
     if (index < 0 || items.length === 0) {

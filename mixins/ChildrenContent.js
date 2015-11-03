@@ -11,6 +11,18 @@
 
 export default class ChildrenContent {
 
+  createdCallback() {
+    let base = this.ChildrenContent.super.createdCallback;
+    if (base) {
+      base.call(this);
+    }
+
+    // Until we have content observing again, force a call to contentChanged().
+    // HACK: Do this asynchronously, so other mixins have a chance to set up
+    // before this call.
+    setTimeout(() => this.contentChanged());
+  }
+
   // TODO: Wait to observe changes until we have a shadow DOM host. Right
   // now, the initial collectiveChanged call can happen too early.
   // TODO: Handle case where component is instantiated out of DOM, then
@@ -53,15 +65,20 @@ export default class ChildrenContent {
   //   this._previousInnermostHost = innermostHost;
   // }
 
-  // contentChanged() {
-  //   let outermost = this.collective.outermostAttached;
-  //   if (outermost) {
-  //     let event = new CustomEvent('content-changed', {
-  //       bubbles: true
-  //     });
-  //     outermost.dispatchEvent(event);
-  //   }
-  // }
+  contentChanged() {
+    let base = this.ChildrenContent.super.contentChanged;
+    if (base) {
+      base.call(this);
+    }
+
+    let outermost = this.outermostAttached;
+    if (outermost) {
+      let event = new CustomEvent('content-changed', {
+        bubbles: true
+      });
+      outermost.dispatchEvent(event);
+    }
+  }
 
   /**
    * The flattened content of this collective.

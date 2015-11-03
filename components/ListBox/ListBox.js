@@ -9,6 +9,7 @@ import ContentItems from '../../mixins/ContentItems';
 import DirectionSelection from '../../mixins/DirectionSelection';
 import Generic from '../../mixins/Generic';
 import ItemSelection from '../../mixins/ItemSelection';
+import ItemsAccessible from '../../mixins/ItemsAccessible';
 import Keyboard from '../../mixins/Keyboard';
 import KeyboardDirection from '../../mixins/KeyboardDirection';
 import KeyboardPaging from '../../mixins/KeyboardPaging';
@@ -36,6 +37,9 @@ class ListBox {
   // Stub for collectives for now
   get innermostAttached() {
     return this.$.itemsContainer;
+  }
+  get outermostAttached() {
+    return this;
   }
 
   get template() {
@@ -93,6 +97,7 @@ ListBox = ElementBase.extend(
   DirectionSelection,
   Generic,
   ItemSelection,
+  ItemsAccessible,
   Keyboard,
   KeyboardDirection,
   KeyboardPaging,

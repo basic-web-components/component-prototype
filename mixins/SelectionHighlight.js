@@ -7,7 +7,7 @@
 export default class SelectionHighlight {
 
   applySelection(item, selected) {
-    let base = this.SelectionHighlight.applySelection.super;
+    let base = this.SelectionHighlight.super.applySelection;
     if (base) {
       base.call(this, item, selected);
     }
