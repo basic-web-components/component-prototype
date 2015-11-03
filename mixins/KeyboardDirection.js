@@ -58,7 +58,7 @@ export default class KeyboardDirection {
       base.call(this, event);
     }
 
-    var handled = false;
+    let handled = false;
 
     switch (event.keyCode) {
       case 35: // End

@@ -19,7 +19,7 @@ export default class Keyboard {
   // that handled automatically?
   // collectiveChanged: function() {
   //
-  //   var outermost = this.collective.outermostAttached;
+  //   let outermost = this.collective.outermostAttached;
   //   if (outermost === this._previousOutermostAspect) {
   //     // Should already be listening to events on the outermost aspect.
   //     return;

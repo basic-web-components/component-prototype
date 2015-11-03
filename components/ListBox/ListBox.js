@@ -12,6 +12,7 @@ import Keyboard from '../../mixins/Keyboard';
 import KeyboardDirection from '../../mixins/KeyboardDirection';
 import ItemSelection from '../../mixins/ItemSelection';
 import SelectionHighlight from '../../mixins/SelectionHighlight';
+import SelectionScroll from '../../mixins/SelectionScroll';
 
 // We'd like to just subclass ElementBase, but then we won't have access to
 // this.ListBox.super. That only gets created by Extensible.extend(), so we have
@@ -88,6 +89,7 @@ ListBox = ElementBase.extend(
   Keyboard,
   KeyboardDirection,
   SelectionHighlight,
+  SelectionScroll,
   ListBox
 );
 

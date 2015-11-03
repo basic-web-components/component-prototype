@@ -130,6 +130,13 @@ export default class ItemSelection {
    */
   // TODO: Confirm item is in items before selecting.
   set selectedItem(item) {
+
+    // TODO: Standard-compliant way to do this.
+    let base = this.ItemSelection.super.__lookupSetter__('selectedItem');
+    if (base) {
+      base.call(this, item);
+    }
+
     let previousItem = this._selectedItem;
     if (previousItem) {
       // Remove previous selection.
