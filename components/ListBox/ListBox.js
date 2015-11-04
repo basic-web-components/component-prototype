@@ -25,15 +25,7 @@ import SelectionScroll from '../../mixins/SelectionScroll';
 // a component constructor.
 //class ListBox extends ElementBase {
 
-class ListBox {
-
-  // createdCallback() {
-  //   let base = this.ListBox.super.createdCallback;
-  //   if (base) {
-  //     base.call(this);
-  //   }
-  //   this.log("createdCallback");
-  // }
+export default class ListBox {
 
   // Stub for collectives for now
   get innermostAttached() {
@@ -110,5 +102,3 @@ ListBox = ElementBase.extend(
 );
 
 document.registerElement('basic-list-box', ListBox);
-
-export default ListBox;
