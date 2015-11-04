@@ -75,7 +75,7 @@ export default class ListBox {
       </style>
 
       <div id="itemsContainer">
-        <content></content>
+        <slot></slot>
       </div>
     `;
   }
