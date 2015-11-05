@@ -7,6 +7,9 @@
     "Jan Miksovsky <jan@component.kitchen>"
   ],
   "license": "MIT",
+  "dependencies": {
+    "element-base": "componentkitchen/element-base#master"
+  },
   "devDependencies": {
     "babel-preset-es2015": "^6.0.2",
     "babelify": "^7.0.2",

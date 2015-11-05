@@ -3,6 +3,7 @@
  */
 
 import ElementBase from '../../../element-base/src/ElementBase';
+//import ElementBase from 'ElementBase';
 import Super from './Super';
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ClickSelection from '../../mixins/ClickSelection';
