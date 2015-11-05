@@ -18,6 +18,9 @@
     "grunt-browserify": "^4.0.1",
     "grunt-contrib-watch": "^0.6.1"
   },
+  "browserify": {
+    "transform": ["babelify"]
+  },
   "ignore": [
     "**/.*",
     "node_modules",

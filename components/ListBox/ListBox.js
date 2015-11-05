@@ -2,8 +2,7 @@
  * basic-list-box
  */
 
-import ElementBase from '../../../element-base/src/ElementBase';
-//import ElementBase from 'ElementBase';
+import ElementBase from 'element-base/src/ElementBase';
 import Super from './Super';
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ClickSelection from '../../mixins/ClickSelection';

@@ -9,27 +9,16 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     browserify: {
-      options: {
-        browserifyOptions: {
-          debug: true
-        },
-        transform: ['babelify']
-      },
       dist: {
         files: {
           'dist/basic-web-components.js': 'components/**/*.js'
+        },
+        options: {
+          transform: ['babelify'],
+          // Don't ignore transpilation in node_modules
+          ignore: false
         }
       }
-      // demos: {
-      //   files: {
-      //     'build/demos.js': ['demos/*.js', 'demos/**/*.js']
-      //   }
-      // },
-      // test: {
-      //   files: {
-      //     'build/tests.js': 'test/*.tests.js'
-      //   }
-      // }
     },
 
     watch: {
