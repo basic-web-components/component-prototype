@@ -18,14 +18,23 @@ import KeyboardPrefixSelection from '../../mixins/KeyboardPrefixSelection';
 import SelectionHighlight from '../../mixins/SelectionHighlight';
 import SelectionScroll from '../../mixins/SelectionScroll';
 
-// We'd like to just subclass ElementBase, but then we won't have access to
-// this.ListBox.super. That only gets created by Extensible.extend(), so we have
-// to manually invoke that. We could fix that if we could implement a component
-// constructor, but currently document.registerElement() in Blink doesn't invoke
-// a component constructor.
-//class ListBox extends ElementBase {
 
-export default class ListBox {
+export default class ListBox extends ElementBase.extend(
+    Super,
+    ChildrenContent,
+    ClickSelection,
+    ContentItems,
+    DirectionSelection,
+    Generic,
+    ItemSelection,
+    ItemsAccessible,
+    Keyboard,
+    KeyboardDirection,
+    KeyboardPaging,
+    KeyboardPrefixSelection,
+    SelectionHighlight,
+    SelectionScroll
+  ) {
 
   // Stub for collectives for now
   get innermostAttached() {
@@ -82,23 +91,5 @@ export default class ListBox {
 
 }
 
-// See notes above for class declaration.
-ListBox = ElementBase.extend(
-  Super,
-  ChildrenContent,
-  ClickSelection,
-  ContentItems,
-  DirectionSelection,
-  Generic,
-  ItemSelection,
-  ItemsAccessible,
-  Keyboard,
-  KeyboardDirection,
-  KeyboardPaging,
-  KeyboardPrefixSelection,
-  SelectionHighlight,
-  SelectionScroll,
-  ListBox
-);
 
 document.registerElement('basic-list-box', ListBox);
