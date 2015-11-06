@@ -10,12 +10,10 @@
 export default class ContentItems {
 
   applySelection(item, selected) {
-    this.superCall(this.ContentItems, 'applySelection', item, selected);
     item.classList.toggle('selected', selected);
   }
 
   contentChanged() {
-    this.superCall(this.ContentItems, 'contentChanged');
     this._items = null;
     this.itemsChanged();
   }
@@ -34,12 +32,9 @@ export default class ContentItems {
   // Default implementation does nothing. This will typically be handled by
   // other aspects in the collective.
   // itemAdded: Basic.Collective.defaultMethod,
-  itemAdded(item) {
-    this.superCall(this.ContentItems, 'itemAdded', item);
-  }
+  itemAdded(item) {}
 
   itemsChanged() {
-    this.superCall(this.ContentItems, 'itemsChanged');
 
     // Perform per-item initialization.
     this.items.forEach(item => {

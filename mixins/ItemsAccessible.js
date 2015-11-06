@@ -10,7 +10,6 @@ let idCount = 0;
 export default class ItemsAccessible {
 
   applySelection(item, selected) {
-    this.superCall(this.ItemsAccessible, 'applySelection', item, selected);
     item.setAttribute('aria-selected', selected);
     var itemId = item.getAttribute('id');
     if (itemId) {
@@ -56,8 +55,6 @@ export default class ItemsAccessible {
   // }
 
   createdCallback() {
-    this.superCall(this.ItemsAccessible, 'createdCallback');
-
     let outermost = this.outermostAttached;
     outermost.setAttribute('role', 'listbox');
 
@@ -80,7 +77,6 @@ export default class ItemsAccessible {
   }
 
   itemAdded(item) {
-    this.superCall(this.ItemsAccessible, 'itemAdded', item);
     item.setAttribute('role', 'option');
 
     // Ensure each item has an ID so we can set aria-activedescendant on the

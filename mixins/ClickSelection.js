@@ -7,8 +7,6 @@
 export default class ClickSelection {
 
   createdCallback() {
-    this.superCall(this.ClickSelection, 'createdCallback');
-
     /*
      * REVIEW: Which event should we listen to here?
      *

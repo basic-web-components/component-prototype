@@ -59,7 +59,6 @@ export default class Keyboard {
   // }
 
   createdCallback() {
-    this.superCall(this.Keyboard, 'createdCallback');
     this.addEventListener('keydown', event => {
       let handled = this.keydown(event);
       if (handled) {
@@ -72,8 +71,6 @@ export default class Keyboard {
 
   // Default keydown handler. This will typically be handled by other aspects
   // in the collective.
-  keydown(event) {
-    return this.superCall(this.Keyboard, 'keydown', event);
-  }
+  keydown(event) {}
 
 }

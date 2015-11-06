@@ -12,8 +12,6 @@
 export default class ChildrenContent {
 
   createdCallback() {
-    this.superCall(this.ChildrenContent, 'createdCallback');
-
     // Until we have content observing again, force a call to contentChanged().
     // HACK: Do this asynchronously, so other mixins have a chance to set up
     // before this call.
@@ -63,8 +61,6 @@ export default class ChildrenContent {
   // }
 
   contentChanged() {
-    this.superCall(this.ChildrenContent, 'contentChanged');
-
     let outermost = this.outermostAttached;
     if (outermost) {
       let event = new CustomEvent('content-changed', {

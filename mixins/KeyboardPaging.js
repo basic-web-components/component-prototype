@@ -17,6 +17,8 @@
  * @element basic-keyboard-paging
  */
 
+import Composable from '../../element-base/extensible/Composable';
+
 export default class KeyboardPaging {
 
   keydown(event) {
@@ -40,7 +42,6 @@ export default class KeyboardPaging {
    * @method pageDown
    */
   pageDown() {
-    this.superCall(this.KeyboardPaging, 'pageDown');
     return scrollOnePage(this, true);
   }
 
@@ -50,7 +51,6 @@ export default class KeyboardPaging {
    * @method pageUp
    */
   pageUp() {
-    this.superCall(this.KeyboardPaging, 'pageUp');
     return scrollOnePage(this, false);
   }
 
@@ -154,3 +154,6 @@ function scrollOnePage(element, downward) {
     return false; // We didn't do anything.
   }
 }
+Composable.decorate.call(KeyboardPaging.prototype, {
+  keydown: Composable.rule(Composable.override)
+});

@@ -5,33 +5,18 @@
  * @element basic-keyboard-direction
  */
 
+import Composable from '../../element-base/extensible/Composable';
+
 export default class KeyboardDirection {
 
   // Default implementations. These will typically be handled by other aspects
   // in the collective.
-  goDown() {
-    return this.superCall(this.KeyboardDirection, 'goDown');
-  }
-
-  goEnd() {
-    return this.superCall(this.KeyboardDirection, 'goEnd');
-  }
-
-  goLeft() {
-    return this.superCall(this.KeyboardDirection, 'goLeft');
-  }
-
-  goRight() {
-    return this.superCall(this.KeyboardDirection, 'goRight');
-  }
-
-  goStart() {
-    return this.superCall(this.KeyboardDirection, 'goStart');
-  }
-
-  goUp() {
-    return this.superCall(this.KeyboardDirection, 'goUp');
-  }
+  goDown() {}
+  goEnd() {}
+  goLeft() {}
+  goRight() {}
+  goStart() {}
+  goUp() {}
 
   keydown(event) {
     let handled = this.superCall(this.KeyboardDirection, 'keydown', event);
@@ -61,3 +46,6 @@ export default class KeyboardDirection {
   }
 
 }
+Composable.decorate.call(KeyboardDirection.prototype, {
+  keydown: Composable.rule(Composable.override)
+});

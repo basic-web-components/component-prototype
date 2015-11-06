@@ -28,8 +28,6 @@ export default class SelectionScroll {
    * @method scrollItemIntoView
    */
   scrollItemIntoView(item) {
-    this.superCall(this.SelectionScroll, 'scrollItemIntoView');
-
     // Get the relative position of the item with respect to the top of the
     // list's scrollable canvas. An item at the top of the list will have a
     // elementTop of 0.

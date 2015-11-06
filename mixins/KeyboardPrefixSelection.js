@@ -6,6 +6,8 @@
  *
  */
 
+import Composable from '../../element-base/extensible/Composable';
+
 // TODO: If the selection is changed by some other means (e.g., arrow keys) other
 // than prefix typing, then that act should reset the prefix.
 
@@ -62,6 +64,9 @@ export default class KeyboardPrefixSelection {
   }
 
 }
+Composable.decorate.call(KeyboardPrefixSelection.prototype, {
+  keydown: Composable.rule(Composable.override)
+});
 
 
 // Time in milliseconds after which the user is considered to have stopped

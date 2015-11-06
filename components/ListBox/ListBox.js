@@ -19,7 +19,7 @@ import SelectionHighlight from '../../mixins/SelectionHighlight';
 import SelectionScroll from '../../mixins/SelectionScroll';
 
 
-export default class ListBox extends ElementBase.extend(
+export default class ListBox extends ElementBase.compose(
     Super,
     ChildrenContent,
     ClickSelection,

@@ -24,9 +24,7 @@ export default class ItemSelection {
 
   // Default implementations. These will typically be handled by other aspects
   // in the collective.
-  applySelection(item, selected) {
-    this.superCall(this.ItemSelection, 'applySelection', item, selected);
-  }
+  applySelection(item, selected) {}
 
   get canSelectNext() {
     return this._canSelectNext;
@@ -43,12 +41,10 @@ export default class ItemSelection {
   }
 
   itemAdded(item) {
-    this.superCall(this.ItemSelection, 'itemAdded');
     this.applySelection(item, item === this.selectedItem);
   }
 
   itemsChanged() {
-    this.superCall(this.ItemSelection, 'itemsChanged');
     let index = this.items.indexOf(this.selectedItem);
     if (index < 0) {
       // Selected item is no longer in the current set of items.
