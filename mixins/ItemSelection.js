@@ -82,8 +82,6 @@ export default class ItemSelection {
   }
 
   set selectedIndex(index) {
-    this.superSet(this.ItemSelection, 'selectedIndex', index);
-
     let items = this.items;
     let item;
     if (index < 0 || items.length === 0) {
@@ -118,8 +116,6 @@ export default class ItemSelection {
    */
   // TODO: Confirm item is in items before selecting.
   set selectedItem(item) {
-    this.superSet(this.ItemSelection, 'selectedItem', item);
-
     let previousItem = this._selectedItem;
     if (previousItem) {
       // Remove previous selection.

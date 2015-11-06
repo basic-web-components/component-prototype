@@ -86,11 +86,7 @@ export default class ItemsAccessible {
     }
   }
 
-  get selectedItem() {
-    return this.superGet(this.ItemsAccessible, 'selectedItem');
-  }
   set selectedItem(item) {
-    this.superSet(this.ItemsAccessible, 'selectedItem', item);
     // Catch the case where the selection is removed.
     if (item == null) {
       this.outermostAttached.removeAttribute('aria-activedescendant');

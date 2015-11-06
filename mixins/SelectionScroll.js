@@ -6,11 +6,7 @@
 
 export default class SelectionScroll {
 
-  get selectedItem() {
-    return this.superGet(this.SelectionScroll, 'selectedItem');
-  }
   set selectedItem(item) {
-    this.superSet(this.SelectionScroll, 'selectedItem', item);
     if (item) {
       // Keep the selected item in view.
       this.scrollItemIntoView(item);
