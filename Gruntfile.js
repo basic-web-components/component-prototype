@@ -9,17 +9,17 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     browserify: {
+      options: {
+        browserifyOptions: {
+          debug: true // Ask for source maps
+        },
+        // Don't ignore transpilation in node_modules
+        ignore: false,
+        transform: ['babelify']
+      },
       dist: {
         files: {
           'dist/basic-web-components.js': 'components/**/*.js'
-        },
-        options: {
-          browserifyOptions: {
-            debug: true // Ask for source maps
-          },
-          transform: ['babelify'],
-          // Don't ignore transpilation in node_modules
-          ignore: false
         }
       }
     },
