@@ -6,7 +6,7 @@
  *
  */
 
-import Composable from '../../element-base/extensible/Composable';
+import Composable from 'element-base/extensible/Composable';
 
 // TODO: If the selection is changed by some other means (e.g., arrow keys) other
 // than prefix typing, then that act should reset the prefix.

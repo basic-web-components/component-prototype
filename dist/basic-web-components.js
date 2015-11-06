@@ -69,14 +69,7 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-// We'd like to just subclass ElementBase, but then we won't have access to
-// this.ListBox.super. That only gets created by Extensible.extend(), so we have
-// to manually invoke that. We could fix that if we could implement a component
-// constructor, but currently document.registerElement() in Blink doesn't invoke
-// a component constructor.
-//class ListBox extends ElementBase {
-
-class ListBox {
+class ListBox extends _ElementBase2.default.compose(_Super2.default, _ChildrenContent2.default, _ClickSelection2.default, _ContentItems2.default, _DirectionSelection2.default, _Generic2.default, _ItemSelection2.default, _ItemsAccessible2.default, _Keyboard2.default, _KeyboardDirection2.default, _KeyboardPaging2.default, _KeyboardPrefixSelection2.default, _SelectionHighlight2.default, _SelectionScroll2.default) {
 
   // Stub for collectives for now
   get innermostAttached() {
@@ -133,16 +126,13 @@ class ListBox {
 
 }
 
-exports.default = ListBox; // See notes above for class declaration.
-/*
- * basic-list-box
- */
-
-exports.default = ListBox = _ElementBase2.default.extend(_Super2.default, _ChildrenContent2.default, _ClickSelection2.default, _ContentItems2.default, _DirectionSelection2.default, _Generic2.default, _ItemSelection2.default, _ItemsAccessible2.default, _Keyboard2.default, _KeyboardDirection2.default, _KeyboardPaging2.default, _KeyboardPrefixSelection2.default, _SelectionHighlight2.default, _SelectionScroll2.default, ListBox);
+exports.default = ListBox; /*
+                            * basic-list-box
+                            */
 
 document.registerElement('basic-list-box', ListBox);
 
-},{"../../mixins/ChildrenContent":4,"../../mixins/ClickSelection":5,"../../mixins/ContentItems":6,"../../mixins/DirectionSelection":7,"../../mixins/Generic":8,"../../mixins/ItemSelection":9,"../../mixins/ItemsAccessible":10,"../../mixins/Keyboard":11,"../../mixins/KeyboardDirection":12,"../../mixins/KeyboardPaging":13,"../../mixins/KeyboardPrefixSelection":14,"../../mixins/SelectionHighlight":15,"../../mixins/SelectionScroll":16,"./Super":2,"element-base/src/ElementBase":20}],2:[function(require,module,exports){
+},{"../../mixins/ChildrenContent":4,"../../mixins/ClickSelection":5,"../../mixins/ContentItems":6,"../../mixins/DirectionSelection":7,"../../mixins/Generic":8,"../../mixins/ItemSelection":9,"../../mixins/ItemsAccessible":10,"../../mixins/Keyboard":11,"../../mixins/KeyboardDirection":12,"../../mixins/KeyboardPaging":13,"../../mixins/KeyboardPrefixSelection":14,"../../mixins/SelectionHighlight":15,"../../mixins/SelectionScroll":16,"./Super":2,"element-base/src/ElementBase":22}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -217,8 +207,6 @@ Object.defineProperty(exports, "__esModule", {
 class ChildrenContent {
 
   createdCallback() {
-    this.superCall(this.ChildrenContent, 'createdCallback');
-
     // Until we have content observing again, force a call to contentChanged().
     // HACK: Do this asynchronously, so other mixins have a chance to set up
     // before this call.
@@ -268,8 +256,6 @@ class ChildrenContent {
   // }
 
   contentChanged() {
-    this.superCall(this.ChildrenContent, 'contentChanged');
-
     let outermost = this.outermostAttached;
     if (outermost) {
       let event = new CustomEvent('content-changed', {
@@ -323,8 +309,6 @@ Object.defineProperty(exports, "__esModule", {
 class ClickSelection {
 
   createdCallback() {
-    this.superCall(this.ClickSelection, 'createdCallback');
-
     /*
      * REVIEW: Which event should we listen to here?
      *
@@ -341,8 +325,7 @@ class ClickSelection {
     });
   }
 
-  // Default implementation. This will typically be handled by other aspects
-  // in the collective.
+  // Default implementation. This will typically be handled by other mixins.
   // set selectedIndex(index) {}
 
 }
@@ -377,12 +360,10 @@ Object.defineProperty(exports, "__esModule", {
 class ContentItems {
 
   applySelection(item, selected) {
-    this.superCall(this.ContentItems, 'applySelection', item, selected);
     item.classList.toggle('selected', selected);
   }
 
   contentChanged() {
-    this.superCall(this.ContentItems, 'contentChanged');
     this._items = null;
     this.itemsChanged();
   }
@@ -401,12 +382,9 @@ class ContentItems {
   // Default implementation does nothing. This will typically be handled by
   // other aspects in the collective.
   // itemAdded: Basic.Collective.defaultMethod,
-  itemAdded(item) {
-    this.superCall(this.ContentItems, 'itemAdded', item);
-  }
+  itemAdded(item) {}
 
   itemsChanged() {
-    this.superCall(this.ContentItems, 'itemsChanged');
 
     // Perform per-item initialization.
     this.items.forEach(item => {
@@ -466,67 +444,63 @@ function filterAuxiliaryElements(items) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-/**
- * Aspect which maps direction semantics (goLeft, goRight, etc.) to selection
- * semantics (selectPrevious, selectNext, etc.).
- *
- * @element basic-direction-selection
- */
+
+var _Composable = require('element-base/extensible/Composable');
+
+var _Composable2 = _interopRequireDefault(_Composable);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 class DirectionSelection {
 
   goDown() {
-    this.superCall(this.DirectionSelection, 'goDown');
     return this.selectNext();
   }
 
   goEnd() {
-    this.superCall(this.DirectionSelection, 'goEnd');
     return this.selectLast();
   }
 
   goLeft() {
-    this.superCall(this.DirectionSelection, 'goLeft');
     return this.selectPrevious();
   }
 
   goRight() {
-    this.superCall(this.DirectionSelection, 'goRight');
     return this.selectNext();
   }
 
   goStart() {
-    this.superCall(this.DirectionSelection, 'goStart');
     return this.selectFirst();
   }
 
   goUp() {
-    this.superCall(this.DirectionSelection, 'goUp');
     return this.selectPrevious();
   }
 
-  // Default implementations. These will typically be handled by other aspects
-  // in the collective.
-  selectFirst() {
-    return this.superCall(this.DirectionSelection, 'selectFirst');
-  }
-
-  selectLast() {
-    return this.superCall(this.DirectionSelection, 'selectLast');
-  }
-
-  selectNext() {
-    return this.superCall(this.DirectionSelection, 'selectNext');
-  }
-
-  selectPrevious() {
-    return this.superCall(this.DirectionSelection, 'selectPrevious');
-  }
+  // Default implementations. These will typically be handled by other mixins.
+  selectFirst() {}
+  selectLast() {}
+  selectNext() {}
+  selectPrevious() {}
 
 }
-exports.default = DirectionSelection;
+exports.default = DirectionSelection; /**
+                                       * Aspect which maps direction semantics (goLeft, goRight, etc.) to selection
+                                       * semantics (selectPrevious, selectNext, etc.).
+                                       *
+                                       * @element basic-direction-selection
+                                       */
 
-},{}],8:[function(require,module,exports){
+_Composable2.default.decorate.call(DirectionSelection.prototype, {
+  selectFirst: _Composable2.default.rule(_Composable2.default.rules.preferBaseResult),
+  selectLast: _Composable2.default.rule(_Composable2.default.rules.preferBaseResult),
+  selectNext: _Composable2.default.rule(_Composable2.default.rules.preferBaseResult),
+  selectPrevious: _Composable2.default.rule(_Composable2.default.rules.preferBaseResult)
+});
+
+},{"element-base/extensible/Composable":17}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -560,7 +534,6 @@ Object.defineProperty(exports, "__esModule", {
 class Generic {
 
   createdCallback() {
-    this.superCall(this.Generic, 'createdCallback');
     this.generic = this.getAttribute('generic') || true;
   }
 
@@ -630,11 +603,8 @@ Object.defineProperty(exports, "__esModule", {
 
 class ItemSelection {
 
-  // Default implementations. These will typically be handled by other aspects
-  // in the collective.
-  applySelection(item, selected) {
-    this.superCall(this.ItemSelection, 'applySelection', item, selected);
-  }
+  // Default implementation. This will typically be handled by other mixins.
+  applySelection(item, selected) {}
 
   get canSelectNext() {
     return this._canSelectNext;
@@ -651,12 +621,10 @@ class ItemSelection {
   }
 
   itemAdded(item) {
-    this.superCall(this.ItemSelection, 'itemAdded');
     this.applySelection(item, item === this.selectedItem);
   }
 
   itemsChanged() {
-    this.superCall(this.ItemSelection, 'itemsChanged');
     let index = this.items.indexOf(this.selectedItem);
     if (index < 0) {
       // Selected item is no longer in the current set of items.
@@ -695,8 +663,6 @@ class ItemSelection {
   }
 
   set selectedIndex(index) {
-    this.superSet(this.ItemSelection, 'selectedIndex', index);
-
     let items = this.items;
     let item;
     if (index < 0 || items.length === 0) {
@@ -731,8 +697,6 @@ class ItemSelection {
    */
   // TODO: Confirm item is in items before selecting.
   set selectedItem(item) {
-    this.superSet(this.ItemSelection, 'selectedItem', item);
-
     let previousItem = this._selectedItem;
     if (previousItem) {
       // Remove previous selection.
@@ -907,7 +871,6 @@ let idCount = 0;
 class ItemsAccessible {
 
   applySelection(item, selected) {
-    this.superCall(this.ItemsAccessible, 'applySelection', item, selected);
     item.setAttribute('aria-selected', selected);
     var itemId = item.getAttribute('id');
     if (itemId) {
@@ -953,8 +916,6 @@ class ItemsAccessible {
   // }
 
   createdCallback() {
-    this.superCall(this.ItemsAccessible, 'createdCallback');
-
     let outermost = this.outermostAttached;
     outermost.setAttribute('role', 'listbox');
 
@@ -975,7 +936,6 @@ class ItemsAccessible {
   }
 
   itemAdded(item) {
-    this.superCall(this.ItemsAccessible, 'itemAdded', item);
     item.setAttribute('role', 'option');
 
     // Ensure each item has an ID so we can set aria-activedescendant on the
@@ -985,11 +945,7 @@ class ItemsAccessible {
     }
   }
 
-  get selectedItem() {
-    return this.superGet(this.ItemsAccessible, 'selectedItem');
-  }
   set selectedItem(item) {
-    this.superSet(this.ItemsAccessible, 'selectedItem', item);
     // Catch the case where the selection is removed.
     if (item == null) {
       this.outermostAttached.removeAttribute('aria-activedescendant');
@@ -1006,8 +962,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 /**
- * Aspect which manages the keyboard focus and keydown handling for a component
- * collective.
+ * Aspect which manages the keyboard focus and keydown handling for a component.
  *
  * This aspect ensures that its only the outermost aspect in a collective that is
  * listening for keyboard events.
@@ -1066,7 +1021,6 @@ class Keyboard {
   // }
 
   createdCallback() {
-    this.superCall(this.Keyboard, 'createdCallback');
     this.addEventListener('keydown', event => {
       let handled = this.keydown(event);
       if (handled) {
@@ -1077,11 +1031,8 @@ class Keyboard {
     this.setAttribute('tabIndex', 0);
   }
 
-  // Default keydown handler. This will typically be handled by other aspects
-  // in the collective.
-  keydown(event) {
-    return this.superCall(this.Keyboard, 'keydown', event);
-  }
+  // Default keydown handler. This will typically be handled by other mixins.
+  keydown(event) {}
 
 }
 exports.default = Keyboard;
@@ -1092,83 +1043,132 @@ exports.default = Keyboard;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-/**
- * Aspect which maps direction keys (Left, Right, etc.) to direction semantics
- * (goLeft, goRight, etc.).
- *
- * @element basic-keyboard-direction
- */
+
+var _Composable = require('element-base/extensible/Composable');
+
+var _Composable2 = _interopRequireDefault(_Composable);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 class KeyboardDirection {
 
-  // Default implementations. These will typically be handled by other aspects
-  // in the collective.
-  goDown() {
-    return this.superCall(this.KeyboardDirection, 'goDown');
-  }
-
-  goEnd() {
-    return this.superCall(this.KeyboardDirection, 'goEnd');
-  }
-
-  goLeft() {
-    return this.superCall(this.KeyboardDirection, 'goLeft');
-  }
-
-  goRight() {
-    return this.superCall(this.KeyboardDirection, 'goRight');
-  }
-
-  goStart() {
-    return this.superCall(this.KeyboardDirection, 'goStart');
-  }
-
-  goUp() {
-    return this.superCall(this.KeyboardDirection, 'goUp');
-  }
+  // Default implementations. These will typically be handled by other mixins.
+  goDown() {}
+  goEnd() {}
+  goLeft() {}
+  goRight() {}
+  goStart() {}
+  goUp() {}
 
   keydown(event) {
-    let handled = this.superCall(this.KeyboardDirection, 'keydown', event);
-    if (!handled) {
-      switch (event.keyCode) {
-        case 35:
-          // End
-          handled = this.goEnd();
-          break;
-        case 36:
-          // Home
-          handled = this.goStart();
-          break;
-        case 37:
-          // Left
-          handled = this.goLeft();
-          break;
-        case 38:
-          // Up
-          handled = event.altKey ? this.goStart() : this.goUp();
-          break;
-        case 39:
-          // Right
-          handled = this.goRight();
-          break;
-        case 40:
-          // Down
-          handled = event.altKey ? this.goEnd() : this.goDown();
-          break;
-      }
+    let handled;
+    switch (event.keyCode) {
+      case 35:
+        // End
+        handled = this.goEnd();
+        break;
+      case 36:
+        // Home
+        handled = this.goStart();
+        break;
+      case 37:
+        // Left
+        handled = this.goLeft();
+        break;
+      case 38:
+        // Up
+        handled = event.altKey ? this.goStart() : this.goUp();
+        break;
+      case 39:
+        // Right
+        handled = this.goRight();
+        break;
+      case 40:
+        // Down
+        handled = event.altKey ? this.goEnd() : this.goDown();
+        break;
     }
     return handled;
   }
 
 }
-exports.default = KeyboardDirection;
+exports.default = KeyboardDirection; /**
+                                      * Aspect which maps direction keys (Left, Right, etc.) to direction semantics
+                                      * (goLeft, goRight, etc.).
+                                      *
+                                      * @element basic-keyboard-direction
+                                      */
 
-},{}],13:[function(require,module,exports){
+_Composable2.default.decorate.call(KeyboardDirection.prototype, {
+  goDown: _Composable2.default.rule(_Composable2.default.rules.preferBaseResult),
+  goEnd: _Composable2.default.rule(_Composable2.default.rules.preferBaseResult),
+  goLeft: _Composable2.default.rule(_Composable2.default.rules.preferBaseResult),
+  goRight: _Composable2.default.rule(_Composable2.default.rules.preferBaseResult),
+  goStart: _Composable2.default.rule(_Composable2.default.rules.preferBaseResult),
+  goUp: _Composable2.default.rule(_Composable2.default.rules.preferBaseResult),
+  keydown: _Composable2.default.rule(_Composable2.default.rules.preferMixinResult)
+});
+
+},{"element-base/extensible/Composable":17}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _Composable = require('element-base/extensible/Composable');
+
+var _Composable2 = _interopRequireDefault(_Composable);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+class KeyboardPaging {
+
+  keydown(event) {
+    let handled;
+    switch (event.keyCode) {
+      case 33:
+        // Page Up
+        handled = this.pageUp();
+        break;
+      case 34:
+        // Page Down
+        handled = this.pageDown();
+        break;
+    }
+    return handled;
+  }
+
+  /**
+   * Scroll down one page.
+   *
+   * @method pageDown
+   */
+  pageDown() {
+    return scrollOnePage(this, true);
+  }
+
+  /**
+   * Scroll up one page.
+   *
+   * @method pageUp
+   */
+  pageUp() {
+    return scrollOnePage(this, false);
+  }
+
+}
+
+exports.default = KeyboardPaging; // Return the item whose content spans the given y position (relative to the
+// top of the list's scrolling client area), or null if not found.
+//
+// If downward is true, move down the list of items to find the first item
+// found at the given y position; if downward is false, move up the list of
+// items to find the last item at that position.
 /**
  * Aspect which maps page keys (Page Up, Page Down) into operations that scroll
  * the component.
@@ -1187,54 +1187,6 @@ Object.defineProperty(exports, "__esModule", {
  *
  * @element basic-keyboard-paging
  */
-
-class KeyboardPaging {
-
-  keydown(event) {
-    let handled = this.superCall(this.KeyboardPaging, 'keydown', event);
-    if (!handled) {
-      switch (event.keyCode) {
-        case 33:
-          // Page Up
-          handled = this.pageUp();
-          break;
-        case 34:
-          // Page Down
-          handled = this.pageDown();
-          break;
-      }
-    }
-    return handled;
-  }
-
-  /**
-   * Scroll down one page.
-   *
-   * @method pageDown
-   */
-  pageDown() {
-    this.superCall(this.KeyboardPaging, 'pageDown');
-    return scrollOnePage(this, true);
-  }
-
-  /**
-   * Scroll up one page.
-   *
-   * @method pageUp
-   */
-  pageUp() {
-    this.superCall(this.KeyboardPaging, 'pageUp');
-    return scrollOnePage(this, false);
-  }
-
-}
-
-exports.default = KeyboardPaging; // Return the item whose content spans the given y position (relative to the
-// top of the list's scrolling client area), or null if not found.
-//
-// If downward is true, move down the list of items to find the first item
-// found at the given y position; if downward is false, move up the list of
-// items to find the last item at that position.
 
 function getIndexOfItemAtY(element, y, downward) {
   var items = element.items;
@@ -1323,20 +1275,24 @@ function scrollOnePage(element, downward) {
       return false; // We didn't do anything.
     }
 }
+_Composable2.default.decorate.call(KeyboardPaging.prototype, {
+  keydown: _Composable2.default.rule(_Composable2.default.rules.preferMixinResult)
+});
 
-},{}],14:[function(require,module,exports){
+},{"element-base/extensible/Composable":17}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-/**
- * Handle list box-style prefix typing, in which the user can type a string to
- * select the first item that begins with that string.
- *
- * @element basic-keyboard-prefix-selection
- *
- */
+
+var _Composable = require('element-base/extensible/Composable');
+
+var _Composable2 = _interopRequireDefault(_Composable);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 // TODO: If the selection is changed by some other means (e.g., arrow keys) other
 // than prefix typing, then that act should reset the prefix.
@@ -1349,32 +1305,31 @@ class KeyboardPrefixSelection {
   // }
 
   keydown(event) {
-    let handled = this.superCall(this.KeyboardPrefixSelection, 'keydown', event);
-    if (!handled) {
-      let resetPrefix = true;
+    let handled;
+    let resetPrefix = true;
 
-      switch (event.keyCode) {
-        case 8:
-          // Backspace
-          handleBackspace(this);
-          handled = true;
-          resetPrefix = false;
-          break;
-        case 27:
-          // Escape
-          handled = true;
-          break;
-        default:
-          if (!event.ctrlKey && !event.metaKey && !event.altKey && event.which !== 32 /* Space */) {
-              handlePlainCharacter(this, String.fromCharCode(event.which));
-            }
-          resetPrefix = false;
-      }
-
-      if (resetPrefix) {
-        resetTypedPrefix(this);
-      }
+    switch (event.keyCode) {
+      case 8:
+        // Backspace
+        handleBackspace(this);
+        handled = true;
+        resetPrefix = false;
+        break;
+      case 27:
+        // Escape
+        handled = true;
+        break;
+      default:
+        if (!event.ctrlKey && !event.metaKey && !event.altKey && event.which !== 32 /* Space */) {
+            handlePlainCharacter(this, String.fromCharCode(event.which));
+          }
+        resetPrefix = false;
     }
+
+    if (resetPrefix) {
+      resetTypedPrefix(this);
+    }
+
     return handled;
   }
 
@@ -1395,10 +1350,20 @@ class KeyboardPrefixSelection {
   }
 
 }
+exports.default = KeyboardPrefixSelection; /**
+                                            * Handle list box-style prefix typing, in which the user can type a string to
+                                            * select the first item that begins with that string.
+                                            *
+                                            * @element basic-keyboard-prefix-selection
+                                            *
+                                            */
 
-exports.default = KeyboardPrefixSelection; // Time in milliseconds after which the user is considered to have stopped
+_Composable2.default.decorate.call(KeyboardPrefixSelection.prototype, {
+  keydown: _Composable2.default.rule(_Composable2.default.rules.preferMixinResult)
+});
+
+// Time in milliseconds after which the user is considered to have stopped
 // typing.
-
 const PREFIX_TIMEOUT_DURATION = 1000;
 
 // Return the index of the first item with the given prefix, else -1.
@@ -1462,7 +1427,7 @@ function setPrefixTimeout(element) {
   }, PREFIX_TIMEOUT_DURATION);
 }
 
-},{}],15:[function(require,module,exports){
+},{"element-base/extensible/Composable":17}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1477,7 +1442,6 @@ Object.defineProperty(exports, "__esModule", {
 class SelectionHighlight {
 
   applySelection(item, selected) {
-    this.superCall(this.SelectionHighlight, 'applySelection', item, selected);
     item.style.backgroundColor = selected ? 'highlight' : '';
     item.style.color = selected ? 'highlighttext' : '';
   }
@@ -1486,7 +1450,7 @@ class SelectionHighlight {
 exports.default = SelectionHighlight;
 
 },{}],16:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -1499,11 +1463,7 @@ Object.defineProperty(exports, "__esModule", {
 
 class SelectionScroll {
 
-  get selectedItem() {
-    return this.superGet(this.SelectionScroll, 'selectedItem');
-  }
   set selectedItem(item) {
-    this.superSet(this.SelectionScroll, 'selectedItem', item);
     if (item) {
       // Keep the selected item in view.
       this.scrollItemIntoView(item);
@@ -1521,8 +1481,6 @@ class SelectionScroll {
    * @method scrollItemIntoView
    */
   scrollItemIntoView(item) {
-    this.superCall(this.SelectionScroll, 'scrollItemIntoView');
-
     // Get the relative position of the item with respect to the top of the
     // list's scrollable canvas. An item at the top of the list will have a
     // elementTop of 0.
@@ -1551,25 +1509,39 @@ exports.default = SelectionScroll;
 },{}],17:[function(require,module,exports){
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        * Extend classes/objects with other classes/objects.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _CompositionRules = require('./CompositionRules');
+
+var CompositionRules = _interopRequireWildcard(_CompositionRules);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/*
- * Extend classes/objects with other classes/objects.
- */
-
-var Extensible = (function () {
-  function Extensible() {
-    _classCallCheck(this, Extensible);
+var Composable = (function () {
+  function Composable() {
+    _classCallCheck(this, Composable);
   }
 
-  _createClass(Extensible, null, [{
-    key: 'extend',
+  _createClass(Composable, [{
+    key: 'decorate',
+    value: function decorate(decorators) {
+      Composable.decorate.call(this, decorators);
+    }
+
+    // Decorate for annotating how a class member should be composed later.
+    // This takes a decorator that will be run at *composition* time.
+    // For now, this can only be applied to methods.
+
+  }], [{
+    key: 'compose',
 
     /*
      * Return a subclass of the current class that includes the members indicated
@@ -1582,60 +1554,87 @@ var Extensible = (function () {
      *
      * The call
      *
-     *   MyBaseClass.extend(Extension1, Extension2, Extension3)
+     *   MyBaseClass.compose(Mixin1, Mixin2, Mixin3)
      *
      * will return a new class of MyBaseClass that implements all the methods in
-     * the three extensions given. The above is equivalent to
+     * the three mixins given. The above is equivalent to
      *
-     *   MyBaseClass.extend(Extension1).extend(Extension2).extend(Extension3)
+     *   MyBaseClass.compose(Mixin1).compose(Mixin2).compose(Mixin3)
      *
      * This method can be statically invoked to extend plain objects:
      *
-     *   let extended = Extensible.extend.call(obj1, obj2);
+     *   let extended = Composable.extend.call(obj1, obj2);
      *
      */
-    value: function extend() {
-      for (var _len = arguments.length, extensions = Array(_len), _key = 0; _key < _len; _key++) {
-        extensions[_key] = arguments[_key];
+    value: function compose() {
+      for (var _len = arguments.length, mixins = Array(_len), _key = 0; _key < _len; _key++) {
+        mixins[_key] = arguments[_key];
       }
 
-      // We create a new subclass for each extension in turn. The result becomes
-      // the base class extended by any subsequent extensions. It turns out that
+      // We create a new subclass for each mixin in turn. The result becomes
+      // the base class extended by any subsequent mixins. It turns out that
       // we can use Array.reduce() to concisely express this, using the current
       // (original) class as the seed for reduce().
-      return extensions.reduce(_extend, this);
+      return mixins.reduce(_compose, this);
+    }
+  }, {
+    key: 'decorate',
+    value: function decorate(decorators) {
+      for (var key in decorators) {
+        var decorator = decorators[key];
+        var descriptor = Object.getOwnPropertyDescriptor(this, key);
+        decorator(this, key, descriptor);
+        Object.defineProperty(this, key, descriptor);
+      }
+    }
+  }, {
+    key: 'rule',
+    value: function rule(decorator) {
+      // We return a decorator that just adds the decorator given above to the
+      // member.
+      return function (target, key, descriptor) {
+        // TODO: Use a Symbol instead of a string property name to save this.
+        descriptor.value._compositionRule = decorator;
+      };
     }
   }]);
 
-  return Extensible;
+  return Composable;
 })();
 
 /*
- * All Extensible-created objects keep references to the extensions that were
- * applied to create them. When a *named* extension is applied to the prototype
+ * Expose standard composition rules as properties of Composable.
+ * This avoids the need for someone to make a separate import of the rules.
+ */
+
+exports.default = Composable;
+Composable.rules = CompositionRules;
+
+/*
+ * All Composable-created objects keep references to the mixins that were
+ * applied to create them. When a *named* mixin is applied to the prototype
  * chain, the resulting object (or, for a class, the class' prototype) will
  * have a new member with that name that points back to the same object.
  * That facility is useful when dealing with chains that have been extended
- * more than once, as an extension's name is sufficient to retrieve a reference
+ * more than once, as an mixin's name is sufficient to retrieve a reference
  * to that point in the prototype chain.
  *
- * A single extension can be applied to multiple prototype chains -- the name
+ * A single mixin can be applied to multiple prototype chains -- the name
  * refers to the prototype on *this particular prototype chain* that was added
- * for that extension. This lets extension/mixin code get back to its own
+ * for that mixin. This lets mixin/mixin code get back to its own
  * prototype, most often in combination with "super" (see below) in order to
  * invoke superclass behavior.
  */
-
-Extensible.prototype.Extensible = Extensible.prototype;
+Composable.prototype.Composable = Composable.prototype;
 
 /*
- * All Extensible-created objects have a "super" property that references the
+ * All Composable-created objects have a "super" property that references the
  * prototype above them in the prototype chain.
  *
  * This "super" reference is used as a replacement for ES6's "super" keyword in
- * in ES5 (or transpiled ES6) extensions/mixins
- * that want to invoke superclass behavior, where the specific superclass will
- * depend upon which extensions have been applied to a given prototype chain.
+ * in ES5 (or transpiled ES6) mixins that want to invoke superclass behavior,
+ * where the specific superclass will depend upon which mixins have been applied
+ * to a given prototype chain.
  *
  * E.g.:
  *   class Mixin {
@@ -1647,9 +1646,39 @@ Extensible.prototype.Extensible = Extensible.prototype;
  *     }
  *   }
  *
- * For consistency, Extensible itself records its own superclass as Object.
+ * For consistency, Composable itself records its own superclass as Object.
  */
-Extensible.prototype.super = Object.prototype;
+Composable.prototype.super = Object.prototype;
+
+// Composition rules for standard object members.
+Composable.prototype.compositionRules = {
+  constructor: Composable.override,
+  toString: Composable.override
+};
+
+function applyCompositionRules(obj) {
+  var base = Object.getPrototypeOf(obj);
+  Object.getOwnPropertyNames(obj).forEach(function (name) {
+    if (name in base) {
+      // Base also implements a member with the same name; need to combine.
+      var descriptor = Object.getOwnPropertyDescriptor(obj, name);
+      var rule = descriptor.value && descriptor.value._compositionRule;
+      if (!rule) {
+        // See if prototype chain has a rule for this member.
+        rule = obj.compositionRules[name];
+      }
+      if (!rule) {
+        rule = getDefaultCompositionRule(descriptor);
+      }
+      // "override" is a known no-op, so we don't bother trying to redefine the
+      // property.
+      if (rule && rule !== Composable.override) {
+        rule(obj, name, descriptor);
+        Object.defineProperty(obj, name, descriptor);
+      }
+    }
+  });
+}
 
 /*
  * Copy the given properties/methods to the target.
@@ -1668,20 +1697,20 @@ function copyOwnProperties(source, target) {
 
 /*
  * Return a new subclass/object that extends the given base class/object with
- * the members of the indicated extension.
+ * the members of the indicated mixin.
  */
-function _extend(base, extension) {
+function _compose(base, mixin) {
 
-  // Check whether the base and extension are classes or plain objects.
+  // Check whether the base and mixin are classes or plain objects.
   var baseIsClass = isClass(base);
-  var extensionIsClass = isClass(extension);
+  var mixinIsClass = isClass(mixin);
 
-  // Check to see if the *extension* has a base class/prototype of its own.
-  var extensionBase = extensionIsClass ? Object.getPrototypeOf(extension.prototype).constructor : Object.getPrototypeOf(extension);
-  if (extensionBase && extensionBase !== Function && extensionBase !== Object) {
-    // The extension itself derives from another class/object.
-    // Recurse, and extend with the extension's base first.
-    base = _extend(base, extensionBase);
+  // Check to see if the *mixin* has a base class/prototype of its own.
+  var mixinBase = mixinIsClass ? Object.getPrototypeOf(mixin.prototype).constructor : Object.getPrototypeOf(mixin);
+  if (mixinBase && mixinBase !== Function && mixinBase !== Object && mixinBase !== Object.prototype) {
+    // The mixin itself derives from another class/object.
+    // Recurse, and extend with the mixin's base first.
+    base = _compose(base, mixinBase);
   }
 
   // Create the extended object we're going to return as a result.
@@ -1703,7 +1732,7 @@ function _extend(base, extension) {
 
   var source = undefined;
   var target = undefined;
-  if (baseIsClass && extensionIsClass) {
+  if (baseIsClass && mixinIsClass) {
     // Properties defined by Function.
     // We'd prefer to get by interrogating Function itself, but WebKit functions
     // have some properties (arguments and caller) which are not returned by
@@ -1711,37 +1740,49 @@ function _extend(base, extension) {
     var FUNCTION_PROPERTIES = ['arguments', 'caller', 'length', 'name', 'prototype'];
     // Extending a class with a class.
     // We'll copy instance members in a moment, but first copy static members.
-    copyOwnProperties(extension, result, FUNCTION_PROPERTIES);
-    source = extension.prototype;
+    copyOwnProperties(mixin, result, FUNCTION_PROPERTIES);
+    source = mixin.prototype;
     target = result.prototype;
-  } else if (!baseIsClass && extensionIsClass) {
+  } else if (!baseIsClass && mixinIsClass) {
     // Extending a plain object with a class.
     // Copy prototype methods directly to result.
-    source = extension.prototype;
+    source = mixin.prototype;
     target = result;
-  } else if (baseIsClass && !extensionIsClass) {
+  } else if (baseIsClass && !mixinIsClass) {
     // Extending class with plain object.
-    // Copy extension to result prototype.
-    source = extension;
+    // Copy mixin to result prototype.
+    source = mixin;
     target = result.prototype;
   } else {
     // Extending a plain object with a plain object.
-    source = extension;
+    source = mixin;
     target = result;
   }
   copyOwnProperties(source, target, ['constructor']);
 
-  if (extension.name) {
-    // Use the extension's name (usually the name of a class' constructor) to
+  applyCompositionRules(target);
+
+  if (mixin.name) {
+    // Use the mixin's name (usually the name of a class' constructor) to
     // save a reference back to the newly-created object in the prototype chain.
-    target[extension.name] = target;
+    target[mixin.name] = target;
 
     // Save a reference to the superclass/super-object. See the comments on
-    // Extensible's "super" property.
+    // Composable's "super" property.
     target.super = baseIsClass ? base.prototype : base;
   }
 
   return result;
+}
+
+function getDefaultCompositionRule(descriptor) {
+  if (typeof descriptor.value === 'function') {
+    return Composable.rules.propagateFunction;
+  } else if (typeof descriptor.get === 'function' || typeof descriptor.set === 'function') {
+    // Property with getter and/or setter.
+    return Composable.rules.propagateProperty;
+  }
+  return null;
 }
 
 // Return true if c is a JavaScript class.
@@ -1755,9 +1796,113 @@ function isClass(c) {
   c.prototype && c.prototype.constructor === c; // HTMLElement in WebKit
 }
 
-exports.default = Extensible;
+},{"./CompositionRules":18}],18:[function(require,module,exports){
+"use strict";
 
-},{}],18:[function(require,module,exports){
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.composeFunction = composeFunction;
+exports.getPropertyDescriptor = getPropertyDescriptor;
+exports.override = override;
+exports.preferBaseResult = preferBaseResult;
+exports.preferMixinResult = preferMixinResult;
+exports.propagateFunction = propagateFunction;
+exports.propagateProperty = propagateProperty;
+/**
+ * Standard composition rules
+ */
+
+// Take two functions and return a new composed function that invokes both.
+// The composed function will return the result of the second function.
+// This is not a rule, but a helper used by rules.
+function composeFunction(function1, function2) {
+  return function () {
+    function1.apply(this, arguments);
+    return function2.apply(this, arguments);
+  };
+}
+
+// Like Object.getOwnPropertyDescriptor(), but walks up the prototype chain.
+// This is needed by composition rules, which usually start out by getting
+// the base implementation of a member they're composing.
+// This is not a rule, but a helper used by rules.
+function getPropertyDescriptor(obj, name) {
+  var descriptor = Object.getOwnPropertyDescriptor(obj, name);
+  if (descriptor) {
+    return descriptor;
+  } else {
+    var prototype = Object.getPrototypeOf(obj);
+    // Checking for "name in prototype" lets us know whether we should bother
+    // walking up the prototype chain.
+    if (prototype && name in prototype) {
+      return getPropertyDescriptor(prototype, name);
+    }
+  }
+  return undefined; // Not found
+}
+
+// Combinator that causes a mixin method to override its base implementation.
+// Since this the default behavior of the prototype chain, this is a no-op.
+function override(target, key, descriptor) {}
+
+// Compose methods, invoking base implementation first. If it returns a
+// truthy result, that is returned. Otherwise, the mixin implementation's
+// result is returned.
+function preferBaseResult(target, key, descriptor) {
+  var mixinImplementation = descriptor.value;
+  var baseImplementation = Object.getPrototypeOf(target)[key];
+  descriptor.value = function () {
+    return baseImplementation.apply(this, arguments) || mixinImplementation.apply(this, arguments);
+  };
+}
+
+// Compose methods, invoking mixin implementation first. If it returns a
+// truthy result, that is returned. Otherwise, the base implementation's
+// result is returned.
+function preferMixinResult(target, key, descriptor) {
+  var mixinImplementation = descriptor.value;
+  var baseImplementation = Object.getPrototypeOf(target)[key];
+  descriptor.value = function () {
+    return mixinImplementation.apply(this, arguments) || baseImplementation.apply(this, arguments);
+  };
+}
+
+// Default rule for composing methods: invoke base first, then mixin.
+function propagateFunction(target, key, descriptor) {
+  var mixinImplementation = descriptor.value;
+  var baseImplementation = Object.getPrototypeOf(target)[key];
+  descriptor.value = composeFunction(baseImplementation, mixinImplementation);
+}
+
+// Default rule for composing properties.
+// We only compose setters, which invoke base first, then mixin.
+// A defined mixin getter overrides a base getter.
+// Note that, because of the way property descriptors work, if the mixin only
+// defines a setter, but not a getter, we have to supply a default getter that
+// invokes the base getter. Similarly, if the mixin just defines a getter,
+// we have to supply a default setter.
+function propagateProperty(target, key, descriptor) {
+  var base = Object.getPrototypeOf(target);
+  var baseDescriptor = getPropertyDescriptor(base, key);
+  if (descriptor.get && !descriptor.set && baseDescriptor.set) {
+    // Need to supply default setter.
+    descriptor.set = function (value) {
+      baseDescriptor.set.call(this, value);
+    };
+  } else if (descriptor.set) {
+    if (!descriptor.get && baseDescriptor.get) {
+      // Need to supply default getter.
+      descriptor.get = function () {
+        return baseDescriptor.get.call(this);
+      };
+    }
+    // Compose setters.
+    descriptor.set = composeFunction(baseDescriptor.set, descriptor.set);
+  }
+}
+
+},{}],19:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1784,10 +1929,6 @@ var AttributeMarshalling = (function () {
      * Handle a change to the attribute with the given name.
      */
     value: function attributeChangedCallback(name, oldValue, newValue) {
-      var base = this.AttributeMarshalling.super.attributeChangedCallback;
-      if (base) {
-        base.call(this);
-      }
       // If the attribute name corresponds to a property name, then set that
       // property. Ignore changes in standard HTMLElement properties.
       var propertyName = attributeToPropertyName(name);
@@ -1800,10 +1941,6 @@ var AttributeMarshalling = (function () {
     value: function createdCallback() {
       var _this = this;
 
-      var base = this.AttributeMarshalling.super.createdCallback;
-      if (base) {
-        base.call(this);
-      }
       [].forEach.call(this.attributes, function (attribute) {
         _this.attributeChangedCallback(attribute.name, undefined, attribute.value);
       });
@@ -1831,7 +1968,7 @@ function propertyToAttributeName(propertyName) {
   return attributeName;
 }
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1857,10 +1994,6 @@ var AutomaticNodeFinding = (function () {
     value: function createdCallback() {
       var _this = this;
 
-      var base = this.AutomaticNodeFinding.super.createdCallback;
-      if (base) {
-        base.call(this);
-      }
       if (this.shadowRoot) {
         this.$ = {};
         var nodesWithIds = this.shadowRoot.querySelectorAll('[id]');
@@ -1877,7 +2010,31 @@ var AutomaticNodeFinding = (function () {
 
 exports.default = AutomaticNodeFinding;
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Composable = require('../extensible/Composable');
+
+var _Composable2 = _interopRequireDefault(_Composable);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// We use Extensible to add its own members to a HTMLElement subclass.
+// The result is an HTMLElement with .extend() and super() support.
+var ComposableElement = _Composable2.default.compose.call(HTMLElement, _Composable2.default); /*
+                                                                                               * A composable HTML element.
+                                                                                               *
+                                                                                               * This class is provided just as a convenience. One could also start with
+                                                                                               * HTMLElement at the top level, and add extensibility by mixing in Composable.
+                                                                                               */
+
+exports.default = ComposableElement;
+
+},{"../extensible/Composable":17}],22:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1886,9 +2043,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ExtensibleElement2 = require('./ExtensibleElement');
+var _ComposableElement2 = require('./ComposableElement');
 
-var _ExtensibleElement3 = _interopRequireDefault(_ExtensibleElement2);
+var _ComposableElement3 = _interopRequireDefault(_ComposableElement2);
 
 var _TemplateStamping = require('./TemplateStamping');
 
@@ -1914,8 +2071,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * finding, and marshalling between attributes and properties.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
-var ElementBase = (function (_ExtensibleElement) {
-  _inherits(ElementBase, _ExtensibleElement);
+var ElementBase = (function (_ComposableElement) {
+  _inherits(ElementBase, _ComposableElement);
 
   function ElementBase() {
     _classCallCheck(this, ElementBase);
@@ -1933,41 +2090,15 @@ var ElementBase = (function (_ExtensibleElement) {
   }]);
 
   return ElementBase;
-})(_ExtensibleElement3.default);
+})(_ComposableElement3.default);
 
-ElementBase = ElementBase.extend(_TemplateStamping2.default, // before node finding, so shadow root is populated
+exports.default = ElementBase = ElementBase.compose(_TemplateStamping2.default, // before node finding, so shadow root is populated
 _AutomaticNodeFinding2.default, // before marshalling, so marshalled properties can use it
 _AttributeMarshalling2.default);
 
 document.registerElement('element-base', ElementBase);
 
-exports.default = ElementBase;
-
-},{"./AttributeMarshalling":18,"./AutomaticNodeFinding":19,"./ExtensibleElement":21,"./TemplateStamping":22}],21:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _Extensible = require('../extensible/Extensible');
-
-var _Extensible2 = _interopRequireDefault(_Extensible);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// We use Extensible to add its own members to a HTMLElement subclass.
-// The result is an HTMLElement with .extend() and super() support.
-var ExtensibleElement = _Extensible2.default.extend.call(HTMLElement, _Extensible2.default); /*
-                                                                                              * An extensible HTML element.
-                                                                                              *
-                                                                                              * This class is provided just as a convenience. One could also start with
-                                                                                              * HTMLElement at the top level, and add extensibility by mixing in Extensible.
-                                                                                              */
-
-exports.default = ExtensibleElement;
-
-},{"../extensible/Extensible":17}],22:[function(require,module,exports){
+},{"./AttributeMarshalling":19,"./AutomaticNodeFinding":20,"./ComposableElement":21,"./TemplateStamping":23}],23:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2001,11 +2132,6 @@ var TemplateStamping = (function () {
      * component instance, and the template stamped into it.
      */
     value: function createdCallback() {
-      // this.log("created");
-      var base = this.TemplateStamping.super.createdCallback;
-      if (base) {
-        base();
-      }
       var template = this.template;
       if (typeof template === 'string') {
         // Upgrade plain string to real template.

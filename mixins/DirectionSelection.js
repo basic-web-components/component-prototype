@@ -5,7 +5,7 @@
  * @element basic-direction-selection
  */
 
-import Composable from '../../element-base/extensible/Composable';
+import Composable from 'element-base/extensible/Composable';
 
 export default class DirectionSelection {
 
