@@ -41,8 +41,8 @@ export default class DirectionSelection {
 
 }
 Composable.decorate.call(DirectionSelection.prototype, {
-  selectFirst: Composable.rule(Composable.preferBaseResult),
-  selectLast: Composable.rule(Composable.preferBaseResult),
-  selectNext: Composable.rule(Composable.preferBaseResult),
-  selectPrevious: Composable.rule(Composable.preferBaseResult)
+  selectFirst: Composable.rule(Composable.rules.preferBaseResult),
+  selectLast: Composable.rule(Composable.rules.preferBaseResult),
+  selectNext: Composable.rule(Composable.rules.preferBaseResult),
+  selectPrevious: Composable.rule(Composable.rules.preferBaseResult)
 });

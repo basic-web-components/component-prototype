@@ -153,5 +153,5 @@ function scrollOnePage(element, downward) {
   }
 }
 Composable.decorate.call(KeyboardPaging.prototype, {
-  keydown: Composable.rule(Composable.preferMixinResult)
+  keydown: Composable.rule(Composable.rules.preferMixinResult)
 });

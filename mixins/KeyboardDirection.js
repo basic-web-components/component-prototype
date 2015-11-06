@@ -44,11 +44,11 @@ export default class KeyboardDirection {
 
 }
 Composable.decorate.call(KeyboardDirection.prototype, {
-  goDown: Composable.rule(Composable.preferBaseResult),
-  goEnd: Composable.rule(Composable.preferBaseResult),
-  goLeft: Composable.rule(Composable.preferBaseResult),
-  goRight: Composable.rule(Composable.preferBaseResult),
-  goStart: Composable.rule(Composable.preferBaseResult),
-  goUp: Composable.rule(Composable.preferBaseResult),
-  keydown: Composable.rule(Composable.preferMixinResult)
+  goDown: Composable.rule(Composable.rules.preferBaseResult),
+  goEnd: Composable.rule(Composable.rules.preferBaseResult),
+  goLeft: Composable.rule(Composable.rules.preferBaseResult),
+  goRight: Composable.rule(Composable.rules.preferBaseResult),
+  goStart: Composable.rule(Composable.rules.preferBaseResult),
+  goUp: Composable.rule(Composable.rules.preferBaseResult),
+  keydown: Composable.rule(Composable.rules.preferMixinResult)
 });

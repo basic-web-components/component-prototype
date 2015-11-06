@@ -64,7 +64,7 @@ export default class KeyboardPrefixSelection {
 
 }
 Composable.decorate.call(KeyboardPrefixSelection.prototype, {
-  keydown: Composable.rule(Composable.preferMixinResult)
+  keydown: Composable.rule(Composable.rules.preferMixinResult)
 });
 
 
