@@ -1,6 +1,5 @@
 /**
- * Aspect which manages the keyboard focus and keydown handling for a component
- * collective.
+ * Aspect which manages the keyboard focus and keydown handling for a component.
  *
  * This aspect ensures that its only the outermost aspect in a collective that is
  * listening for keyboard events.
@@ -69,8 +68,7 @@ export default class Keyboard {
     this.setAttribute('tabIndex', 0);
   }
 
-  // Default keydown handler. This will typically be handled by other aspects
-  // in the collective.
+  // Default keydown handler. This will typically be handled by other mixins.
   keydown(event) {}
 
 }

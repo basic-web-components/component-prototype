@@ -23,8 +23,7 @@ export default class ClickSelection {
     });
   }
 
-  // Default implementation. This will typically be handled by other aspects
-  // in the collective.
+  // Default implementation. This will typically be handled by other mixins.
   // set selectedIndex(index) {}
 
 }

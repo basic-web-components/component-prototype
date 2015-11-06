@@ -9,8 +9,7 @@ import Composable from '../../element-base/extensible/Composable';
 
 export default class KeyboardDirection {
 
-  // Default implementations. These will typically be handled by other aspects
-  // in the collective.
+  // Default implementations. These will typically be handled by other mixins.
   goDown() {}
   goEnd() {}
   goLeft() {}

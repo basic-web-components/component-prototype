@@ -22,8 +22,7 @@
 
 export default class ItemSelection {
 
-  // Default implementations. These will typically be handled by other aspects
-  // in the collective.
+  // Default implementation. This will typically be handled by other mixins.
   applySelection(item, selected) {}
 
   get canSelectNext() {

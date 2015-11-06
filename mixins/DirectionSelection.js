@@ -31,14 +31,10 @@ export default class DirectionSelection {
     return this.selectPrevious();
   }
 
-  // Default implementations. These will typically be handled by other aspects
-  // in the collective.
+  // Default implementations. These will typically be handled by other mixins.
   selectFirst() {}
-
   selectLast() {}
-
   selectNext() {}
-
   selectPrevious() {}
 
 }
