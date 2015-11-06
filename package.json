@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "repository": "https://github.com/basic-web-components/component-prototype",
   "authors": [
-    "Jan Miksovsky <jan@component.kitchen>"
+    "Jan Miksovsky <jan@component.kitchen>",
+    "Rob Bearman <rob@component.kitchen>"
   ],
   "license": "MIT",
   "dependencies": {
