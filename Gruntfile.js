@@ -14,6 +14,9 @@ module.exports = function (grunt) {
           'dist/basic-web-components.js': 'components/**/*.js'
         },
         options: {
+          browserifyOptions: {
+            debug: true // Ask for source maps
+          },
           transform: ['babelify'],
           // Don't ignore transpilation in node_modules
           ignore: false
@@ -24,12 +27,8 @@ module.exports = function (grunt) {
     watch: {
       scripts: {
         files: [
-          // 'demos/*.js',
-          // 'demos/**/*.js',
-          // 'extensible/*.js',
           'components/**/*.js',
           'mixins/*.js'
-          // 'test/*.js'
         ],
         tasks: ['build']
       }
