@@ -5,6 +5,8 @@
  * @element basic-direction-selection
  */
 
+import Composable from '../../element-base/extensible/Composable';
+
 export default class DirectionSelection {
 
   goDown() {
@@ -38,3 +40,9 @@ export default class DirectionSelection {
   selectPrevious() {}
 
 }
+Composable.decorate.call(DirectionSelection.prototype, {
+  selectFirst: Composable.rule(Composable.preferBaseResult),
+  selectLast: Composable.rule(Composable.preferBaseResult),
+  selectNext: Composable.rule(Composable.preferBaseResult),
+  selectPrevious: Composable.rule(Composable.preferBaseResult)
+});

@@ -19,31 +19,30 @@ export default class KeyboardPrefixSelection {
   // }
 
   keydown(event) {
-    let handled = this.superCall(this.KeyboardPrefixSelection, 'keydown', event);
-    if (!handled) {
-      let resetPrefix = true;
+    let handled;
+    let resetPrefix = true;
 
-      switch (event.keyCode) {
-        case 8: // Backspace
-          handleBackspace(this);
-          handled = true;
-          resetPrefix = false;
-          break;
-        case 27: // Escape
-          handled = true;
-          break;
-        default:
-          if (!event.ctrlKey && !event.metaKey && !event.altKey
-            && event.which !== 32 /* Space */) {
-            handlePlainCharacter(this, String.fromCharCode(event.which));
-          }
-          resetPrefix = false;
-      }
-
-      if (resetPrefix) {
-        resetTypedPrefix(this);
-      }
+    switch (event.keyCode) {
+      case 8: // Backspace
+        handleBackspace(this);
+        handled = true;
+        resetPrefix = false;
+        break;
+      case 27: // Escape
+        handled = true;
+        break;
+      default:
+        if (!event.ctrlKey && !event.metaKey && !event.altKey
+          && event.which !== 32 /* Space */) {
+          handlePlainCharacter(this, String.fromCharCode(event.which));
+        }
+        resetPrefix = false;
     }
+
+    if (resetPrefix) {
+      resetTypedPrefix(this);
+    }
+
     return handled;
   }
 
@@ -65,7 +64,7 @@ export default class KeyboardPrefixSelection {
 
 }
 Composable.decorate.call(KeyboardPrefixSelection.prototype, {
-  keydown: Composable.rule(Composable.override)
+  keydown: Composable.rule(Composable.preferMixinResult)
 });
 
 

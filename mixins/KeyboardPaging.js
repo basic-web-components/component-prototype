@@ -22,16 +22,14 @@ import Composable from '../../element-base/extensible/Composable';
 export default class KeyboardPaging {
 
   keydown(event) {
-    let handled = this.superCall(this.KeyboardPaging, 'keydown', event);
-    if (!handled) {
-      switch (event.keyCode) {
-        case 33: // Page Up
-          handled = this.pageUp();
-          break;
-        case 34: // Page Down
-          handled = this.pageDown();
-          break;
-      }
+    let handled;
+    switch (event.keyCode) {
+      case 33: // Page Up
+        handled = this.pageUp();
+        break;
+      case 34: // Page Down
+        handled = this.pageDown();
+        break;
     }
     return handled;
   }
@@ -155,5 +153,5 @@ function scrollOnePage(element, downward) {
   }
 }
 Composable.decorate.call(KeyboardPaging.prototype, {
-  keydown: Composable.rule(Composable.override)
+  keydown: Composable.rule(Composable.preferMixinResult)
 });
