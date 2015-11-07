@@ -3,12 +3,12 @@ module.exports = function (grunt) {
   'use strict';
 
   grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Project configuration.
   grunt.initConfig({
 
     browserify: {
+
       options: {
         browserifyOptions: {
           debug: true // Ask for source maps
@@ -17,26 +17,28 @@ module.exports = function (grunt) {
         ignore: false,
         transform: ['babelify']
       },
-      dist: {
+
+      package: {
         files: {
           'dist/basic-web-components.js': 'components/**/*.js'
         }
-      }
-    },
+      },
 
-    watch: {
-      scripts: {
-        files: [
-          'components/**/*.js',
-          'mixins/*.js'
-        ],
-        tasks: ['build']
+      watch: {
+        files: {
+          'dist/basic-web-components.js': 'components/**/*.js'
+        },
+        options: {
+          keepAlive: true,
+          watch: true
+        }
       }
     }
 
   });
 
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['browserify']);
+  grunt.registerTask('build', ['browserify:package']);
+  grunt.registerTask('watch', ['browserify:watch']);
 
 };
