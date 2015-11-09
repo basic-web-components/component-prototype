@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
   'use strict';
 
@@ -9,36 +9,54 @@ module.exports = function (grunt) {
 
     browserify: {
 
-      options: {
-        browserifyOptions: {
-          debug: true // Ask for source maps
-        },
-        // Don't ignore transpilation in node_modules
-        ignore: false,
-        transform: ['babelify']
-      },
-
-      package: {
-        files: {
-          'dist/basic-web-components.js': 'components/**/*.js'
-        }
-      },
-
-      watch: {
+      ES5: {
         files: {
           'dist/basic-web-components.js': 'components/**/*.js'
         },
         options: {
-          keepAlive: true,
-          watch: true
+          transform: [['babelify', {presets: ['es2015']}]],
+          ignore: false,
+          browserifyOptions: {
+            debug: true
+          }
+        }
+      },
+
+      ES6: {
+        files: {
+          'dist/basic-web-components-es6.js': 'components/**/*.js'
+        },
+        options: {
+          transform: [['babelify', {plugins: ['transform-es2015-modules-commonjs']}]],
+          ignore: false,
+          browserifyOptions: {
+            debug: true
+          }
         }
       }
     }
 
   });
 
-  grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['browserify:package']);
-  grunt.registerTask('watch', ['browserify:watch']);
+  grunt.registerTask('default', function() {
+    grunt.log.writeln('grunt commands this project supports:');
+    grunt.log.writeln('');
+    grunt.log.writeln('  grunt build');
+    grunt.log.writeln('  grunt watch');
+    grunt.log.writeln('  grunt watch-es6');
+  });
+  grunt.registerTask('build', ['browserify:ES5', 'browserify:ES6']);
+  grunt.registerTask('watch', function() {
+    watchHelper(grunt, 'ES5');
+  });
+  grunt.registerTask('watch-es6', function() {
+    watchHelper(grunt, 'ES6');
+  });
 
 };
+
+function watchHelper(grunt, version) {
+  grunt.config.set('browserify.' + version + '.options.watch', true);
+  grunt.config.set('browserify.' + version + '.options.keepAlive', true);
+  grunt.task.run('browserify:' + version);
+}
