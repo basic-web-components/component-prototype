@@ -17,7 +17,7 @@
  * @element basic-keyboard-paging
  */
 
-import Composable from 'element-base/extensible/Composable';
+import Composable from 'Composable/src/Composable';
 
 export default class KeyboardPaging {
 

@@ -590,7 +590,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Composable = require('element-base/extensible/Composable');
+var _Composable = require('Composable/src/Composable');
 
 var _Composable2 = _interopRequireDefault(_Composable);
 
@@ -1364,7 +1364,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Composable = require('element-base/extensible/Composable');
+var _Composable = require('Composable/src/Composable');
 
 var _Composable2 = _interopRequireDefault(_Composable);
 
@@ -1486,7 +1486,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Composable = require('element-base/extensible/Composable');
+var _Composable = require('Composable/src/Composable');
 
 var _Composable2 = _interopRequireDefault(_Composable);
 
@@ -1672,7 +1672,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Composable = require('element-base/extensible/Composable');
+var _Composable = require('Composable/src/Composable');
 
 var _Composable2 = _interopRequireDefault(_Composable);
 
