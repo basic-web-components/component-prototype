@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 
       ES6: {
         files: {
-          'dist/basic-web-components-es6.js': 'components/**/*.js'
+          'dist/basic-web-components.es6.js': 'components/**/*.js'
         },
         options: {
           transform: [['babelify', {plugins: ['transform-es2015-modules-commonjs']}]],
