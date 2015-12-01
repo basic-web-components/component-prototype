@@ -9,6 +9,7 @@
  */
 
 import ElementBase from 'element-base/src/ElementBase';
+import ChildrenContent from '../../mixins/ChildrenContent';
 
 export default class SpreadItems {
 
@@ -17,9 +18,12 @@ export default class SpreadItems {
     this.itemsChanged();
   }
 
+  get items() {
+    return this.content;
+  }
+
   itemsChanged() {
-    // var items = this.items;
-    let items = this.children;
+    let items = this.items;
     let count = items.length;
     this.$.spreadContainer.style.width = (count * 100) + '%';
     let itemWidth = (100 / count) + "%";
@@ -60,6 +64,6 @@ export default class SpreadItems {
 
 }
 
-SpreadItems = ElementBase.compose(SpreadItems);
+SpreadItems = ElementBase.compose(ChildrenContent, SpreadItems);
 
 document.registerElement('basic-spread-items', SpreadItems);

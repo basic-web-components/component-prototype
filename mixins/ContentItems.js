@@ -31,7 +31,6 @@ export default class ContentItems {
 
   // Default implementation does nothing. This will typically be handled by
   // other aspects in the collective.
-  // itemAdded: Basic.Collective.defaultMethod,
   itemAdded(item) {}
 
   itemsChanged() {

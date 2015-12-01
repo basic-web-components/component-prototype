@@ -11,15 +11,17 @@
  */
 
 import ElementBase from 'element-base/src/ElementBase';
+import SpreadItems from '../SpreadItems/SpreadItems';
 
 export default class SlidingViewport {
 
-  createdCallback() {
+  attachedCallback() {
     this.position = 0;
+    this.render();
   }
 
   get items() {
-    return this.children;
+    return this.$.slidingContainer.items;
   }
 
   render() {
@@ -31,8 +33,8 @@ export default class SlidingViewport {
    * moved (dragged/scrolled/etc.).
    *
    * This is expressed as a fraction of the element's width. If the value is
-   * positive, the surface is being moved to the left; if negative, the surface is
-   * being moved to the right. E.g., a value of 0.5 indicates the surface has
+   * positive, the surface is being moved to the left; if negative, the surface
+   * is being moved to the right. E.g., a value of 0.5 indicates the surface has
    * moved half the element's width to the left.
    *
    * @property position
@@ -47,7 +49,23 @@ export default class SlidingViewport {
     this.render();
   }
 
+  get selectedIndex() {
+    let items = this.items;
+    let index = items && items.indexOf(this.selectedItem);
+    return index || -1;
+  }
+  set selectedIndex(index) {
+    let item = this.items && this.items[index];
+    if (item) {
+      this.selectedItem = item;
+    }
+  }
+
+  get selectedItem() {
+    return this._selectedItem;
+  }
   set selectedItem(item) {
+    this._selectedItem = item;
     this.render();
   }
 
@@ -81,9 +99,9 @@ export default class SlidingViewport {
       }
       </style>
 
-      <div id="slidingContainer">
+      <basic-spread-items id="slidingContainer">
         <content></content>
-      </div>
+      </basic-spread-items>
     `;
   }
 

@@ -88,13 +88,44 @@ export default class ChildrenContent {
     //   }
     // }
     // return this._content;
-    return this.children;
+    return expandContentElements(this.children);
   }
 
 };
 
 
-// ready() {
-//   // HACK: Ensure targetChanged (also) happens after ready.
-//   this.targetChanged(this.target);
-// }
+/*
+ * Given a array of nodes, return a new array with any content elements expanded
+ * to the nodes distributed to that content element. This rule is applied
+ * recursively.
+ *
+ * If includeTextNodes is true, text nodes will be included, as in the
+ * standard childNodes property; by default, this skips text nodes, like the
+ * standard children property.
+ */
+function expandContentElements(nodes, includeTextNodes) {
+  let expanded = Array.prototype.map.call(nodes, node => {
+    // We want to see if the node is an instanceof HTMLContentElement, but
+    // that class won't exist if the browser that doesn't support native
+    // Shadow DOM and if the Shadow DOM polyfill hasn't been loaded. Instead,
+    // we do a simplistic check to see if the tag name is "content".
+    if (node.localName && node.localName === "content") {
+      // content element; use its distributed nodes instead.
+      let distributedNodes = node.getDistributedNodes();
+      return distributedNodes ?
+        expandContentElements(distributedNodes, includeTextNodes) :
+        [];
+    } else if (node instanceof HTMLElement) {
+      // Plain element; use as is.
+      return [node];
+    } else if (node instanceof Text && includeTextNodes) {
+      // Text node.
+      return [node];
+    } else {
+      // Comment, processing instruction, etc.; skip.
+      return [];
+    }
+  });
+  let flattened = [].concat(...expanded);
+  return flattened;
+}
