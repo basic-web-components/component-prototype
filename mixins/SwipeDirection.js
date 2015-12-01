@@ -7,5 +7,138 @@
 
 export default class SwipeDirection {
 
-  
+  createdCallback() {
+
+    this.position = 0;
+    // TODO: touch events could be factored out into their own aspect.
+
+    // In all touch events, only handle single touches. We don't want to
+    // inadvertently do work when the user's trying to pinch-zoom for example.
+    // TODO: Even better approach than below would be to ignore touches after
+    // the first if the user has already begun a swipe.
+    this.addEventListener('touchstart', function(event) {
+      if (this._multiTouch) {
+        return;
+      } else if (event.touches.length === 1) {
+        touchStart(this, event);
+      } else {
+        this._multiTouch = true;
+      }
+    }.bind(this));
+    this.addEventListener('touchmove', function(event) {
+      if (!this._multiTouch && event.touches.length === 1) {
+        var handled = touchMove(this, event);
+        if (handled) {
+          event.preventDefault();
+        }
+      }
+    }.bind(this));
+    this.addEventListener('touchend', function(event) {
+      if (event.touches.length === 0) {
+        // All touches removed; gesture is complete.
+        if (!this._multiTouch) {
+          // Single-touch swipe has finished.
+          touchEnd(this, event);
+        }
+        this._multiTouch = false;
+      }
+    }.bind(this));
+  }
+
+  // Default implementations. These will typically be handled by other aspects
+  // in the collective.
+  goLeft() {}
+  goRight() {}
+
+  /**
+   * The distance the user has moved the first touchpoint since the beginning
+   * of a drag, expressed as a fraction of the element's width.
+   *
+   * @property position
+   * @type Number
+   */
+  get position() {
+    return this._position;
+  }
+
+  set position(value) {
+    this._position = value;
+  }
+
+  // Default implementation. This will typically be handled by other aspects
+  // in the collective.
+  showTransition(value) {}
+
+}
+
+
+function touchStart(element, event) {
+  element.showTransition(false);
+  var x = event.changedTouches[0].clientX;
+  var y = event.changedTouches[0].clientY;
+  element._startX = x;
+  element._previousX = x;
+  element._previousY = y;
+  element._deltaX = 0;
+  element._deltaY = 0;
+}
+
+function touchMove(element, event) {
+  var x = event.changedTouches[0].clientX;
+  var y = event.changedTouches[0].clientY;
+  element._deltaX = x - element._previousX;
+  element._deltaY = y - element._previousY;
+  element._previousX = x;
+  element._previousY = y;
+  if (Math.abs(element._deltaX) > Math.abs(element._deltaY)) {
+    // Move was mostly horizontal.
+    trackTo(element, x);
+    // Indicate that the event was handled. It'd be nicer if we didn't have
+    // to do this so that, e.g., a user could be swiping left and right
+    // while simultaneously scrolling up and down. (Native touch apps can do
+    // that.) However, Mobile Safari wants to handle swipe events near the
+    // page and interpret them as navigations. To avoid having a horiziontal
+    // swipe misintepreted as a navigation, we indicate that we've handled
+    // the event, and prevent default behavior.
+    return true;
+  } else {
+    // Move was mostly vertical.
+    return false; // Not handled
+  }
+}
+
+function touchEnd(element, event) {
+  element.showTransition(true);
+  var x = event.changedTouches[0].clientX;
+  if (element._deltaX >= 20) {
+    // Finished going right at high speed.
+    // console.log("flick right " + element._deltaX);
+    element.goLeft();
+  } else if (element._deltaX <= -20) {
+    // Finished going left at high speed.
+    // console.log("flick left " + element._deltaX);
+    element.goRight();
+  } else {
+    // Finished at low speed.
+    // console.log("slow drag " + element._deltaX);
+    trackTo(element, x);
+    var position = element.position;
+    if (position >= 0.5) {
+      element.goRight();
+    } else if (position <= -0.5) {
+      element.goLeft();
+    }
+  }
+  element.position = 0;
+  element._deltaX = null;
+  element._deltaY = null;
+}
+
+function trackTo(element, x) {
+  var width = element.offsetWidth;
+  var dragDistance = element._startX - x;
+  var fraction = width > 0 ?
+    dragDistance / width :
+    0;
+  element.position = fraction;
 }
