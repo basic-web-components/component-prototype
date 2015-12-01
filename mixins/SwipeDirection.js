@@ -27,7 +27,7 @@ export default class SwipeDirection {
     }.bind(this));
     this.addEventListener('touchmove', function(event) {
       if (!this._multiTouch && event.touches.length === 1) {
-        var handled = touchMove(this, event);
+        let handled = touchMove(this, event);
         if (handled) {
           event.preventDefault();
         }
@@ -74,8 +74,8 @@ export default class SwipeDirection {
 
 function touchStart(element, event) {
   element.showTransition(false);
-  var x = event.changedTouches[0].clientX;
-  var y = event.changedTouches[0].clientY;
+  let x = event.changedTouches[0].clientX;
+  let y = event.changedTouches[0].clientY;
   element._startX = x;
   element._previousX = x;
   element._previousY = y;
@@ -84,8 +84,8 @@ function touchStart(element, event) {
 }
 
 function touchMove(element, event) {
-  var x = event.changedTouches[0].clientX;
-  var y = event.changedTouches[0].clientY;
+  let x = event.changedTouches[0].clientX;
+  let y = event.changedTouches[0].clientY;
   element._deltaX = x - element._previousX;
   element._deltaY = y - element._previousY;
   element._previousX = x;
@@ -109,7 +109,7 @@ function touchMove(element, event) {
 
 function touchEnd(element, event) {
   element.showTransition(true);
-  var x = event.changedTouches[0].clientX;
+  let x = event.changedTouches[0].clientX;
   if (element._deltaX >= 20) {
     // Finished going right at high speed.
     // console.log("flick right " + element._deltaX);
@@ -122,7 +122,7 @@ function touchEnd(element, event) {
     // Finished at low speed.
     // console.log("slow drag " + element._deltaX);
     trackTo(element, x);
-    var position = element.position;
+    let position = element.position;
     if (position >= 0.5) {
       element.goRight();
     } else if (position <= -0.5) {
@@ -135,9 +135,9 @@ function touchEnd(element, event) {
 }
 
 function trackTo(element, x) {
-  var width = element.offsetWidth;
-  var dragDistance = element._startX - x;
-  var fraction = width > 0 ?
+  let width = element.offsetWidth;
+  let dragDistance = element._startX - x;
+  let fraction = width > 0 ?
     dragDistance / width :
     0;
   element.position = fraction;
