@@ -1,0 +1,154 @@
+/**
+ * Presents list items in a viewport such that only a single item is visible at a
+ * time. Navigating between items will be represented with a horizontal visual
+ * sliding effect.
+ *
+ * This component currently requires that you explicitly apply a size to it. For a
+ * variant which automatically sizes to its content, see the related component
+ * basic-sliding-viewport-fit.
+ *
+ * @element basic-sliding-viewport
+ */
+
+import ElementBase from 'element-base/src/ElementBase';
+
+export default class SlidingViewport {
+
+  createdCallback() {
+    this.position = 0;
+  }
+
+  get items() {
+    return this.children;
+  }
+
+  render() {
+    requestAnimationFrame(renderSelection.bind(this));
+  }
+
+  /**
+   * The fractional position of the element's moving surface while it is being
+   * moved (dragged/scrolled/etc.).
+   *
+   * This is expressed as a fraction of the element's width. If the value is
+   * positive, the surface is being moved to the left; if negative, the surface is
+   * being moved to the right. E.g., a value of 0.5 indicates the surface has
+   * moved half the element's width to the left.
+   *
+   * @property position
+   * @type Number
+   */
+  get position() {
+    return this._position;
+  }
+
+  set position(position) {
+    this._position = position;
+    this.render();
+  }
+
+  set selectedItem(item) {
+    this.render();
+  }
+
+  showTransition(show) {
+    this.classList.toggle('showTransition', show);
+  }
+
+  get template() {
+    return `
+      <style>
+      :host {
+        display: block;
+        overflow: hidden;
+        position: relative;
+      }
+
+      #slidingContainer {
+        height: 100%;
+        position: absolute;
+        /*
+         Set width for IE/Edge. It's not clear why they need this, and the other
+         browsers don't.
+         */
+        width: 100%;
+        will-change: transform;
+      }
+
+      :host(.showTransition) #slidingContainer {
+        -webkit-transition: -webkit-transform 0.2s ease-out;
+        transition: transform 0.2s ease-out;
+      }
+      </style>
+
+      <div id="slidingContainer">
+        <content></content>
+      </div>
+    `;
+  }
+
+}
+
+
+function renderSelection() {
+
+  var count = this.items && this.items.length;
+  if (!count) {
+    // Null or zero means we don't have items to render yet.
+    return;
+  }
+
+  var index = this.selectedIndex;
+  if (index < 0) {
+    // No selection
+    // return;
+    index = 0;
+  }
+
+  var position = this.position || 0;
+  var dampenedPosition;
+  if (index === 0 && position < 0) {
+    // Apply tension from the left edge.
+    dampenedPosition = -damping(-position);
+  } else if (index === count - 1 && position > 0) {
+    // Apply tension from the right edge.
+    dampenedPosition = damping(position);
+  } else {
+    // No damping required.
+    dampenedPosition = position;
+  }
+  var fractionalIndex = index + dampenedPosition;
+  // Use a percentage so the transform will still work if screen size changes
+  // (e.g., if device orientation changes).
+  var left = -fractionalIndex * 100;
+  // var left = -(fractionalIndex / count) * 100;
+  var transform = 'translateX(' + left + '%)';
+  this.$.slidingContainer.style.webkitTransform = transform;
+  this.$.slidingContainer.style.transform = transform;
+}
+
+
+/*
+ * Calculate damping as a function of the distance past the minimum/maximum
+ * values.
+ *
+ * We want to asymptotically approach an absolute minimum of 1 unit
+ * below/above the actual minimum/maximum. This requires calculating a
+ * hyperbolic function.
+ *
+ * See http://www.wolframalpha.com/input/?i=y+%3D+-1%2F%28x%2B1%29+%2B+1
+ * for the one we use. The only portion of that function we care about is when
+ * x is zero or greater. An important consideration is that the curve be
+ * tangent to the diagonal line x=y at (0, 0). This ensures smooth continuity
+ * with the normal drag behavior, in which the visible sliding is linear with
+ * the distance the touchpoint has been dragged.
+ */
+function damping(x) {
+  var y = (-1 / (x + 1)) + 1;
+  return y;
+}
+
+
+SlidingViewport = ElementBase.compose(SlidingViewport);
+
+document.registerElement('basic-sliding-viewport', SlidingViewport);
