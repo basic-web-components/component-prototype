@@ -10,13 +10,14 @@ export default class SwipeDirection {
   createdCallback() {
 
     this.position = 0;
+    
     // TODO: touch events could be factored out into their own aspect.
 
     // In all touch events, only handle single touches. We don't want to
     // inadvertently do work when the user's trying to pinch-zoom for example.
     // TODO: Even better approach than below would be to ignore touches after
     // the first if the user has already begun a swipe.
-    this.addEventListener('touchstart', function(event) {
+    this.addEventListener('touchstart', event => {
       if (this._multiTouch) {
         return;
       } else if (event.touches.length === 1) {
@@ -24,16 +25,16 @@ export default class SwipeDirection {
       } else {
         this._multiTouch = true;
       }
-    }.bind(this));
-    this.addEventListener('touchmove', function(event) {
+    });
+    this.addEventListener('touchmove', event => {
       if (!this._multiTouch && event.touches.length === 1) {
         let handled = touchMove(this, event);
         if (handled) {
           event.preventDefault();
         }
       }
-    }.bind(this));
-    this.addEventListener('touchend', function(event) {
+    });
+    this.addEventListener('touchend', event => {
       if (event.touches.length === 0) {
         // All touches removed; gesture is complete.
         if (!this._multiTouch) {
@@ -42,7 +43,7 @@ export default class SwipeDirection {
         }
         this._multiTouch = false;
       }
-    }.bind(this));
+    });
   }
 
   // Default implementations. These will typically be handled by other aspects

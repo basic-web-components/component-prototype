@@ -13,6 +13,7 @@ import Keyboard from '../../mixins/Keyboard';
 import KeyboardDirection from '../../mixins/KeyboardDirection';
 import SlidingViewport from '../SlidingViewport/SlidingViewport';
 import SwipeDirection from '../../mixins/SwipeDirection';
+import TrackpadDirection from '../../mixins/TrackpadDirection';
 
 
 export default class Carousel {
@@ -20,6 +21,7 @@ export default class Carousel {
   attachedCallback() {
     // HACK
     this.itemsChanged();
+    this.selectionRequired = true;
   }
 
   get content() {
@@ -85,6 +87,7 @@ Carousel = ElementBase.compose(
   Keyboard,
   KeyboardDirection,
   SwipeDirection,
+  TrackpadDirection,
   Carousel
 );
 
