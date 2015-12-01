@@ -3,10 +3,9 @@
  */
 
 import ElementBase from 'element-base/src/ElementBase';
-// import ChildrenContent from '../../mixins/ChildrenContent';
 import ContentItems from '../../mixins/ContentItems';
 import DirectionSelection from '../../mixins/DirectionSelection';
-// import Generic from '../../mixins/Generic';
+import Generic from '../../mixins/Generic';
 import ItemSelection from '../../mixins/ItemSelection';
 import ItemsAccessible from '../../mixins/ItemsAccessible';
 import Keyboard from '../../mixins/Keyboard';
@@ -78,10 +77,9 @@ export default class Carousel {
 }
 
 Carousel = ElementBase.compose(
-  // ChildrenContent,
   ContentItems,
   DirectionSelection,
-  // Generic,
+  Generic,
   ItemSelection,
   ItemsAccessible,
   Keyboard,
