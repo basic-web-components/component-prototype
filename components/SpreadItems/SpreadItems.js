@@ -47,6 +47,7 @@ export default class SpreadItems {
       }
 
       #spreadContainer ::content > * {
+        object-fit: contain;
         object-fit: var(--basic-item-object-fit, contain);
         touch-action: none;
         height: 100%;

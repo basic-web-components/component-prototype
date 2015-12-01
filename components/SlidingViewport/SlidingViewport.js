@@ -20,6 +20,10 @@ export default class SlidingViewport {
     this.render();
   }
 
+  get content() {
+    return this.$.slidingContainer.content;
+  }
+
   get items() {
     return this.$.slidingContainer.items;
   }
