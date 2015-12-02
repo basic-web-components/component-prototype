@@ -11,18 +11,27 @@
  */
 
 import ElementBase from 'element-base/src/ElementBase';
+import ChildrenContent from '../../mixins/ChildrenContent';
 
 
 export default class ArrowDirection {
 
-  // attachedCallback() {
-  //   // Apply any selection made before assimilation.
-  //   if (this._prematureSelectedIndex
-  //       && 'selectedIndex' in this && this.selectedIndex === -1) {
-  //     this.selectedIndex = this._prematureSelectedIndex;
-  //     this._prematureSelectedIndex = null;
-  //   }
-  // }
+  attachedCallback() {
+    // // Apply any selection made before assimilation.
+    // if (this._prematureSelectedIndex
+    //     && 'selectedIndex' in this && this.selectedIndex === -1) {
+    //   this.selectedIndex = this._prematureSelectedIndex;
+    //   this._prematureSelectedIndex = null;
+    // }
+  }
+
+  contentChanged() {
+    let content = this.content;
+    let target = content && content[0];
+    if (target) {
+      this.target = target;
+    }
+  }
 
   createdCallback() {
     this.$.buttonLeft.addEventListener('click', event => {
@@ -47,16 +56,16 @@ export default class ArrowDirection {
     }
   }
 
-  // Default implementations. These will typically be handled by other aspects
-  // in the collective.
-  goLeft() {}
-  goRight() {}
-
-  set canSelectNext(canSelectNext) {
-    this.$.buttonRight.disabled = !canSelectNext;
+  goLeft() {
+    if (this.target) {
+      this.target.goLeft();
+    }
   }
-  set canSelectPrevious(canSelectPrevious) {
-    this.$.buttonLeft.disabled = !canSelectPrevious;
+
+  goRight() {
+    if (this.target) {
+      this.target.goRight();
+    }
   }
 
   /**
@@ -90,6 +99,27 @@ export default class ArrowDirection {
   // set selectedItem(item) {
   //   this.selectedItem = item;
   // }
+
+  get target() {
+    return this._target;
+  }
+  set target(element) {
+    if (this._itemsChangedListener) {
+      this.removeEventListener('items-changed', this._itemsChangedListener);
+    }
+    if (this._selectedItemChangedListener) {
+      this.removeEventListener('selected-item-changed', this._selectedItemChangedListener);
+    }
+    this._target = element;
+    this._itemsChangedListener = element.addEventListener('items-changed', event => {
+      updateButtonStates(this);
+    });
+    this._selectedItemChangedListener = element.addEventListener('selected-item-changed', event => {
+      updateButtonStates(this);
+    });
+    // Force initial refresh.
+    updateButtonStates(this);
+  }
 
   get template() {
     return `
@@ -167,13 +197,13 @@ export default class ArrowDirection {
       we mark the button as aria-hidden so that assistive devices ignore them.
       -->
       <button id="buttonLeft" class="navigationButton" aria-hidden="true">
-        <img class="icon" src="ic_keyboard_arrow_left_black_24px.svg">
+        <img class="icon" src="../ArrowDirection/ic_keyboard_arrow_left_black_24px.svg">
       </button>
       <div id="arrowNavigationContainer">
         <content></content>
       </div>
       <button id="buttonRight" class="navigationButton" aria-hidden="true">
-        <img class="icon" src="ic_keyboard_arrow_right_black_24px.svg">
+        <img class="icon" src="../ArrowDirection/ic_keyboard_arrow_right_black_24px.svg">
       </button>
     `;
   }
@@ -231,7 +261,21 @@ function showArrows(element) {
   element.classList.add('showArrows');
 }
 
+function updateButtonStates(element) {
+  let target = element.target;
+  let items = target && target.items;
+  if (!items) {
+    return;
+  }
+  let selectedIndex = target.selectedIndex || 0;
+  element.$.buttonRight.disabled = selectedIndex >= items.length - 1;
+  element.$.buttonLeft.disabled = selectedIndex <= 0;
+}
 
-ArrowDirection = ElementBase.compose(ArrowDirection);
+
+ArrowDirection = ElementBase.compose(
+  ChildrenContent,
+  ArrowDirection
+);
 
 document.registerElement('basic-arrow-direction', ArrowDirection);

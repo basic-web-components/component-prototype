@@ -16,8 +16,12 @@ import SpreadItems from '../SpreadItems/SpreadItems';
 export default class SlidingViewport {
 
   attachedCallback() {
-    this.position = 0;
     this.render();
+  }
+
+  createdCallback() {
+    this.classList.add('showTransition');
+    this.position = 0;
   }
 
   get content() {

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>basic-carousel with basic-arrow-direction</title>
+
+  <script src="../../node_modules/webcomponents.js/webcomponents.js"></script>
+  <script src="../../dist/basic-web-components.js"></script>
+  <link rel="stylesheet" href="../demos.css">
+
+  <style>
+  html {
+    height: 100%;
+  }
+
+  body {
+    /*background: black;*/
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  basic-arrow-direction,
+  basic-carousel {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex: 1;
+    flex: 1;
+  }
+  </style>
+
+</head>
+
+<body>
+  <basic-arrow-direction>
+    <basic-carousel aria-label="Nature scenes">
+      <img src="../../resources/images/image1.jpg" alt="Lake">
+      <img src="../../resources/images/image2.jpg" alt="Horses">
+      <img src="../../resources/images/image6.jpg" alt="Wheat">
+      <img src="../../resources/images/image3.jpg" alt="Mountain">
+      <img src="../../resources/images/image7.jpg" alt="Palm tree">
+    </basic-carousel>
+  </basic-arrow-direction>
+</body>
+
+</html>

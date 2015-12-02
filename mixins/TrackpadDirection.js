@@ -180,16 +180,16 @@ function wheel(element, event) {
 // A sufficiently long period of time has passed since the last wheel event.
 // We snap the selection to the closest item, then reset our state.
 function wheelTimedOut(element) {
-  console.log("timeout");
+  // console.log("timeout");
 
   // Snap to the closest item.
   element.showTransition(true);
   var position = element.position;
   if (position >= 0.5) {
-    console.log("snap right");
+    // console.log("snap right");
     element.goRight();
   } else if (position <= -0.5) {
-    console.log("snap left");
+    // console.log("snap left");
     element.goLeft();
   }
 

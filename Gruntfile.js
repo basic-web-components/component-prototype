@@ -43,14 +43,14 @@ module.exports = function(grunt) {
     grunt.log.writeln('grunt commands this project supports:');
     grunt.log.writeln('');
     grunt.log.writeln('  grunt build');
-    grunt.log.writeln('  grunt watch-es5');
     grunt.log.writeln('  grunt watch');
+    grunt.log.writeln('  grunt watch-es6');
   });
   grunt.registerTask('build', ['browserify:ES5', 'browserify:ES6']);
-  grunt.registerTask('watch-es5', function() {
+  grunt.registerTask('watch', function() {
     watchHelper(grunt, 'ES5');
   });
-  grunt.registerTask('watch', function() {
+  grunt.registerTask('watch-es6', function() {
     watchHelper(grunt, 'ES6');
   });
 
