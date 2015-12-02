@@ -51,6 +51,11 @@ export default class ArrowDirection {
     }
   }
 
+  selectedItemChanged() {
+    // HACK: Force an update of the set of possible navigations.
+    this.itemsChanged();
+  }
+
   get template() {
     return `
       <style>

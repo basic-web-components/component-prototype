@@ -39,7 +39,7 @@ export default class TargetSelection {
     //   this._prematureSelectedIndex = index;
     // }
     let target = this.target;
-    if (target) {
+    if (target && target.selectedIndex !== index) {
       target.selectedIndex = index;
     }
   }
@@ -72,8 +72,9 @@ export default class TargetSelection {
       this.itemsChanged();
     });
     this._selectedItemChangedListener = element.addEventListener('selected-item-changed', event => {
-      // this.selectedItemChanged();
-      console.log("TargetSelection: selected-item-changed");
+      // Let the component know the target's selection changed, but without
+      // re-invoking the selectIndex/selectedItem setter.
+      this.selectedItemChanged();
     });
     // Force initial refresh.
     this.itemsChanged();

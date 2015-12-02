@@ -13,7 +13,6 @@ export default class ContentFirstChildTarget {
   }
   set target(element) {
     this._target = element;
-    console.log("ContentFirstChildTarget: target changed");
   }
 
 }
