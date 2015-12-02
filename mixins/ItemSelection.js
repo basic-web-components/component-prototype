@@ -56,6 +56,9 @@ export default class ItemSelection {
         }.bind(this));
       }
     }
+
+    // The change in items may have affected which navigations are possible.
+    updatePossibleNavigations(this, index);
   }
 
   /**

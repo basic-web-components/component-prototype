@@ -12,25 +12,20 @@
 
 import ElementBase from 'element-base/src/ElementBase';
 import ChildrenContent from '../../mixins/ChildrenContent';
+import ContentFirstChildTarget from '../../mixins/ContentFirstChildTarget';
+import DirectionSelection from '../../mixins/DirectionSelection';
+import ItemSelection from '../../mixins/ItemSelection';
+import TargetSelection from '../../mixins/TargetSelection';
 
 
 export default class ArrowDirection {
 
-  attachedCallback() {
-    // // Apply any selection made before assimilation.
-    // if (this._prematureSelectedIndex
-    //     && 'selectedIndex' in this && this.selectedIndex === -1) {
-    //   this.selectedIndex = this._prematureSelectedIndex;
-    //   this._prematureSelectedIndex = null;
-    // }
+  set canSelectNext(canSelectNext) {
+    this.$.buttonRight.disabled = !canSelectNext;
   }
 
-  contentChanged() {
-    let content = this.content;
-    let target = content && content[0];
-    if (target) {
-      this.target = target;
-    }
+  set canSelectPrevious(canSelectPrevious) {
+    this.$.buttonLeft.disabled = !canSelectPrevious;
   }
 
   createdCallback() {
@@ -54,71 +49,6 @@ export default class ArrowDirection {
         showArrows(this);
       }
     }
-  }
-
-  goLeft() {
-    if (this.target) {
-      this.target.goLeft();
-    }
-  }
-
-  goRight() {
-    if (this.target) {
-      this.target.goRight();
-    }
-  }
-
-  /**
-   * The index of the item which is currently selected, or -1 if there is no
-   * selection.
-   *
-   * @property selectedIndex
-   * @type Number
-   */
-  // get selectedIndex() {
-  //   return this.selectedIndex;
-  // }
-  // set selectedIndex(index) {
-  //   if ('selectedIndex' in this {
-  //     this.selectedIndex = index;
-  //   } else {
-  //     // Selection is being made before the collective supports it.
-  //     this._prematureSelectedIndex = index;
-  //   }
-  // }
-
-  /**
-   * The currently selected item, or null if there is no selection.
-   *
-   * @property selectedItem
-   * @type Object
-   */
-  // get selectedItem() {
-  //   return this.selectedItem;
-  // }
-  // set selectedItem(item) {
-  //   this.selectedItem = item;
-  // }
-
-  get target() {
-    return this._target;
-  }
-  set target(element) {
-    if (this._itemsChangedListener) {
-      this.removeEventListener('items-changed', this._itemsChangedListener);
-    }
-    if (this._selectedItemChangedListener) {
-      this.removeEventListener('selected-item-changed', this._selectedItemChangedListener);
-    }
-    this._target = element;
-    this._itemsChangedListener = element.addEventListener('items-changed', event => {
-      updateButtonStates(this);
-    });
-    this._selectedItemChangedListener = element.addEventListener('selected-item-changed', event => {
-      updateButtonStates(this);
-    });
-    // Force initial refresh.
-    updateButtonStates(this);
   }
 
   get template() {
@@ -261,20 +191,13 @@ function showArrows(element) {
   element.classList.add('showArrows');
 }
 
-function updateButtonStates(element) {
-  let target = element.target;
-  let items = target && target.items;
-  if (!items) {
-    return;
-  }
-  let selectedIndex = target.selectedIndex || 0;
-  element.$.buttonRight.disabled = selectedIndex >= items.length - 1;
-  element.$.buttonLeft.disabled = selectedIndex <= 0;
-}
-
 
 ArrowDirection = ElementBase.compose(
   ChildrenContent,
+  ContentFirstChildTarget,
+  DirectionSelection,
+  ItemSelection,
+  TargetSelection,
   ArrowDirection
 );
 
