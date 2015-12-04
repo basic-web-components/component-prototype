@@ -59,16 +59,51 @@ export default class Keyboard {
 
   createdCallback() {
     this.addEventListener('keydown', event => {
-      let handled = this.keydown(event);
+
+      if (this.tabIndex < 0) {
+        // Someone else is managing the keyboard event for us.
+        return;
+      }
+
+      // Give target first shot at the event.
+      let handled = this.target && this.target.keydown(event);
+
+      // If target doesn't exist, or it didn't handle the event, try ourselves.
+      handled = handled || this.keydown(event);
+
       if (handled) {
         event.preventDefault();
         event.stopPropagation();
       }
+
     });
     this.setAttribute('tabIndex', 0);
   }
 
   // Default keydown handler. This will typically be handled by other mixins.
   keydown(event) {}
+
+  /*
+   * If this component has a target element that is currently handling the
+   * keyboard using this same mixin, then take over handling of the keyboard on
+   * behalf of that target element.
+   */
+  set target(element) {
+
+    if (this._keyboardTarget) {
+      // TODO: Restore previous state of target.
+    }
+
+    if (this.tabIndex < 0) {
+      this.tabIndex = element.tabIndex >= 0 ?
+        element.tabIndex :
+        0;
+    }
+
+    // Since we're handling keyboard now, take target out of tab order.
+    element.removeAttribute('tabIndex');
+
+    this._keyboardTarget = element;
+  }
 
 }

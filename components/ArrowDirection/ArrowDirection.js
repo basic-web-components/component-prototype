@@ -14,6 +14,7 @@ import ElementBase from 'element-base/src/ElementBase';
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ContentFirstChildTarget from '../../mixins/ContentFirstChildTarget';
 import DirectionSelection from '../../mixins/DirectionSelection';
+import Keyboard from '../../mixins/Keyboard';
 import ItemSelection from '../../mixins/ItemSelection';
 import TargetSelection from '../../mixins/TargetSelection';
 
@@ -37,6 +38,8 @@ export default class ArrowDirection {
       this.goRight();
       event.stopPropagation();
     });
+    assumeButtonFocus(this, this.$.buttonLeft);
+    assumeButtonFocus(this, this.$.buttonRight);
 
     if (!this.classList.contains('showArrows')) {
       // Determine whether we should show arrow buttons or not.
@@ -84,6 +87,9 @@ export default class ArrowDirection {
         z-index: 1;
       }
 
+      .navigationButton:focus {
+        border-color: red;
+      }
       .navigationButton:hover:not(:disabled) {
         background: rgba( 0, 0, 0, 0.5 );
         fill: rgba( 0, 0, 0, 0.7 );
@@ -131,13 +137,13 @@ export default class ArrowDirection {
       be redundant (that is, there should be other ways of navigating the list),
       we mark the button as aria-hidden so that assistive devices ignore them.
       -->
-      <button id="buttonLeft" class="navigationButton" aria-hidden="true">
+      <button id="buttonLeft" class="navigationButton" tabindex="-1" aria-hidden="true">
         <img class="icon" src="../ArrowDirection/ic_keyboard_arrow_left_black_24px.svg">
       </button>
       <div id="arrowNavigationContainer">
         <content></content>
       </div>
-      <button id="buttonRight" class="navigationButton" aria-hidden="true">
+      <button id="buttonRight" class="navigationButton" tabindex="-1" aria-hidden="true">
         <img class="icon" src="../ArrowDirection/ic_keyboard_arrow_right_black_24px.svg">
       </button>
     `;
@@ -146,10 +152,26 @@ export default class ArrowDirection {
 }
 
 
+/*
+ * By default, a button will always take focus on mousedown. For this component,
+ * we want to override that behavior, such that a mousedown on a button keeps
+ * the focus on the outer component.
+ */
+function assumeButtonFocus(element, button) {
+  button.addEventListener('mousedown', event => {
+    // Given the outer element focus if it doesn't already have it.
+    element.focus();
+    // Prevent the default focus-on-mousedown behavior.
+    event.preventDefault();
+  });
+}
+
+
 function deviceSupportsTouch() {
   return 'ontouchstart' in window ||
       (window.DocumentTouch && document instanceof DocumentTouch);
 }
+
 
 // We try to detect the presence of a mouse by listening for mousemove events
 // which are *not* the result of a mousedown. On a touch device, a tap on the
@@ -181,6 +203,7 @@ function listenForMouse(element) {
   window.addEventListener('mousemove', element._mousemoveListener);
 }
 
+
 function mouseDetected(element) {
   // console.log("mouse detected");
   showArrows(element);
@@ -192,6 +215,7 @@ function mouseDetected(element) {
   element._mousemoveListener = null;
 }
 
+
 function showArrows(element) {
   element.classList.add('showArrows');
 }
@@ -201,6 +225,7 @@ ArrowDirection = ElementBase.compose(
   ChildrenContent,
   ContentFirstChildTarget,
   DirectionSelection,
+  Keyboard,
   ItemSelection,
   TargetSelection,
   ArrowDirection
