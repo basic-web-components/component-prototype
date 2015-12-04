@@ -1,4 +1,4 @@
-import ElementBase from 'element-base/src/ElementBase';
+import ElementBase from 'core-component-mixins/src/ElementBase';
 import SwipeDirection from '../mixins/SwipeDirection';
 
 export default class SwipeDirectionTest extends ElementBase.compose(SwipeDirection) {

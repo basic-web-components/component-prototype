@@ -10,7 +10,7 @@
  * @element basic-arrow-direction
  */
 
-import ElementBase from 'element-base/src/ElementBase';
+import ElementBase from 'core-component-mixins/src/ElementBase';
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ContentFirstChildTarget from '../../mixins/ContentFirstChildTarget';
 import DirectionSelection from '../../mixins/DirectionSelection';

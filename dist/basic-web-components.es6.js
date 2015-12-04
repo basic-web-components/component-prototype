@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ElementBase = require('element-base/src/ElementBase');
+var _ElementBase = require('core-component-mixins/src/ElementBase');
 
 var _ElementBase2 = _interopRequireDefault(_ElementBase);
 
@@ -120,14 +120,14 @@ _ItemSelection2.default, _ItemsAccessible2.default, _Keyboard2.default, _Keyboar
 
 document.registerElement('basic-carousel', Carousel);
 
-},{"../../mixins/ContentItems":7,"../../mixins/DirectionSelection":8,"../../mixins/ItemSelection":10,"../../mixins/ItemsAccessible":11,"../../mixins/Keyboard":12,"../../mixins/KeyboardDirection":13,"../../mixins/SwipeDirection":18,"../SlidingViewport/SlidingViewport":3,"element-base/src/ElementBase":24}],2:[function(require,module,exports){
+},{"../../mixins/ContentItems":7,"../../mixins/DirectionSelection":8,"../../mixins/ItemSelection":10,"../../mixins/ItemsAccessible":11,"../../mixins/Keyboard":12,"../../mixins/KeyboardDirection":13,"../../mixins/SwipeDirection":18,"../SlidingViewport/SlidingViewport":3,"core-component-mixins/src/ElementBase":24}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ElementBase = require('element-base/src/ElementBase');
+var _ElementBase = require('core-component-mixins/src/ElementBase');
 
 var _ElementBase2 = _interopRequireDefault(_ElementBase);
 
@@ -251,14 +251,14 @@ class ListBox extends _ElementBase2.default.compose(_ChildrenContent2.default, _
 exports.default = ListBox;
 document.registerElement('basic-list-box', ListBox);
 
-},{"../../mixins/ChildrenContent":5,"../../mixins/ClickSelection":6,"../../mixins/ContentItems":7,"../../mixins/DirectionSelection":8,"../../mixins/Generic":9,"../../mixins/ItemSelection":10,"../../mixins/ItemsAccessible":11,"../../mixins/Keyboard":12,"../../mixins/KeyboardDirection":13,"../../mixins/KeyboardPaging":14,"../../mixins/KeyboardPrefixSelection":15,"../../mixins/SelectionHighlight":16,"../../mixins/SelectionScroll":17,"element-base/src/ElementBase":24}],3:[function(require,module,exports){
+},{"../../mixins/ChildrenContent":5,"../../mixins/ClickSelection":6,"../../mixins/ContentItems":7,"../../mixins/DirectionSelection":8,"../../mixins/Generic":9,"../../mixins/ItemSelection":10,"../../mixins/ItemsAccessible":11,"../../mixins/Keyboard":12,"../../mixins/KeyboardDirection":13,"../../mixins/KeyboardPaging":14,"../../mixins/KeyboardPrefixSelection":15,"../../mixins/SelectionHighlight":16,"../../mixins/SelectionScroll":17,"core-component-mixins/src/ElementBase":24}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ElementBase = require('element-base/src/ElementBase');
+var _ElementBase = require('core-component-mixins/src/ElementBase');
 
 var _ElementBase2 = _interopRequireDefault(_ElementBase);
 
@@ -442,14 +442,14 @@ exports.default = SlidingViewport = _ElementBase2.default.compose(SlidingViewpor
 
 document.registerElement('basic-sliding-viewport', SlidingViewport);
 
-},{"../SpreadItems/SpreadItems":4,"element-base/src/ElementBase":24}],4:[function(require,module,exports){
+},{"../SpreadItems/SpreadItems":4,"core-component-mixins/src/ElementBase":24}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ElementBase = require('element-base/src/ElementBase');
+var _ElementBase = require('core-component-mixins/src/ElementBase');
 
 var _ElementBase2 = _interopRequireDefault(_ElementBase);
 
@@ -529,7 +529,7 @@ exports.default = SpreadItems = _ElementBase2.default.compose(_ChildrenContent2.
 
 document.registerElement('basic-spread-items', SpreadItems);
 
-},{"../../mixins/ChildrenContent":5,"element-base/src/ElementBase":24}],5:[function(require,module,exports){
+},{"../../mixins/ChildrenContent":5,"core-component-mixins/src/ElementBase":24}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2854,7 +2854,7 @@ exports.default = ElementBase = ElementBase.compose(_TemplateStamping2.default, 
 _AutomaticNodeFinding2.default, // before marshalling, so marshalled properties can use it
 _AttributeMarshalling2.default);
 
-document.registerElement('element-base', ElementBase);
+document.registerElement('core-component-mixins', ElementBase);
 
 },{"./AttributeMarshalling":21,"./AutomaticNodeFinding":22,"./ComposableElement":23,"./TemplateStamping":25}],25:[function(require,module,exports){
 'use strict';

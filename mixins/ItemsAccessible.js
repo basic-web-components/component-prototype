@@ -55,8 +55,7 @@ export default class ItemsAccessible {
   // }
 
   createdCallback() {
-    let outermost = this.outermostAttached;
-    outermost.setAttribute('role', 'listbox');
+    this.setAttribute('role', 'listbox');
 
     // Determine a base item ID based on this component's host's own ID. This
     // will be combined with a unique integer to assign IDs to items that don't
@@ -70,7 +69,7 @@ export default class ItemsAccessible {
     // We may need to dynamically update the item IDs whenever the collection
     // changes, although that requires keeping track of whether we've changed
     // an item's ID or whether it's always had that ID.
-    var elementId = outermost.getAttribute( "id" );
+    var elementId = this.getAttribute( "id" );
     this.itemBaseId = elementId ?
         "_" + elementId + "Option" :
         "_option";
@@ -89,7 +88,7 @@ export default class ItemsAccessible {
   set selectedItem(item) {
     // Catch the case where the selection is removed.
     if (item == null) {
-      this.outermostAttached.removeAttribute('aria-activedescendant');
+      this.removeAttribute('aria-activedescendant');
     }
   }
 

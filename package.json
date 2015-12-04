@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "Composable": "ComponentKitchen/Composable#master",
-    "element-base": "ComponentKitchen/element-base#master",
+    "core-component-mixins": "ComponentKitchen/core-component-mixins#master",
     "webcomponents.js": "^0.7.2"
   },
   "devDependencies": {

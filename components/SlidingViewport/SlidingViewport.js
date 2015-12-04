@@ -10,7 +10,7 @@
  * @element basic-sliding-viewport
  */
 
-import ElementBase from 'element-base/src/ElementBase';
+import ElementBase from 'core-component-mixins/src/ElementBase';
 import SpreadItems from '../SpreadItems/SpreadItems';
 
 export default class SlidingViewport {

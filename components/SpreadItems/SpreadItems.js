@@ -8,7 +8,7 @@
  * @element basic-spread-items
  */
 
-import ElementBase from 'element-base/src/ElementBase';
+import ElementBase from 'core-component-mixins/src/ElementBase';
 import ChildrenContent from '../../mixins/ChildrenContent';
 
 export default class SpreadItems {

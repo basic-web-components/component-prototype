@@ -2,7 +2,7 @@
  * basic-list-box
  */
 
-import ElementBase from 'element-base/src/ElementBase';
+import ElementBase from 'core-component-mixins/src/ElementBase';
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ClickSelection from '../../mixins/ClickSelection';
 import ContentItems from '../../mixins/ContentItems';

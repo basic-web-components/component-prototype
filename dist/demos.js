@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ElementBase = require('element-base/src/ElementBase');
+var _ElementBase = require('core-component-mixins/src/ElementBase');
 
 var _ElementBase2 = _interopRequireDefault(_ElementBase);
 
@@ -45,7 +45,7 @@ class SwipeDirectionTest extends _ElementBase2.default.compose(_SwipeDirection2.
 exports.default = SwipeDirectionTest;
 document.registerElement('swipe-direction-test', SwipeDirectionTest);
 
-},{"../mixins/SwipeDirection":2,"element-base/src/ElementBase":8}],2:[function(require,module,exports){
+},{"../mixins/SwipeDirection":2,"core-component-mixins/src/ElementBase":8}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1023,7 +1023,7 @@ exports.default = ElementBase = ElementBase.compose(_TemplateStamping2.default, 
 _AutomaticNodeFinding2.default, // before marshalling, so marshalled properties can use it
 _AttributeMarshalling2.default);
 
-document.registerElement('element-base', ElementBase);
+document.registerElement('core-component-mixins', ElementBase);
 
 },{"./AttributeMarshalling":5,"./AutomaticNodeFinding":6,"./ComposableElement":7,"./TemplateStamping":9}],9:[function(require,module,exports){
 'use strict';
