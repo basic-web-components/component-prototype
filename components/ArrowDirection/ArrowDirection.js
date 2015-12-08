@@ -151,7 +151,7 @@ export default class ArrowDirection {
       be redundant (that is, there should be other ways of navigating the list),
       we mark the button as aria-hidden so that assistive devices ignore them.
       -->
-      <button id="buttonLeft" class="navigationButton" tabindex="-1" aria-hidden="true">
+      <button id="buttonLeft" class="navigationButton" disabled tabindex="-1" aria-hidden="true">
         <svg class="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
           <g id="chevron-left">
             <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
@@ -161,7 +161,7 @@ export default class ArrowDirection {
       <div id="arrowNavigationContainer">
         <content></content>
       </div>
-      <button id="buttonRight" class="navigationButton" tabindex="-1" aria-hidden="true">
+      <button id="buttonRight" class="navigationButton" disabled tabindex="-1" aria-hidden="true">
         <svg class="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
           <g id="chevron-right">
             <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>

@@ -24,24 +24,10 @@ export default class Keyboard {
         startListeningToKeydown(this);
       }
     } else {
-      stopListeningToKeydown(this);
-    }
-  }
-
-  /*
-   * If this component has a target element that is currently handling the
-   * keyboard using this same mixin, then take over handling of the keyboard on
-   * behalf of that target element.
-   */
-  set target(element) {
-
-    // TODO: Restore previous state of previous target.
-
-    if (this.tabIndex < 0) {
-      this.tabIndex = element.tabIndex > 0 ?
-        element.tabIndex :
-        0;
+      if (listeningToKeydown(this)) {
+        stopListeningToKeydown(this);
       }
+    }
   }
 
 }
@@ -76,11 +62,14 @@ function listeningToKeydown(element) {
 function startListeningToKeydown(element) {
   element._keydownListener = keydown.bind(element);
   element.addEventListener('keydown', element._keydownListener);
-  // element.setAttribute('tabIndex', 0);
+  if (element.tabIndex < 0) {
+    element.setAttribute('tabIndex', 0);
+  }
 }
 
 
 function stopListeningToKeydown(element) {
+  element.log("stopListeningToKeydown");
   element.removeEventListener('keydown', element._keydownListener);
   element._keydownListener = null;
   element.removeAttribute('tabIndex');
