@@ -62,6 +62,10 @@ export default class ArrowDirection {
     this.itemsChanged();
   }
 
+  /*
+   * The template uses the chevron-left and chevron-right SVG icons from
+   * https://github.com/PolymerElements/iron-icons/blob/master/iron-icons.html.
+   */
   get template() {
     return `
       <style>
@@ -81,7 +85,8 @@ export default class ArrowDirection {
         background: transparent;
         border: 1px solid transparent;
         box-sizing: border-box;
-        color: rgba(0, 0, 0, 0.5);
+        color: rgba(0, 0, 0, 0.7);
+        fill: currentColor;
         margin: 0;
         opacity: 1;
         outline: none; /* REVIEW: Accessibility should be provided by other elements. */
@@ -90,16 +95,16 @@ export default class ArrowDirection {
         z-index: 1;
       }
 
-      .navigationButton:focus {
-        border-color: red;
-      }
       .navigationButton:hover:not(:disabled) {
-        background: rgba( 0, 0, 0, 0.5 );
-        fill: rgba( 0, 0, 0, 0.7 );
+        background: rgba(0, 0, 0, 0.5);
+        color: rgba(0, 0, 0, 0.8);
       }
       .navigationButton:active:not(:disabled) {
-        background: rgba( 0, 0, 0, 0.7 );
-        fill: rgba( 0, 0, 0, 0.9 );
+        background: rgba(0, 0, 0, 0.7);
+        color: rgba(0, 0, 0, 0.9);
+      }
+      .navigationButton:disabled {
+        color: rgba(0, 0, 0, 0.2);
       }
 
       :host(:not(.showArrows)) .navigationButton {
@@ -128,10 +133,16 @@ export default class ArrowDirection {
       :host(.overlay) #buttonRight {
         right: 0;
       }
-
-      .navigationButton:disabled {
+      :host(.overlay) .navigationButton:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.8);
+      }
+      :host(.overlay) .navigationButton:active:not(:disabled) {
+        background: rgba(255, 255, 255, 0.4);
+        color: rgba(255, 255, 255, 0.9);
+      }
+      :host(.overlay) .navigationButton:disabled {
         color: rgba(255, 255, 255, 0.3);
-        fill: rgba( 0, 0, 0, 0.2 );
       }
       </style>
 
@@ -141,13 +152,21 @@ export default class ArrowDirection {
       we mark the button as aria-hidden so that assistive devices ignore them.
       -->
       <button id="buttonLeft" class="navigationButton" tabindex="-1" aria-hidden="true">
-        <img class="icon" src="../ArrowDirection/ic_keyboard_arrow_left_black_24px.svg">
+        <svg class="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+          <g id="chevron-left">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </g>
+        </svg>
       </button>
       <div id="arrowNavigationContainer">
         <content></content>
       </div>
       <button id="buttonRight" class="navigationButton" tabindex="-1" aria-hidden="true">
-        <img class="icon" src="../ArrowDirection/ic_keyboard_arrow_right_black_24px.svg">
+        <svg class="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+          <g id="chevron-right">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          </g>
+        </svg>
       </button>
     `;
   }
