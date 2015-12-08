@@ -15,4 +15,11 @@ export default class ContentFirstChildTarget {
     }
   }
 
+  get target() {
+    return this._target;
+  }
+  set target(element) {
+    this._target = element;
+  }
+
 }

@@ -55,11 +55,7 @@ export default class CollectiveElement {
     this.collective = new Collective(this);
   }
 
-  get target() {
-    return this._target;
-  }
   set target(element) {
-    this._target = element;
     this.collective.assimilate(element);
   }
 

@@ -20,8 +20,9 @@ export default class TargetSelection {
 
   indexOfItem(item) {
     let target = this.target;
-    let index = target && target.indexOfItem(item);
-    return index || -1;
+    return target ?
+      target.indexOfItem(item) :
+      -1;
   }
 
   get items() {
