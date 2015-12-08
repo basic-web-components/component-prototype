@@ -31,6 +31,10 @@ export default class TargetSelection {
     return items || [];
   }
 
+  itemsChanged() {
+    this.dispatchEvent(new CustomEvent('items-changed'));
+  }
+
   /**
    * The index of the item which is currently selected, or -1 if there is no
    * selection.

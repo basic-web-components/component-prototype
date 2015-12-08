@@ -245,33 +245,3 @@ function updatePossibleNavigations(element, index) {
   element.canSelectNext = canSelectNext;
   element.canSelectPrevious = canSelectPrevious;
 }
-
-
-// properties: {
-//
-//   selectedIndex: {
-//     type: Number
-//   }
-//
-//   selectedItem: {
-//     type: Object
-//   }
-//
-//   selectionRequired: {
-//     type: Boolean,
-//     observer: 'selectionRequiredChanged',
-//     value: false
-//   }
-//
-// }
-//
-// get selectedIndex() {
-//   // HACK: Proxied getter/setter properties like this one can't be set via
-//   // attributes. See https://github.com/Polymer/polymer/issues/2454. We
-//   // currently hack around this by only returning a value for this property if
-//   // the element is ready. A negative side effect is that inspecting this
-//   // property before the element is ready will always return undefined.
-//   if (this._readied) {
-//     return this.selectedIndex;
-//   }
-// }

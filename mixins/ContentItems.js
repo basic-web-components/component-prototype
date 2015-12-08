@@ -42,13 +42,7 @@ export default class ContentItems {
       }
     });
 
-    let outermost = this.outermostAttached;
-    if (outermost) {
-      let event = new CustomEvent('items-changed', {
-        bubbles: true
-      });
-      outermost.dispatchEvent(event);
-    }
+    this.dispatchEvent(new CustomEvent('items-changed'));
   }
 
   /**
