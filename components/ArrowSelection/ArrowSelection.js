@@ -19,7 +19,7 @@ import Keyboard from '../../mixins/Keyboard';
 import TargetSelection from '../../mixins/TargetSelection';
 
 
-export default class ArrowDirection {
+export default class ArrowSelection {
 
   set canSelectNext(canSelectNext) {
     this.$.buttonRight.disabled = !canSelectNext;
@@ -243,13 +243,13 @@ function showArrows(element) {
 }
 
 
-ArrowDirection = ElementBase.compose(
+ArrowSelection = ElementBase.compose(
   ChildrenContent,
   ContentFirstChildTarget,
   Keyboard,
   ItemSelection,
   TargetSelection,
-  ArrowDirection
+  ArrowSelection
 );
 
-document.registerElement('basic-arrow-direction', ArrowDirection);
+document.registerElement('basic-arrow-selection', ArrowSelection);
