@@ -9,9 +9,13 @@
  */
 
 import ElementBase from 'core-component-mixins/src/ElementBase';
+
 import ChildrenContent from '../../mixins/ChildrenContent';
+import CollectiveElement from '../../mixins/CollectiveElement';
 import ContentFirstChildTarget from '../../mixins/ContentFirstChildTarget';
+import DirectionSelection from '../../mixins/DirectionSelection';
 import ItemSelection from '../../mixins/ItemSelection';
+import Keyboard from '../../mixins/Keyboard';
 import TargetSelection from '../../mixins/TargetSelection';
 
 
@@ -53,9 +57,15 @@ export default class PageDots {
     //   });
     // }
     createDots(this);
+    this.selectedItemChanged();  // In case position of selected item moved.
   }
 
-  selectedItemChanged() {}
+  selectedItemChanged() {
+    let selectedIndex = this.selectedIndex;
+    this.dots.forEach((dot, i) => {
+      dot.classList.toggle('selected', i === selectedIndex);
+    });
+  }
 
   get template() {
     return `
@@ -146,7 +156,6 @@ function createDot() {
 
 
 function createDots(element) {
-  let selectedIndex = element.selectedIndex;
   let newDotCount = element.items.length;
   let dotContainer = element.$.dots;
   let existingDotCount = dotContainer.children.length;
@@ -161,7 +170,6 @@ function createDots(element) {
     // Create needed dots.
     for (let i = existingDotCount; i < newDotCount; i++) {
       let dot = createDot();
-      dot.classList.toggle('selected', i === selectedIndex);
       dotContainer.appendChild(dot);
     }
   }
@@ -170,7 +178,10 @@ function createDots(element) {
 
 PageDots = ElementBase.compose(
   ChildrenContent,
+  CollectiveElement,
   ContentFirstChildTarget,
+  DirectionSelection,
+  Keyboard,
   ItemSelection,
   TargetSelection,
   PageDots

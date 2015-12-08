@@ -12,6 +12,7 @@
  */
 
 import ElementBase from 'core-component-mixins/src/ElementBase';
+
 import ChildrenContent from '../../mixins/ChildrenContent';
 import CollectiveElement from '../../mixins/CollectiveElement';
 import ContentFirstChildTarget from '../../mixins/ContentFirstChildTarget';
