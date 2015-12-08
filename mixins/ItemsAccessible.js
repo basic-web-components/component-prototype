@@ -4,59 +4,49 @@
  * @class ItemsAccessible
  */
 
-// Used to assign unique IDs to item elements without IDs.
-let idCount = 0;
 
-export default class ItemsAccessible {
+import CollectiveElement from './CollectiveElement';
+
+
+export default class ItemsAccessible extends CollectiveElement {
 
   applySelection(item, selected) {
     item.setAttribute('aria-selected', selected);
     var itemId = item.getAttribute('id');
     if (itemId) {
-      this.outermostAttached.setAttribute('aria-activedescendant', itemId);
+      this.collective.outermostElement.setAttribute('aria-activedescendant', itemId);
     }
   }
 
-  // // Ensure the outermost aspect has role="listbox".
-  // collectiveChanged() {
-  //
-  //   var outermost = this.outermostAttached;
-  //   if (this._previousOutermostAspect === outermost) {
-  //     // Already configured.
-  //     return;
-  //   }
-  //
-  //   if (this._previousOutermostAspect) {
-  //     // Remove ARIA attributes from previous outermost aspect.
-  //     this._previousOutermostAspect.removeAttribute('role');
-  //     this._previousOutermostAspect.removeAttribute('aria-activedescendant');
-  //   }
-  //
-  //   outermost.setAttribute('role', 'listbox');
-  //
-  //   // Determine a base item ID based on this component's host's own ID. This
-  //   // will be combined with a unique integer to assign IDs to items that don't
-  //   // have an explicit ID. If the basic-list-box has ID "foo", then its items
-  //   // will have IDs that look like "_fooOption1". If the list has no ID itself,
-  //   // its items will get IDs that look like "_option1". Item IDs are prefixed
-  //   // with an underscore to differentiate them from manually-assigned IDs, and
-  //   // to minimize the potential for ID conflicts.
-  //
-  //   // TODO: This check now comes too late for components like basic-list-box.
-  //   // We may need to dynamically update the item IDs whenever the collection
-  //   // changes, although that requires keeping track of whether we've changed
-  //   // an item's ID or whether it's always had that ID.
-  //   var elementId = outermost.getAttribute( "id" );
-  //   this.itemBaseId = elementId ?
-  //       "_" + elementId + "Option" :
-  //       "_option";
-  //
-  //   this._previousOutermostAspect = outermost;
-  // }
+  collectiveChanged() {
+
+    // Ensure the outermost aspect has an ARIA role.
+    let outermostElement = this.collective.outermostElement;
+    if (!outermostElement.getAttribute('role')) {
+      // Try to promote an ARIA role from an inner element. If none is found,
+      // use a default role.
+      let role = getCollectiveAriaRole(this.collective) || 'listbox';
+      outermostElement.setAttribute('role', role);
+    }
+    if (!outermostElement.getAttribute('aria-activedescendant')) {
+      // Try to promote an ARIA activedescendant value from an inner element.
+      let descendant = getCollectiveAriaActiveDescendant(this.collective);
+      if (descendant) {
+        outermostElement.setAttribute('aria-activedescendant', descendant);
+      }
+    }
+
+    // Remove the ARIA role and activedescendant values from the collective's
+    // inner elements.
+    this.collective.elements.forEach(element => {
+      if (element !== outermostElement) {
+        element.removeAttribute('aria-activedescendant');
+        element.removeAttribute('role');
+      }
+    });
+  }
 
   createdCallback() {
-    this.setAttribute('role', 'listbox');
-
     // Determine a base item ID based on this component's host's own ID. This
     // will be combined with a unique integer to assign IDs to items that don't
     // have an explicit ID. If the basic-list-box has ID "foo", then its items
@@ -64,11 +54,6 @@ export default class ItemsAccessible {
     // its items will get IDs that look like "_option1". Item IDs are prefixed
     // with an underscore to differentiate them from manually-assigned IDs, and
     // to minimize the potential for ID conflicts.
-
-    // TODO: This check now comes too late for components like basic-list-box.
-    // We may need to dynamically update the item IDs whenever the collection
-    // changes, although that requires keeping track of whether we've changed
-    // an item's ID or whether it's always had that ID.
     var elementId = this.getAttribute( "id" );
     this.itemBaseId = elementId ?
         "_" + elementId + "Option" :
@@ -88,8 +73,26 @@ export default class ItemsAccessible {
   set selectedItem(item) {
     // Catch the case where the selection is removed.
     if (item == null) {
-      this.removeAttribute('aria-activedescendant');
+      this.collective.outermostElement.removeAttribute('aria-activedescendant');
     }
   }
 
+}
+
+
+// Used to assign unique IDs to item elements without IDs.
+let idCount = 0;
+
+
+// Return the first ARIA activedescendant defined by the collective.
+function getCollectiveAriaActiveDescendant(collective) {
+  let descendants = collective.elements.map(element => element.getAttribute('aria-activedescendant'));
+  return descendants.find(descendant => descendant !== null);
+}
+
+
+// Return the first ARIA label defined by the collective.
+function getCollectiveAriaRole(collective) {
+  let roles = collective.elements.map(element => element.getAttribute('role'));
+  return roles.find(role => role !== null);
 }

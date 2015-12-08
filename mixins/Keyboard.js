@@ -7,37 +7,49 @@
  * @class Keyboard
  */
 
-export default class Keyboard {
+import CollectiveElement from './CollectiveElement';
+
+
+export default class Keyboard extends CollectiveElement {
 
   // Default keydown handler. This will typically be handled by other mixins.
   keydown(event) {}
 
   /*
-   * If we're now the outermost element, of the collective, set up to receive
+   * If we're now the outermost element of the collective, set up to receive
    * keyboard events. If we're no longer the outermost element, stop listening.
    */
-  // TODO: Do we need to start/stop listening when attached/detached, or is
-  // that handled automatically?
   collectiveChanged() {
-    if (this.collective.outermostElement === this) {
-      if (!listeningToKeydown(this)) {
-        startListeningToKeydown(this);
-      }
-      if (!this.getAttribute('aria-label')) {
-        // Since we're handling the keyboard, see if we can adopt an ARIA label
-        // from an inner element of the collective.
-        let labels = this.collective.elements.map(element =>
-            element.getAttribute('aria-label'));
-        let label = labels.find(label => label !== null);
-        if (label) {
-          this.setAttribute('aria-label', label);
-        }
-      }
-    } else {
-      if (listeningToKeydown(this)) {
-        stopListeningToKeydown(this);
+
+    let outermostElement = this.collective.outermostElement;
+    if (outermostElement === this && !this.getAttribute('aria-label')) {
+      // Since we're handling the keyboard, see if we can adopt an ARIA label
+      // from an inner element of the collective.
+      let label = getCollectiveAriaLabel(this.collective);
+      if (label) {
+        this.setAttribute('aria-label', label);
       }
     }
+
+    // Make sure only the outermost element in the collective is listening to
+    // the keyboard.
+    this.collective.elements.forEach(element => {
+
+      let shouldListen = (element === outermostElement);
+      let isListening = isListeningToKeydown(element);
+      if (isListening !== shouldListen) {
+        if (shouldListen) {
+          startListeningToKeydown(element);
+        } else {
+          stopListeningToKeydown(element);
+        }
+      }
+      if (!shouldListen && element.getAttribute('aria-label')) {
+        // Remove the ARIA label from inner element's not handling the keyboard.
+        element.removeAttribute('aria-label');
+      }
+
+    });
   }
 
 }
@@ -64,7 +76,14 @@ function keydown(event) {
 }
 
 
-function listeningToKeydown(element) {
+// Return the first ARIA label defined by the collective.
+function getCollectiveAriaLabel(collective) {
+  let labels = collective.elements.map(element => element.getAttribute('aria-label'));
+  return labels.find(label => label !== null);
+}
+
+
+function isListeningToKeydown(element) {
   return element._keydownListener != null;
 }
 
