@@ -163,7 +163,10 @@ export default class ArrowDirection {
 function assumeButtonFocus(element, button) {
   button.addEventListener('mousedown', event => {
     // Given the outer element focus if it doesn't already have it.
-    element.focus();
+    let outermost = element.collective.outermostElement;
+    if (element) {
+      element.focus();
+    }
     // Prevent the default focus-on-mousedown behavior.
     event.preventDefault();
   });

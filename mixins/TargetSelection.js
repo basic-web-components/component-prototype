@@ -27,7 +27,8 @@ export default class TargetSelection {
 
   get items() {
     let target = this.target;
-    return target && target.items;
+    let items = target && target.items;
+    return items || [];
   }
 
   /**
