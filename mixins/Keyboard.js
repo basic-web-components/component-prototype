@@ -9,79 +9,24 @@
 
 export default class Keyboard {
 
+  // Default keydown handler. This will typically be handled by other mixins.
+  keydown(event) {}
+
   /*
-   * When the collective changes, stop listening for keyboard events on
-   * whichever aspect was previously the outermost aspect, and start listening
-   * to keyboard events on whichever aspect is now the new outermost aspect.
+   * If we're now the outermost element, of the collective, set up to receive
+   * keyboard events. If we're no longer the outermost element, stop listening.
    */
   // TODO: Do we need to start/stop listening when attached/detached, or is
   // that handled automatically?
-  // collectiveChanged: function() {
-  //
-  //   let outermost = this.collective.outermostAttached;
-  //   if (outermost === this._previousOutermostAspect) {
-  //     // Should already be listening to events on the outermost aspect.
-  //     return;
-  //   }
-  //
-  //   if (this._previousOutermostAspect) {
-  //     // Clean up the previous aspect that was handling the keyboard.
-  //
-  //     if (this._previousTabIndex) {
-  //       // Restore previous tab index.
-  //       this._previousOutermostAspect.setAttribute('tabIndex', this._previousTabIndex);
-  //     } else {
-  //       // Aspect didn't have a tab index before, so remove it.
-  //       this._previousOutermostAspect.removeAttribute('tabIndex');
-  //     }
-  //
-  //     // Stop listening to events the previous outermost aspect.
-  //     this._previousOutermostAspect.removeEventListener('keydown', this._keydownHandler);
-  //   }
-  //
-  //   if (outermost.getAttribute('tabIndex')) {
-  //     // Leave existing tab index in place.
-  //     this._previousTabIndex = null;
-  //   } else {
-  //     // Make new outermost aspect focusable.
-  //     this._previousTabIndex = outermost.getAttribute('tabIndex');
-  //     outermost.setAttribute('tabIndex', 0);
-  //   }
-  //
-  //   // Start listening to events on the new outermost aspect.
-  //   if (!this._keydownHandler) {
-  //     this._keydownHandler = this._keydown.bind(this);
-  //   }
-  //   outermost.addEventListener('keydown', this._keydownHandler);
-  //
-  //   this._previousOutermostAspect = outermost;
-  // }
-
-  createdCallback() {
-    this.addEventListener('keydown', event => {
-
-      if (this.tabIndex < 0) {
-        // Someone else is managing the keyboard event for us.
-        return;
+  collectiveChanged() {
+    if (this.collective.outermostElement === this) {
+      if (!listeningToKeydown(this)) {
+        startListeningToKeydown(this);
       }
-
-      // Give target first shot at the event.
-      let handled = this.target && this.target.keydown(event);
-
-      // If target doesn't exist, or it didn't handle the event, try ourselves.
-      handled = handled || this.keydown(event);
-
-      if (handled) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-
-    });
-    this.setAttribute('tabIndex', 0);
+    } else {
+      stopListeningToKeydown(this);
+    }
   }
-
-  // Default keydown handler. This will typically be handled by other mixins.
-  keydown(event) {}
 
   /*
    * If this component has a target element that is currently handling the
@@ -90,20 +35,53 @@ export default class Keyboard {
    */
   set target(element) {
 
-    if (this._keyboardTarget) {
-      // TODO: Restore previous state of target.
-    }
+    // TODO: Restore previous state of previous target.
 
     if (this.tabIndex < 0) {
-      this.tabIndex = element.tabIndex >= 0 ?
+      this.tabIndex = element.tabIndex > 0 ?
         element.tabIndex :
         0;
-    }
-
-    // Since we're handling keyboard now, take target out of tab order.
-    element.removeAttribute('tabIndex');
-
-    this._keyboardTarget = element;
+      }
   }
 
+}
+
+
+function keydown(event) {
+
+  // Give collective elements a shot at the event, working from innermost to
+  // outermost (this element).
+  let handled;
+  let elements = this.collective.elements;
+  for (let i = elements.length - 1; i >= 0; i--) {
+    let element = elements[i];
+    handled = element.keydown && element.keydown(event);
+    if (handled) {
+      break;
+    }
+  }
+
+  if (handled) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+}
+
+
+function listeningToKeydown(element) {
+  return element._keydownListener != null;
+}
+
+
+function startListeningToKeydown(element) {
+  element._keydownListener = keydown.bind(element);
+  element.addEventListener('keydown', element._keydownListener);
+  // element.setAttribute('tabIndex', 0);
+}
+
+
+function stopListeningToKeydown(element) {
+  element.removeEventListener('keydown', element._keydownListener);
+  element._keydownListener = null;
+  element.removeAttribute('tabIndex');
 }

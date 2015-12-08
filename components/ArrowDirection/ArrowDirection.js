@@ -12,10 +12,11 @@
 
 import ElementBase from 'core-component-mixins/src/ElementBase';
 import ChildrenContent from '../../mixins/ChildrenContent';
+import CollectiveElement from '../../mixins/CollectiveElement';
 import ContentFirstChildTarget from '../../mixins/ContentFirstChildTarget';
 import DirectionSelection from '../../mixins/DirectionSelection';
-import Keyboard from '../../mixins/Keyboard';
 import ItemSelection from '../../mixins/ItemSelection';
+import Keyboard from '../../mixins/Keyboard';
 import TargetSelection from '../../mixins/TargetSelection';
 
 
@@ -223,6 +224,7 @@ function showArrows(element) {
 
 ArrowDirection = ElementBase.compose(
   ChildrenContent,
+  CollectiveElement,
   ContentFirstChildTarget,
   DirectionSelection,
   Keyboard,

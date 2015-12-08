@@ -3,6 +3,7 @@
  */
 
 import ElementBase from 'core-component-mixins/src/ElementBase';
+import CollectiveElement from '../../mixins/CollectiveElement';
 import ContentItems from '../../mixins/ContentItems';
 import DirectionSelection from '../../mixins/DirectionSelection';
 import Generic from '../../mixins/Generic';
@@ -77,6 +78,7 @@ export default class Carousel {
 }
 
 Carousel = ElementBase.compose(
+  CollectiveElement,
   ContentItems,
   DirectionSelection,
   Generic,
