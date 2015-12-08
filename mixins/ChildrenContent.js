@@ -1,6 +1,5 @@
 /**
- * Lets a component collective takes as its content the children of the
- * innermost aspect.
+ * Mixin that defines a component's content as its children.
  *
  * @class ChildrenContent
  *
@@ -71,27 +70,16 @@ export default class ChildrenContent {
   }
 
   /**
-   * The flattened content of this collective.
-   *
-   * The content is the collective of nodes which are children of the
-   * collective's innermost aspect. If any of those nodes are `<content>`
-   * elements, those are recursively expanded.
+   * The flattened content of this component.
    *
    * @property content
    * @type [Object]
    */
   get content() {
-    // if (!this._content) {
-    //   let innermost = this.collective.innermostElement;
-    //   if (innermost) {
-    //     this._content = Basic.ContentHelpers.flattenChildren(innermost);
-    //   }
-    // }
-    // return this._content;
     return expandContentElements(this.children);
   }
 
-};
+}
 
 
 /*

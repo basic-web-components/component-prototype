@@ -1,5 +1,5 @@
 /**
- * Aspect which maps direction keys (Left, Right, etc.) to direction semantics
+ * Mixin which maps direction keys (Left, Right, etc.) to direction semantics
  * (goLeft, goRight, etc.).
  *
  * @class KeyboardDirection

@@ -1,5 +1,5 @@
 /**
- * Aspect that lets a component collective DOM content as list items.
+ * Mixin that lets a component treat its content as list items.
  *
  * Auxiliary elements which are not normally visible are filtered out. For now,
  * For now, these are: link, script, style, and template.
@@ -29,8 +29,7 @@ export default class ContentItems {
     return this.items.indexOf(item);
   }
 
-  // Default implementation does nothing. This will typically be handled by
-  // other aspects in the collective.
+  // Default implementation does nothing.
   itemAdded(item) {}
 
   itemsChanged() {
@@ -38,9 +37,6 @@ export default class ContentItems {
     // Perform per-item initialization.
     this.items.forEach(item => {
       if (!item._itemInitialized) {
-        // BUG: If an aspect is assimilated after ContentItems, then all the
-        // items are already initialized, and the new aspect won't have an
-        // opportunity to do its own per-item initialization in itemAdded.
         this.itemAdded(item);
         item._itemInitialized = true;
       }

@@ -1,6 +1,6 @@
 /*
- * Aspect which maps a horizontal trackpad swipe gesture (or horizontal mouse wheel
- * action) to direction semantics.
+ * Mixin which maps a horizontal trackpad swipe gestures (or horizontal mouse
+ * wheel actions) to direction semantics.
  *
  * To respond to the trackpad, we can listen to the DOM's "wheel" events. These
  * events are fired as the user drags their fingers across a trackpad.
@@ -35,8 +35,7 @@ export default class TrackpadDirection {
     resetWheelTracking(this);
   }
 
-  // Default implementations. These will typically be handled by other aspects
-  // in the collective.
+  // Default implementations
   goLeft() {}
   get position() {}
   set position(value) {}

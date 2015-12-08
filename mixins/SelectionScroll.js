@@ -1,5 +1,5 @@
 /**
- * Aspect which scrolls a container to keep the selected item visible.
+ * Mixin which scrolls a container to keep the selected item visible.
  *
  * @class SelectionScroll
  */

@@ -1,5 +1,5 @@
 /**
- * Aspect which maps page keys (Page Up, Page Down) into operations that scroll
+ * Mixin which maps page keys (Page Up, Page Down) into operations that scroll
  * the component.
  *
  * The keyboard interaction model generally follows that of Microsoft Windows'

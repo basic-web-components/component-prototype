@@ -1,5 +1,5 @@
 /**
- * Aspect which translates touch gestures (swipe left, swipe right) to direction
+ * Mixin which maps touch gestures (swipe left, swipe right) to direction
  * semantics (goRight, goLeft).
  *
  * @class SwipeDirection
@@ -11,7 +11,7 @@ export default class SwipeDirection {
 
     this.position = 0;
 
-    // TODO: touch events could be factored out into their own aspect.
+    // TODO: Touch events could be factored out into its own mixin.
 
     // In all touch events, only handle single touches. We don't want to
     // inadvertently do work when the user's trying to pinch-zoom for example.
@@ -46,8 +46,7 @@ export default class SwipeDirection {
     });
   }
 
-  // Default implementations. These will typically be handled by other aspects
-  // in the collective.
+  // Default implementations
   goLeft() {}
   goRight() {}
 
@@ -66,8 +65,7 @@ export default class SwipeDirection {
     this._position = value;
   }
 
-  // Default implementation. This will typically be handled by other aspects
-  // in the collective.
+  // Default implementation
   showTransition(value) {}
 
 }

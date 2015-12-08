@@ -1,5 +1,5 @@
 /**
- * Aspect which maps a click to item selection.
+ * Mixin which maps a click (actually, a mousedown) to item selection.
  *
  * @class ClickSelection
  */
@@ -10,7 +10,7 @@ export default class ClickSelection {
     /*
      * REVIEW: Which event should we listen to here?
      *
-     * The standard use for this aspect is in list boxes. List boxes don't
+     * The standard use for this mixin is in list boxes. List boxes don't
      * appear to be consistent with regard to whether they select on mousedown
      * or click/mouseup.
      */

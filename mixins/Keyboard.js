@@ -1,8 +1,8 @@
 /**
- * Aspect which manages the keyboard focus and keydown handling for a component.
+ * Mixin which manages the keyboard focus and keydown handling for a component.
  *
- * This aspect ensures that its only the outermost aspect in a collective that is
- * listening for keyboard events.
+ * TODO: Document collective behavior.
+ * TODO: Provide baseline behavior outside of a collective.
  *
  * @class Keyboard
  */

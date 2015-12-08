@@ -1,5 +1,5 @@
 /**
- * Aspect which manages selection semantics for items in a list.
+ * Mixin which manages selection semantics for items in a list.
  *
  * @class ItemSelection
  */
@@ -50,7 +50,7 @@ export default class ItemSelection {
       this.selectedItem = null;
       if (this.selectionRequired) {
         // Ensure selection, but do this in the next tick to give other
-        // aspects a chance to do their own itemsChanged work.
+        // mixins a chance to do their own itemsChanged work.
         setTimeout(function() {
           ensureSelection(this);
         }.bind(this));

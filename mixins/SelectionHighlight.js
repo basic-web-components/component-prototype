@@ -1,5 +1,5 @@
 /**
- * Aspect which applies standard highlight colors to a selected item.
+ * Mixin which applies standard highlight colors to a selected item.
  *
  * @class SelectionHighlight
  */

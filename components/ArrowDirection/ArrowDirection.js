@@ -1,11 +1,12 @@
 /*
- * Aspect used to add prominent left and right arrow buttons to a wrapped child.
- * Clicking the left/right button maps to the corresponding left/right direction.
+ * Mixin used to add prominent left and right arrow buttons to a wrapped child.
+ * Clicking the left/right button maps to the corresponding left/right
+ * direction.
  *
  * By default, the arrow buttons are shown on devices with a mouse or mouse-like
- * point device; they are not shown on a touch-capable device unless mouse movement
- * is detected. To cause the buttons to always appear, apply the 'showArrows' CSS
- * class.
+ * point device; they are not shown on a touch-capable device unless mouse
+ * movement is detected. To cause the buttons to always appear, apply the
+ * 'showArrows' CSS class.
  *
  * @class basic-arrow-direction
  */
@@ -82,7 +83,7 @@ export default class ArrowDirection {
         color: rgba(0, 0, 0, 0.5);
         margin: 0;
         opacity: 1;
-        outline: none; /* REVIEW: Accessibility should be provided by other aspects. */
+        outline: none; /* REVIEW: Accessibility should be provided by other elements. */
         padding: 0;
         transition: opacity 1s;
         z-index: 1;
