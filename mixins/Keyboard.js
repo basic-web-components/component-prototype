@@ -23,6 +23,16 @@ export default class Keyboard {
       if (!listeningToKeydown(this)) {
         startListeningToKeydown(this);
       }
+      if (!this.getAttribute('aria-label')) {
+        // Since we're handling the keyboard, see if we can adopt an ARIA label
+        // from an inner element of the collective.
+        let labels = this.collective.elements.map(element =>
+            element.getAttribute('aria-label'));
+        let label = labels.find(label => label !== null);
+        if (label) {
+          this.setAttribute('aria-label', label);
+        }
+      }
     } else {
       if (listeningToKeydown(this)) {
         stopListeningToKeydown(this);
@@ -69,7 +79,6 @@ function startListeningToKeydown(element) {
 
 
 function stopListeningToKeydown(element) {
-  element.log("stopListeningToKeydown");
   element.removeEventListener('keydown', element._keydownListener);
   element._keydownListener = null;
   element.removeAttribute('tabIndex');
