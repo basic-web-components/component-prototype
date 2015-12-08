@@ -12,8 +12,6 @@ import ElementBase from 'core-component-mixins/src/ElementBase';
 
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ContentFirstChildTarget from '../../mixins/ContentFirstChildTarget';
-import DirectionSelection from '../../mixins/DirectionSelection';
-import ItemSelection from '../../mixins/ItemSelection';
 import Keyboard from '../../mixins/Keyboard';
 import TargetSelection from '../../mixins/TargetSelection';
 
@@ -48,13 +46,6 @@ export default class PageDots {
   }
 
   itemsChanged() {
-    // Raise a property change notification so binding can update.
-    // if (Object.getNotifier) {
-    //   Object.getNotifier(this).notify({
-    //     type: "update",
-    //     name: "items"
-    //   });
-    // }
     createDots(this);
     this.selectedItemChanged();  // In case position of selected item moved.
   }
@@ -126,22 +117,6 @@ export default class PageDots {
     `;
   }
 
-  // collectiveChanged: function() {
-  //   // Apply any selection made before assimilation.
-  //   if (this._prematureSelectedIndex
-  //       && 'selectedIndex' in this.collective
-  //       && this.collective.selectedIndex === -1) {
-  //     this.collective.selectedIndex = this._prematureSelectedIndex;
-  //     this._prematureSelectedIndex = null;
-  //   }
-  //   // TODO: Move the requirement for a selction to basic-item-selection. This
-  //   // should ideally pick the nearest item to the previously-selected item.
-  //   //   if (this.collective.selectedItem === null && this.collective.items != null && this.collective.selectFirst) {
-  //   //     this.collective.selectFirst();
-  //   //   }
-  // }
-
-
 }
 
 
@@ -178,9 +153,8 @@ function createDots(element) {
 PageDots = ElementBase.compose(
   ChildrenContent,
   ContentFirstChildTarget,
-  DirectionSelection,
   Keyboard,
-  ItemSelection,
+  // ItemSelection,
   TargetSelection,
   PageDots
 );

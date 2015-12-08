@@ -1,7 +1,6 @@
 /*
  * Mixin used to add prominent left and right arrow buttons to a wrapped child.
- * Clicking the left/right button maps to the corresponding left/right
- * direction.
+ * Clicking the left/right buttons selects the previous/next item.
  *
  * By default, the arrow buttons are shown on devices with a mouse or mouse-like
  * point device; they are not shown on a touch-capable device unless mouse
@@ -15,7 +14,6 @@ import ElementBase from 'core-component-mixins/src/ElementBase';
 
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ContentFirstChildTarget from '../../mixins/ContentFirstChildTarget';
-import DirectionSelection from '../../mixins/DirectionSelection';
 import ItemSelection from '../../mixins/ItemSelection';
 import Keyboard from '../../mixins/Keyboard';
 import TargetSelection from '../../mixins/TargetSelection';
@@ -33,11 +31,11 @@ export default class ArrowDirection {
 
   createdCallback() {
     this.$.buttonLeft.addEventListener('click', event => {
-      this.goLeft();
+      this.selectPrevious();
       event.stopPropagation();
     });
     this.$.buttonRight.addEventListener('click', event => {
-      this.goRight();
+      this.selectNext();
       event.stopPropagation();
     });
     assumeButtonFocus(this, this.$.buttonLeft);
@@ -248,7 +246,6 @@ function showArrows(element) {
 ArrowDirection = ElementBase.compose(
   ChildrenContent,
   ContentFirstChildTarget,
-  DirectionSelection,
   Keyboard,
   ItemSelection,
   TargetSelection,
