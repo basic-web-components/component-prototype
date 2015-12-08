@@ -17,7 +17,7 @@
  * complex nature of the problem make it extremely difficult to achieve the same
  * degree of trackpad responsiveness possible with native applications.
  *
- * @element basic-trackpad-direction
+ * @class TrackpadDirection
  */
 
 import Composable from 'Composable/src/Composable';

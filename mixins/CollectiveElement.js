@@ -1,3 +1,7 @@
+/**
+ * @class Collective
+ */
+
 class Collective {
 
   constructor(element) {
@@ -37,6 +41,10 @@ class Collective {
 
 }
 
+
+/**
+ * @class CollectiveElement
+ */
 
 export default class CollectiveElement {
 

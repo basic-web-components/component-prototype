@@ -1,7 +1,7 @@
 /**
  * Aspect which applies standard highlight colors to a selected item.
  *
- * @element basic-selection-highlight
+ * @class SelectionHighlight
  */
 
 export default class SelectionHighlight {

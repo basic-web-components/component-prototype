@@ -1,7 +1,7 @@
 /**
  * Aspect which manages selection semantics for items in a list.
  *
- * @element basic-item-selection
+ * @class ItemSelection
  */
 
 

@@ -4,7 +4,7 @@
  * This aspect ensures that its only the outermost aspect in a collective that is
  * listening for keyboard events.
  *
- * @element basic-keyboard
+ * @class Keyboard
  */
 
 export default class Keyboard {

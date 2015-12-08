@@ -55,7 +55,7 @@ Object.defineProperty(exports, "__esModule", {
  * Aspect which translates touch gestures (swipe left, swipe right) to direction
  * semantics (goRight, goLeft).
  *
- * @element basic-swipe-direction
+ * @class basic-swipe-direction
  */
 
 class SwipeDirection {

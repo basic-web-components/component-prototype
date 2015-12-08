@@ -1,13 +1,18 @@
+/**
+ * @class TargetSelection
+ */
+
+
 export default class TargetSelection {
 
-  attachedCallback() {
-    // // Apply any selection made before assimilation.
-    // if (this._prematureSelectedIndex
-    //     && 'selectedIndex' in this && this.selectedIndex === -1) {
-    //   this.selectedIndex = this._prematureSelectedIndex;
-    //   this._prematureSelectedIndex = null;
-    // }
-  }
+  // attachedCallback() {
+  //   // Apply any selection made before assimilation.
+  //   if (this._prematureSelectedIndex
+  //       && 'selectedIndex' in this && this.selectedIndex === -1) {
+  //     this.selectedIndex = this._prematureSelectedIndex;
+  //     this._prematureSelectedIndex = null;
+  //   }
+  // }
 
   indexOfItem(item) {
     let target = this.target;

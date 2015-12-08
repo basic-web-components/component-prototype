@@ -7,7 +7,7 @@
  * variant which automatically sizes to its content, see the related component
  * basic-sliding-viewport-fit.
  *
- * @element basic-sliding-viewport
+ * @class basic-sliding-viewport
  */
 
 import ElementBase from 'core-component-mixins/src/ElementBase';

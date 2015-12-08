@@ -2,7 +2,7 @@
  * Handle list box-style prefix typing, in which the user can type a string to
  * select the first item that begins with that string.
  *
- * @element basic-keyboard-prefix-selection
+ * @class KeyboardPrefixSelection
  *
  */
 

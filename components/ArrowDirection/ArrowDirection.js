@@ -7,7 +7,7 @@
  * is detected. To cause the buttons to always appear, apply the 'showArrows' CSS
  * class.
  *
- * @element basic-arrow-direction
+ * @class basic-arrow-direction
  */
 
 import ElementBase from 'core-component-mixins/src/ElementBase';

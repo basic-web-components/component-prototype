@@ -2,7 +2,7 @@
  * Lets a component collective takes as its content the children of the
  * innermost aspect.
  *
- * @element basic-children-content
+ * @class ChildrenContent
  *
  */
 

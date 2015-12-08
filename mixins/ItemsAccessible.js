@@ -1,7 +1,7 @@
 /**
  * Aspect which adds ARIA roles for lists and list items.
  *
- * @element basic-accessible-list
+ * @class ItemsAccessible
  */
 
 // Used to assign unique IDs to item elements without IDs.

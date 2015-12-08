@@ -2,7 +2,7 @@
  * Aspect which translates touch gestures (swipe left, swipe right) to direction
  * semantics (goRight, goLeft).
  *
- * @element basic-swipe-direction
+ * @class SwipeDirection
  */
 
 export default class SwipeDirection {
@@ -10,7 +10,7 @@ export default class SwipeDirection {
   createdCallback() {
 
     this.position = 0;
-    
+
     // TODO: touch events could be factored out into their own aspect.
 
     // In all touch events, only handle single touches. We don't want to

@@ -1,7 +1,7 @@
 /**
  * Aspect which scrolls a container to keep the selected item visible.
  *
- * @element basic-selection-scroll
+ * @class SelectionScroll
  */
 
 export default class SelectionScroll {

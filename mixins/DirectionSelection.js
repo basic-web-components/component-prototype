@@ -2,7 +2,7 @@
  * Aspect which maps direction semantics (goLeft, goRight, etc.) to selection
  * semantics (selectPrevious, selectNext, etc.).
  *
- * @element basic-direction-selection
+ * @class DirectionSelection
  */
 
 import Composable from 'Composable/src/Composable';

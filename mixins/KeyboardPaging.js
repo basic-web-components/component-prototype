@@ -14,7 +14,7 @@
  *   move the selection up/down by a page, and (per the above point) make the
  *   selected item visible.
  *
- * @element basic-keyboard-paging
+ * @class KeyboardPaging
  */
 
 import Composable from 'Composable/src/Composable';

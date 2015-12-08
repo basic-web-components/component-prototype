@@ -1,3 +1,8 @@
+/**
+ * @class ContentFirstChildTarget
+ */
+
+
 export default class ContentFirstChildTarget {
 
   contentChanged() {

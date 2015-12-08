@@ -279,7 +279,7 @@ function _interopRequireDefault(obj) {
  * variant which automatically sizes to its content, see the related component
  * basic-sliding-viewport-fit.
  *
- * @element basic-sliding-viewport
+ * @class basic-sliding-viewport
  */
 
 class SlidingViewport {
@@ -468,7 +468,7 @@ function _interopRequireDefault(obj) {
  * variant that automatically sizes to fit the list items, see the related
  * component basic-spread-fit.
  *
- * @element basic-spread-items
+ * @class basic-spread-items
  */
 
 class SpreadItems {
@@ -539,7 +539,7 @@ Object.defineProperty(exports, "__esModule", {
  * Lets a component collective takes as its content the children of the
  * innermost aspect.
  *
- * @element basic-children-content
+ * @class basic-children-content
  *
  */
 
@@ -674,7 +674,7 @@ Object.defineProperty(exports, "__esModule", {
 /**
  * Aspect which maps a click to item selection.
  *
- * @element basic-click-selection
+ * @class basic-click-selection
  */
 
 class ClickSelection {
@@ -725,7 +725,7 @@ Object.defineProperty(exports, "__esModule", {
  * Auxiliary elements which are not normally visible are filtered out. For now,
  * For now, these are: link, script, style, and template.
  *
- * @element basic-content-items
+ * @class basic-content-items
  */
 
 class ContentItems {
@@ -860,7 +860,7 @@ exports.default = DirectionSelection; /**
                                        * Aspect which maps direction semantics (goLeft, goRight, etc.) to selection
                                        * semantics (selectPrevious, selectNext, etc.).
                                        *
-                                       * @element basic-direction-selection
+                                       * @class basic-direction-selection
                                        */
 
 _Composable2.default.decorate.call(DirectionSelection.prototype, {
@@ -953,7 +953,7 @@ Object.defineProperty(exports, "__esModule", {
 /**
  * Aspect which manages selection semantics for items in a list.
  *
- * @element basic-item-selection
+ * @class basic-item-selection
  */
 
 /**
@@ -1232,7 +1232,7 @@ Object.defineProperty(exports, "__esModule", {
 /**
  * Aspect which adds ARIA roles for lists and list items.
  *
- * @element basic-accessible-list
+ * @class basic-accessible-list
  */
 
 // Used to assign unique IDs to item elements without IDs.
@@ -1337,7 +1337,7 @@ Object.defineProperty(exports, "__esModule", {
  * This aspect ensures that its only the outermost aspect in a collective that is
  * listening for keyboard events.
  *
- * @element basic-keyboard
+ * @class basic-keyboard
  */
 
 class Keyboard {
@@ -1468,7 +1468,7 @@ exports.default = KeyboardDirection; /**
                                       * Aspect which maps direction keys (Left, Right, etc.) to direction semantics
                                       * (goLeft, goRight, etc.).
                                       *
-                                      * @element basic-keyboard-direction
+                                      * @class basic-keyboard-direction
                                       */
 
 _Composable2.default.decorate.call(KeyboardDirection.prototype, {
@@ -1555,7 +1555,7 @@ exports.default = KeyboardPaging; // Return the item whose content spans the giv
  *   move the selection up/down by a page, and (per the above point) make the
  *   selected item visible.
  *
- * @element basic-keyboard-paging
+ * @class basic-keyboard-paging
  */
 
 function getIndexOfItemAtY(element, y, downward) {
@@ -1724,7 +1724,7 @@ exports.default = KeyboardPrefixSelection; /**
                                             * Handle list box-style prefix typing, in which the user can type a string to
                                             * select the first item that begins with that string.
                                             *
-                                            * @element basic-keyboard-prefix-selection
+                                            * @class basic-keyboard-prefix-selection
                                             *
                                             */
 
@@ -1806,7 +1806,7 @@ Object.defineProperty(exports, "__esModule", {
 /**
  * Aspect which applies standard highlight colors to a selected item.
  *
- * @element basic-selection-highlight
+ * @class basic-selection-highlight
  */
 
 class SelectionHighlight {
@@ -1828,7 +1828,7 @@ Object.defineProperty(exports, "__esModule", {
 /**
  * Aspect which scrolls a container to keep the selected item visible.
  *
- * @element basic-selection-scroll
+ * @class basic-selection-scroll
  */
 
 class SelectionScroll {
@@ -1886,7 +1886,7 @@ Object.defineProperty(exports, "__esModule", {
  * Aspect which translates touch gestures (swipe left, swipe right) to direction
  * semantics (goRight, goLeft).
  *
- * @element basic-swipe-direction
+ * @class basic-swipe-direction
  */
 
 class SwipeDirection {

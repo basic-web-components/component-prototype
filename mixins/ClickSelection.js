@@ -1,7 +1,7 @@
 /**
  * Aspect which maps a click to item selection.
  *
- * @element basic-click-selection
+ * @class ClickSelection
  */
 
 export default class ClickSelection {

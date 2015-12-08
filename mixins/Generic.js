@@ -1,4 +1,4 @@
-/*
+/**
  * A very simple set of helpers to support the use of generic styling in a
  * component.
  *
@@ -21,6 +21,7 @@
  * This makes it easy to remove all default styling -- set the generic attribute
  * to false, and all default styling will be removed.
  *
+ * @class Generic
  */
 
 export default class Generic {

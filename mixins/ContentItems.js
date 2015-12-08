@@ -4,7 +4,7 @@
  * Auxiliary elements which are not normally visible are filtered out. For now,
  * For now, these are: link, script, style, and template.
  *
- * @element basic-content-items
+ * @class ContentItems
  */
 
 export default class ContentItems {

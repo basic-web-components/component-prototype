@@ -2,7 +2,7 @@
  * Aspect which maps direction keys (Left, Right, etc.) to direction semantics
  * (goLeft, goRight, etc.).
  *
- * @element basic-keyboard-direction
+ * @class KeyboardDirection
  */
 
 import Composable from 'Composable/src/Composable';

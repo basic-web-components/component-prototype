@@ -5,7 +5,7 @@
  * variant that automatically sizes to fit the list items, see the related
  * component basic-spread-fit.
  *
- * @element basic-spread-items
+ * @class basic-spread-items
  */
 
 import ElementBase from 'core-component-mixins/src/ElementBase';
