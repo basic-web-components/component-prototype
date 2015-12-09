@@ -9,7 +9,6 @@
  */
 
 import ElementBase from 'core-component-mixins/src/ElementBase';
-
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ContentFirstChildTarget from '../../mixins/ContentFirstChildTarget';
 import Keyboard from '../../mixins/Keyboard';
@@ -154,7 +153,6 @@ PageDots = ElementBase.compose(
   ChildrenContent,
   ContentFirstChildTarget,
   Keyboard,
-  // ItemSelection,
   TargetSelection,
   PageDots
 );

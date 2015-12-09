@@ -246,8 +246,8 @@ function showArrows(element) {
 ArrowSelection = ElementBase.compose(
   ChildrenContent,
   ContentFirstChildTarget,
-  Keyboard,
   ItemSelection,
+  Keyboard,
   TargetSelection,
   ArrowSelection
 );
