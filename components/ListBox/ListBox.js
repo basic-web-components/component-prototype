@@ -119,7 +119,7 @@ export default class ListBox extends ElementBase.compose(
       }
       </style>
 
-      <div id="itemsContainer">
+      <div id="itemsContainer" role="none">
         <slot></slot>
       </div>
     `;
