@@ -7,7 +7,7 @@
  */
 
 
-export default class TargetSelection {
+export default (base) => class TargetSelection extends base {
 
   // attachedCallback() {
   //   // Apply any selection made before assimilation.
@@ -19,6 +19,7 @@ export default class TargetSelection {
   // }
 
   indexOfItem(item) {
+    if (super.indexOfItem) { super.indexOfItem(item); }
     let target = this.target;
     return target ?
       target.indexOfItem(item) :
@@ -32,6 +33,7 @@ export default class TargetSelection {
   }
 
   itemsChanged() {
+    if (super.itemsChanged) { super.itemsChanged(); }
     this.dispatchEvent(new CustomEvent('items-changed'));
   }
 
@@ -47,6 +49,7 @@ export default class TargetSelection {
     return target && target.selectedIndex;
   }
   set selectedIndex(index) {
+    if ('selectedIndex' in base.prototype) { super.selectedIndex = index; }
     // if ('selectedIndex' in this {
     //   this.selectedIndex = index;
     // } else {
@@ -70,13 +73,22 @@ export default class TargetSelection {
     return target && target.selectedItem;
   }
   set selectedItem(item) {
+    if ('selectedItem' in base.prototype) { super.selectedItem = item; }
     let target = this.target;
     if (target) {
       target.selectedItem = item;
     }
   }
 
+  selectedItemChanged() {
+    if (super.selectedItemChanged) { super.selectedItemChanged(); }
+  }
+
+  get target() {
+    return super.target;
+  }
   set target(element) {
+    if ('target' in base.prototype) { super.target = element; }
     if (this._itemsChangedListener) {
       this.removeEventListener('items-changed', this._itemsChangedListener);
     }
@@ -95,4 +107,4 @@ export default class TargetSelection {
     this.itemsChanged();
   }
 
-}
+};

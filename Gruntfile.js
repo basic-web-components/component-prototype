@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 
       ES5: {
         files: {
-          'dist/basic-web-components.js': 'components/ListBox/*.js'
+          'dist/basic-web-components.js': 'components/**/*.js'
         },
         options: {
           transform: [['babelify', {presets: ['es2015']}]],

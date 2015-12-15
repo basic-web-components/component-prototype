@@ -10,14 +10,24 @@
 
 import ElementBase from 'core-component-mixins/src/ElementBase';
 import ChildrenContent from '../../mixins/ChildrenContent';
+import CollectiveElement from '../../mixins/CollectiveElement';
 import ContentFirstChildTarget from '../../mixins/ContentFirstChildTarget';
 import Keyboard from '../../mixins/Keyboard';
 import TargetSelection from '../../mixins/TargetSelection';
 
 
-export default class PageDots {
+let base = ElementBase.compose(
+  ChildrenContent,
+  CollectiveElement,
+  ContentFirstChildTarget,
+  Keyboard,
+  TargetSelection
+);
+
+export default class PageDots extends base {
 
   applySelection(item, selected) {
+    if (super.applySelection) { super.applySelection(item, selected); }
     let index = this.indexOfItem(item);
     // See if the corresponding dot has already been created.
     // If not, the correct dot will be selected when it gets created.
@@ -31,6 +41,7 @@ export default class PageDots {
   }
 
   createdCallback() {
+    super.createdCallback();
     this.$.dots.addEventListener('click', event => {
       let dot = event.target;
       let dotIndex = this.dots.indexOf(dot);
@@ -45,11 +56,13 @@ export default class PageDots {
   }
 
   itemsChanged() {
+    if (super.itemsChanged) { super.itemsChanged(); }
     createDots(this);
     this.selectedItemChanged();  // In case position of selected item moved.
   }
 
   selectedItemChanged() {
+    if (super.selectedItemChanged) { super.selectedItemChanged(); }
     let selectedIndex = this.selectedIndex;
     this.dots.forEach((dot, i) => {
       dot.classList.toggle('selected', i === selectedIndex);
@@ -147,15 +160,6 @@ function createDots(element) {
     }
   }
 }
-
-
-PageDots = ElementBase.compose(
-  ChildrenContent,
-  ContentFirstChildTarget,
-  Keyboard,
-  TargetSelection,
-  PageDots
-);
 
 
 document.registerElement('basic-page-dots', PageDots);

@@ -13,13 +13,17 @@
 import ElementBase from 'core-component-mixins/src/ElementBase';
 import SpreadItems from '../SpreadItems/SpreadItems';
 
-export default class SlidingViewport {
+let base = ElementBase;
+
+export default class SlidingViewport extends base {
 
   attachedCallback() {
+    if (super.attachedCallback) { super.attachedCallback(); }
     this.render();
   }
 
   createdCallback() {
+    if (super.createdCallback) { super.createdCallback(); }
     this.classList.add('showTransition');
     this.position = 0;
   }
@@ -33,6 +37,7 @@ export default class SlidingViewport {
   }
 
   render() {
+    if (super.render) { super.render(); }
     requestAnimationFrame(renderSelection.bind(this));
   }
 
@@ -51,8 +56,8 @@ export default class SlidingViewport {
   get position() {
     return this._position;
   }
-
   set position(position) {
+    if ('position' in base.prototype) { super.position = position; }
     this._position = position;
     this.render();
   }
@@ -63,6 +68,7 @@ export default class SlidingViewport {
     return index || -1;
   }
   set selectedIndex(index) {
+    if ('selectedIndex' in base.prototype) { super.selectedIndex = index; }
     let item = this.items && this.items[index];
     if (item) {
       this.selectedItem = item;
@@ -73,11 +79,13 @@ export default class SlidingViewport {
     return this._selectedItem;
   }
   set selectedItem(item) {
+    if ('selectedItem' in base.prototype) { super.selectedItem = item; }
     this._selectedItem = item;
     this.render();
   }
 
   showTransition(show) {
+    if (super.showTransition) { super.showTransition(show); }
     this.classList.toggle('showTransition', show);
   }
 
@@ -174,7 +182,5 @@ function damping(x) {
   return y;
 }
 
-
-SlidingViewport = ElementBase.compose(SlidingViewport);
 
 document.registerElement('basic-sliding-viewport', SlidingViewport);

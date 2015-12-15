@@ -93,6 +93,7 @@
 
 import ElementBase from 'core-component-mixins/src/ElementBase';
 import ContentItems from '../../mixins/ContentItems';
+import CollectiveElement from '../../mixins/CollectiveElement';
 import DirectionSelection from '../../mixins/DirectionSelection';
 import Generic from '../../mixins/Generic';
 import ItemSelection from '../../mixins/ItemSelection';
@@ -103,10 +104,23 @@ import SlidingViewport from '../SlidingViewport/SlidingViewport';
 import SwipeDirection from '../../mixins/SwipeDirection';
 import TrackpadDirection from '../../mixins/TrackpadDirection';
 
+let base = ElementBase.compose(
+  CollectiveElement,
+  ContentItems,
+  DirectionSelection,
+  Generic,
+  ItemSelection,
+  ItemsAccessible,
+  Keyboard,
+  KeyboardDirection,
+  SwipeDirection,
+  TrackpadDirection
+);
 
-export default class Carousel {
+export default class Carousel extends base {
 
   attachedCallback() {
+    if (super.attachedCallback) { super.attachedCallback(); }
     // HACK
     this.itemsChanged();
     this.selectionRequired = true;
@@ -116,28 +130,24 @@ export default class Carousel {
     return this.$.viewport.content;
   }
 
-  // Stub for collectives for now
-  get innermostAttached() {
-    return this.$.viewport;
-  }
-
-  // Stub for collectives for now
-  get outermostAttached() {
-    return this;
-  }
-
   get position() {
     return this.$.viewport.position;
   }
   set position(value) {
+    if ('position' in base.prototype) { super.position = value; }
     this.$.viewport.position = value;
   }
 
+  get selectedItem() {
+    return super.selectedItem;
+  }
   set selectedItem(item) {
+    if ('selectedItem' in base.prototype) { super.selectedItem = item; }
     this.$.viewport.selectedItem = item;
   }
 
   showTransition(show) {
+    if (super.showTransition) { super.showTransition(); }
     return this.$.viewport.showTransition(show);
   }
 
@@ -164,19 +174,6 @@ export default class Carousel {
   }
 
 }
-
-Carousel = ElementBase.compose(
-  ContentItems,
-  DirectionSelection,
-  Generic,
-  ItemSelection,
-  ItemsAccessible,
-  Keyboard,
-  KeyboardDirection,
-  SwipeDirection,
-  TrackpadDirection,
-  Carousel
-);
 
 
 document.registerElement('basic-carousel', Carousel);

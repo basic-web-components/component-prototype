@@ -13,23 +13,42 @@
 import ElementBase from 'core-component-mixins/src/ElementBase';
 
 import ChildrenContent from '../../mixins/ChildrenContent';
+import CollectiveElement from '../../mixins/CollectiveElement';
 import ContentFirstChildTarget from '../../mixins/ContentFirstChildTarget';
 import ItemSelection from '../../mixins/ItemSelection';
 import Keyboard from '../../mixins/Keyboard';
 import TargetSelection from '../../mixins/TargetSelection';
 
 
-export default class ArrowSelection {
+let base = ElementBase.compose(
+  ChildrenContent,
+  CollectiveElement,
+  ContentFirstChildTarget,
+  ItemSelection,
+  Keyboard,
+  TargetSelection
+);
 
+export default class ArrowSelection extends base {
+
+  get canSelectNext() {
+    return super.canSelectNext;
+  }
   set canSelectNext(canSelectNext) {
+    if ('canSelectNext' in base.prototype) { super.canSelectNext = canSelectNext; }
     this.$.buttonRight.disabled = !canSelectNext;
   }
 
+  get canSelectPrevious() {
+    return super.canSelectPrevious;
+  }
   set canSelectPrevious(canSelectPrevious) {
+    if ('canSelectPrevious' in base.prototype) { super.canSelectPrevious = canSelectPrevious; }
     this.$.buttonLeft.disabled = !canSelectPrevious;
   }
 
   createdCallback() {
+    super.createdCallback();
     this.$.buttonLeft.addEventListener('click', event => {
       this.selectPrevious();
       event.stopPropagation();
@@ -55,6 +74,7 @@ export default class ArrowSelection {
   }
 
   selectedItemChanged() {
+    if (super.selectedItemChanged) { super.selectedItemChanged(); }
     // HACK: Force an update of the set of possible navigations.
     this.itemsChanged();
   }
@@ -242,14 +262,5 @@ function showArrows(element) {
   element.classList.add('showArrows');
 }
 
-
-ArrowSelection = ElementBase.compose(
-  ChildrenContent,
-  ContentFirstChildTarget,
-  ItemSelection,
-  Keyboard,
-  TargetSelection,
-  ArrowSelection
-);
 
 document.registerElement('basic-arrow-selection', ArrowSelection);

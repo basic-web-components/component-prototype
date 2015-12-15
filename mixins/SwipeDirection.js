@@ -5,9 +5,10 @@
  * @class SwipeDirection
  */
 
-export default class SwipeDirection {
+export default (base) => class SwipeDirection extends base {
 
   createdCallback() {
+    if (super.createdCallback) { super.createdCallback(); }
 
     this.position = 0;
 
@@ -47,8 +48,12 @@ export default class SwipeDirection {
   }
 
   // Default implementations
-  goLeft() {}
-  goRight() {}
+  goLeft() {
+    if (super.goLeft) { return super.goLeft(); }
+  }
+  goRight() {
+    if (super.goRight) { return super.goRight(); }
+  }
 
   /**
    * The distance the user has moved the first touchpoint since the beginning
@@ -60,15 +65,17 @@ export default class SwipeDirection {
   get position() {
     return this._position;
   }
-
-  set position(value) {
-    this._position = value;
+  set position(position) {
+    if ('position' in base.prototype) { super.position = position; }
+    this._position = position;
   }
 
   // Default implementation
-  showTransition(value) {}
+  showTransition(value) {
+    if (super.showTransition) { super.showTransition(value); }
+  }
 
-}
+};
 
 
 function touchStart(element, event) {

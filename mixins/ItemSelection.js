@@ -100,17 +100,13 @@ export default (base) => class ItemSelection extends base {
     }
     this.selectedItem = item;
 
-    let outermost = this.outermostAttached;
-    if (outermost) {
-      let event = new CustomEvent('selected-index-changed', {
-        bubbles: true,
-        detail: {
-          selectedIndex: index,
-          value: index // for Polymer binding
-        }
-      });
-      outermost.dispatchEvent(event);
-    }
+    let event = new CustomEvent('selected-index-changed', {
+      detail: {
+        selectedIndex: index,
+        value: index // for Polymer binding
+      }
+    });
+    this.dispatchEvent(event);
   }
 
   /**
@@ -140,18 +136,14 @@ export default (base) => class ItemSelection extends base {
     let index = this.indexOfItem(item);
     updatePossibleNavigations(this, index);
 
-    let outermost = this.outermostAttached;
-    if (outermost) {
-      let event = new CustomEvent('selected-item-changed', {
-        bubbles: true,
-        detail: {
-          selectedItem: item,
-          previousItem: previousItem,
-          value: item // for Polymer binding
-        }
-      });
-      outermost.dispatchEvent(event);
-    }
+    let event = new CustomEvent('selected-item-changed', {
+      detail: {
+        selectedItem: item,
+        previousItem: previousItem,
+        value: item // for Polymer binding
+      }
+    });
+    this.dispatchEvent(event);
   }
 
   /**

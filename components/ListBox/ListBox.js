@@ -74,14 +74,6 @@ export default class ListBox extends ElementBase.compose(
     SelectionScroll
   ) {
 
-  // Stub for collectives for now
-  get innermostAttached() {
-    return this.$.itemsContainer;
-  }
-  get outermostAttached() {
-    return this;
-  }
-
   get template() {
     return `
       <style>

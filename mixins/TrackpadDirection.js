@@ -20,12 +20,10 @@
  * @class TrackpadDirection
  */
 
-import Composable from 'Composable/src/Composable';
-
-
-export default class TrackpadDirection {
+export default (base) => class TrackpadDirection extends base {
 
   createdCallback() {
+    if (super.createdCallback) { super.createdCallback(); }
     this.addEventListener('wheel', event => {
       var handled = wheel(this, event);
       if (handled) {
@@ -36,16 +34,26 @@ export default class TrackpadDirection {
   }
 
   // Default implementations
-  goLeft() {}
-  get position() {}
-  set position(value) {}
-  goRight() {}
-  showTransition() {}
+  goLeft() {
+    if (super.goLeft) { return super.goLeft(); }
+  }
+  goRight() {
+    if (super.goRight) { return super.goRight(); }
+  }
 
-}
-Composable.decorate.call(TrackpadDirection.prototype, {
-  position: Composable.rule(Composable.rules.preferBaseGetter)
-});
+  get position() {
+    return super.position;
+  }
+  set position(position) {
+    if ('position' in base.prototype) { super.position = position; }
+  }
+
+  // Default implementation
+  showTransition(value) {
+    if (super.showTransition) { super.showTransition(value); }
+  }
+
+};
 
 
 // Time we wait following a navigation before paying attention to wheel
