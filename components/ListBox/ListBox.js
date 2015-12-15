@@ -74,6 +74,10 @@ export default class ListBox extends ElementBase.compose(
     SelectionScroll
   ) {
 
+  get scrollTarget() {
+    return this.$.itemsContainer;
+  }
+
   get template() {
     return `
       <style>

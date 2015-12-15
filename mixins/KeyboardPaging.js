@@ -53,6 +53,19 @@ export default (base) => class KeyboardPaging extends base {
     return scrollOnePage(this, false);
   }
 
+  /**
+   * The element that should be scrolled with the Page Up/Down keys.
+   * Default is the current element.
+   *
+   * @property scrollTarget
+   */
+  get scrollTarget() {
+    // Prefer base result.
+    return 'scrollTarget' in base.prototype ? super.scrollTarget : this;
+  }
+  set scrollTarget(element) {
+    if ('scrollTarget' in base.prototype) { super.scrollTarget = element; }
+  }
 };
 
 
@@ -63,27 +76,24 @@ export default (base) => class KeyboardPaging extends base {
 // found at the given y position; if downward is false, move up the list of
 // items to find the last item at that position.
 function getIndexOfItemAtY(element, y, downward) {
-  var items = element.items;
-  var start = downward ? 0 : items.length - 1;
-  var end = downward ? items.length : 0;
-  var step = downward ? 1 : -1;
-  var innermost = element.innermostAttached;
-  var topOfClientArea = innermost.offsetTop + innermost.clientTop;
-  var i = start;
-  var found = false;
-  while (i !== end) {
-    var item = items[i];
-    var itemTop = item.offsetTop - topOfClientArea;
-    var itemBottom = itemTop + item.offsetHeight;
-    if (itemTop <= y && itemBottom >= y) {
-      // Item spans the indicated y coordinate.
-      found = true;
-      break;
-    }
-    i += step;
-  }
+  let items = element.items;
+  let start = downward ? 0 : items.length - 1;
+  let end = downward ? items.length : 0;
+  let step = downward ? 1 : -1;
+  let scrollTarget = element.scrollTarget;
+  let topOfClientArea = scrollTarget.offsetTop + scrollTarget.clientTop;
 
-  if (!found) {
+  // Find the item spanning the indicated y coordinate.
+  let itemIndex;
+  let itemTop;
+  let item = items.find((item, index) => {
+    itemIndex = index;
+    itemTop = item.offsetTop - topOfClientArea;
+    let itemBottom = itemTop + item.offsetHeight;
+    return (itemTop <= y && itemBottom >= y);
+  });
+
+  if (!item) {
     return null;
   }
 
@@ -91,21 +101,19 @@ function getIndexOfItemAtY(element, y, downward) {
   // but whose content is actually above/below that point.
   // TODO: If the item has a border, then padding should be included in
   // considering a hit.
-  var itemStyle = getComputedStyle(item);
-  var itemPaddingTop = parseFloat(itemStyle.paddingTop);
-  var itemPaddingBottom = parseFloat(itemStyle.paddingBottom);
-  var contentTop = itemTop + item.clientTop + itemPaddingTop;
-  var contentBottom = contentTop + item.clientHeight - itemPaddingTop - itemPaddingBottom;
-  if (downward && contentTop <= y
-    || !downward && contentBottom >= y) {
+  let itemStyle = getComputedStyle(item);
+  let itemPaddingTop = parseFloat(itemStyle.paddingTop);
+  let itemPaddingBottom = parseFloat(itemStyle.paddingBottom);
+  let contentTop = itemTop + item.clientTop + itemPaddingTop;
+  let contentBottom = contentTop + item.clientHeight - itemPaddingTop - itemPaddingBottom;
+  if (downward && contentTop <= y || !downward && contentBottom >= y) {
     // The indicated coordinate hits the actual item content.
-    return i;
+    return itemIndex;
   }
   else {
     // The indicated coordinate falls within the item's padding. Back up to
     // the item below/above the item we found and return that.
-    i -= step;
-    return i;
+    return itemIndex - step;
   }
 }
 
@@ -114,22 +122,18 @@ function getIndexOfItemAtY(element, y, downward) {
 // TODO: Better support for horizontal lists.
 function scrollOnePage(element, downward) {
 
-  var innermost = element.innermostAttached;
-  if (!innermost) {
-    return;
-  }
-
   // Determine the item visible just at the edge of direction we're heading.
   // We'll select that item if it's not already selected.
-  var edge = innermost.scrollTop + (downward ? innermost.clientHeight : 0);
-  var indexOfItemAtEdge = getIndexOfItemAtY(element, edge, downward);
+  let scrollTarget = element.scrollTarget;
+  let edge = scrollTarget.scrollTop + (downward ? scrollTarget.clientHeight : 0);
+  let indexOfItemAtEdge = getIndexOfItemAtY(element, edge, downward);
 
-  var selectedIndex = element.selectedIndex;
-  var newIndex;
+  let selectedIndex = element.selectedIndex;
+  let newIndex;
   if (indexOfItemAtEdge && selectedIndex === indexOfItemAtEdge) {
     // The item at the edge was already selected, so scroll in the indicated
     // direction by one page. Leave the new item at that edge selected.
-    var delta = (downward ? 1 : -1) * innermost.clientHeight;
+    let delta = (downward ? 1 : -1) * scrollTarget.clientHeight;
     newIndex = getIndexOfItemAtY(element, edge + delta, downward);
   }
   else {
