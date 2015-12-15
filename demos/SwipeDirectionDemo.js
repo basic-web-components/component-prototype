@@ -1,9 +1,15 @@
 import ElementBase from 'core-component-mixins/src/ElementBase';
 import SwipeDirection from '../mixins/SwipeDirection';
 
-export default class SwipeDirectionTest extends ElementBase.compose(SwipeDirection) {
+let base = ElementBase.compose(SwipeDirection);
 
+export default class SwipeDirectionTest extends base {
+
+  get position() {
+    return super.position;
+  }
   set position(value) {
+    if ('position' in base.prototype) { super.position = value; }
     this.$.text.textContent = value.toFixed(3);
   }
 
