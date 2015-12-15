@@ -6,12 +6,10 @@
  *
  */
 
-import Composable from 'Composable/src/Composable';
-
 // TODO: If the selection is changed by some other means (e.g., arrow keys) other
 // than prefix typing, then that act should reset the prefix.
 
-export default class KeyboardPrefixSelection {
+export default (base) => class KeyboardPrefixSelection extends base {
 
   // itemsChanged() {
   //   this._itemTextContents = null;
@@ -32,8 +30,8 @@ export default class KeyboardPrefixSelection {
         handled = true;
         break;
       default:
-        if (!event.ctrlKey && !event.metaKey && !event.altKey
-          && event.which !== 32 /* Space */) {
+        if (!event.ctrlKey && !event.metaKey && !event.altKey &&
+            event.which !== 32 /* Space */) {
           handlePlainCharacter(this, String.fromCharCode(event.which));
         }
         resetPrefix = false;
@@ -43,7 +41,8 @@ export default class KeyboardPrefixSelection {
       resetTypedPrefix(this);
     }
 
-    return handled;
+    // Prefer mixin result if it's defined, otherwise use base result.
+    return handled || (super.keydown && super.keydown(event));
   }
 
   /**
@@ -53,6 +52,7 @@ export default class KeyboardPrefixSelection {
    * @param prefix [String] The string to search for
    */
   selectItemWithTextPrefix(prefix) {
+    if (super.selectItemWithTextPrefix) { super.selectItemWithTextPrefix(prefix); }
     if (prefix == null || prefix.length === 0) {
       return;
     }
@@ -62,10 +62,7 @@ export default class KeyboardPrefixSelection {
     }
   }
 
-}
-Composable.decorate.call(KeyboardPrefixSelection.prototype, {
-  keydown: Composable.rule(Composable.rules.preferMixinResult)
-});
+};
 
 
 // Time in milliseconds after which the user is considered to have stopped

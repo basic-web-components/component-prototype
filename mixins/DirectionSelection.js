@@ -7,42 +7,51 @@
 
 import Composable from 'Composable/src/Composable';
 
-export default class DirectionSelection {
+export default (base) => class DirectionSelection extends base {
 
   goDown() {
+    if (super.goDown) { super.goDown(); }
     return this.selectNext();
   }
 
   goEnd() {
+    if (super.goEnd) { super.goEnd(); }
     return this.selectLast();
   }
 
   goLeft() {
+    if (super.goLeft) { super.goLeft(); }
     return this.selectPrevious();
   }
 
   goRight() {
+    if (super.goRight) { super.goRight(); }
     return this.selectNext();
   }
 
   goStart() {
+    if (super.goStart) { super.goStart(); }
     return this.selectFirst();
   }
 
   goUp() {
+    if (super.goUp) { super.goUp(); }
     return this.selectPrevious();
   }
 
   // Default implementations. These will typically be handled by other mixins.
-  selectFirst() {}
-  selectLast() {}
-  selectNext() {}
-  selectPrevious() {}
+  selectFirst() {
+    if (super.selectFirst) { return super.selectFirst(); }
+  }
+  selectLast() {
+    if (super.selectLast) { return super.selectLast(); }
+  }
+  selectNext() {
+    if (super.selectNext) { return super.selectNext(); }
+  }
+  selectPrevious() {
+    if (super.selectPrevious) { return super.selectPrevious(); }
+  }
 
-}
-Composable.decorate.call(DirectionSelection.prototype, {
-  selectFirst: Composable.rule(Composable.rules.preferBaseResult),
-  selectLast: Composable.rule(Composable.rules.preferBaseResult),
-  selectNext: Composable.rule(Composable.rules.preferBaseResult),
-  selectPrevious: Composable.rule(Composable.rules.preferBaseResult)
-});
+
+};

@@ -17,9 +17,7 @@
  * @class KeyboardPaging
  */
 
-import Composable from 'Composable/src/Composable';
-
-export default class KeyboardPaging {
+export default (base) => class KeyboardPaging extends base {
 
   keydown(event) {
     let handled;
@@ -31,7 +29,8 @@ export default class KeyboardPaging {
         handled = this.pageDown();
         break;
     }
-    return handled;
+    // Prefer mixin result if it's defined, otherwise use base result.
+    return handled || (super.keydown && super.keydown(event));
   }
 
   /**
@@ -40,6 +39,7 @@ export default class KeyboardPaging {
    * @method pageDown
    */
   pageDown() {
+    if (super.pageDown) { super.pageDown(); }
     return scrollOnePage(this, true);
   }
 
@@ -49,10 +49,11 @@ export default class KeyboardPaging {
    * @method pageUp
    */
   pageUp() {
+    if (super.pageUp) { super.pageUp(); }
     return scrollOnePage(this, false);
   }
 
-}
+};
 
 
 // Return the item whose content spans the given y position (relative to the
@@ -152,6 +153,3 @@ function scrollOnePage(element, downward) {
     return false; // We didn't do anything.
   }
 }
-Composable.decorate.call(KeyboardPaging.prototype, {
-  keydown: Composable.rule(Composable.rules.preferMixinResult)
-});

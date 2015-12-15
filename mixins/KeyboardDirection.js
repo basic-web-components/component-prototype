@@ -7,15 +7,27 @@
 
 import Composable from 'Composable/src/Composable';
 
-export default class KeyboardDirection {
+export default (base) => class KeyboardDirection extends base {
 
   // Default implementations. These will typically be handled by other mixins.
-  goDown() {}
-  goEnd() {}
-  goLeft() {}
-  goRight() {}
-  goStart() {}
-  goUp() {}
+  goDown() {
+    if (super.goDown) { return super.goDown(); }
+  }
+  goEnd() {
+    if (super.goEnd) { return super.goEnd(); }
+  }
+  goLeft() {
+    if (super.goLeft) { return super.goLeft(); }
+  }
+  goRight() {
+    if (super.goRight) { return super.goRight(); }
+  }
+  goStart() {
+    if (super.goStart) { return super.goStart(); }
+  }
+  goUp() {
+    if (super.goUp) { return super.goUp(); }
+  }
 
   keydown(event) {
     let handled;
@@ -39,16 +51,8 @@ export default class KeyboardDirection {
         handled = event.altKey ? this.goEnd() : this.goDown();
         break;
     }
-    return handled;
+    // Prefer mixin result if it's defined, otherwise use base result.
+    return handled || (super.keydown && super.keydown(event));
   }
 
-}
-Composable.decorate.call(KeyboardDirection.prototype, {
-  goDown: Composable.rule(Composable.rules.preferBaseResult),
-  goEnd: Composable.rule(Composable.rules.preferBaseResult),
-  goLeft: Composable.rule(Composable.rules.preferBaseResult),
-  goRight: Composable.rule(Composable.rules.preferBaseResult),
-  goStart: Composable.rule(Composable.rules.preferBaseResult),
-  goUp: Composable.rule(Composable.rules.preferBaseResult),
-  keydown: Composable.rule(Composable.rules.preferMixinResult)
-});
+};

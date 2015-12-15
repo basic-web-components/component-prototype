@@ -7,19 +7,19 @@
  * @class Keyboard
  */
 
-import CollectiveElement from './CollectiveElement';
-
-
-export default class Keyboard extends CollectiveElement {
+export default (base) => class Keyboard extends base {
 
   // Default keydown handler. This will typically be handled by other mixins.
-  keydown(event) {}
+  keydown(event) {
+    if (super.keydown) { return super.keydown(event); }
+  }
 
   /*
    * If we're now the outermost element of the collective, set up to receive
    * keyboard events. If we're no longer the outermost element, stop listening.
    */
   collectiveChanged() {
+    if (super.collectiveChanged) { super.collectiveChanged(); }
 
     let outermostElement = this.collective.outermostElement;
     if (outermostElement === this && !this.getAttribute('aria-label')) {
@@ -52,7 +52,7 @@ export default class Keyboard extends CollectiveElement {
     });
   }
 
-}
+};
 
 
 function keydown(event) {

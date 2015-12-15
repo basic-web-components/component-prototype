@@ -7,13 +7,15 @@
  * @class ContentItems
  */
 
-export default class ContentItems {
+export default (base) => class ContentItems extends base {
 
   applySelection(item, selected) {
+    if (super.applySelection) { super.applySelection(item, selected); }
     item.classList.toggle('selected', selected);
   }
 
   contentChanged() {
+    if (super.contentChanged) { super.contentChanged(); }
     this._items = null;
     this.itemsChanged();
   }
@@ -26,13 +28,17 @@ export default class ContentItems {
    * @returns {Number} The index of the item, or -1 if not found.
    */
   indexOfItem(item) {
+    if (super.indexOfItem) { super.indexOfItem(item); }
     return this.items.indexOf(item);
   }
 
   // Default implementation does nothing.
-  itemAdded(item) {}
+  itemAdded(item) {
+    if (super.itemAdded) { super.itemAdded(item); }
+  }
 
   itemsChanged() {
+    if (super.itemsChanged) { super.itemsChanged(); }
 
     // Perform per-item initialization.
     this.items.forEach(item => {
@@ -59,7 +65,7 @@ export default class ContentItems {
     return this._items;
   }
 
-}
+};
 
 
 // Return the given elements, filtering out auxiliary elements that aren't

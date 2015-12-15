@@ -8,9 +8,10 @@
 // TODO: Don't respond to changes in attributes, or at least offer that as an
 // option.
 
-export default class ChildrenContent {
+export default (base) => class ChildrenContent extends base {
 
   createdCallback() {
+    if (super.createdCallback) { super.createdCallback(); }
     // Until we have content observing again, force a call to contentChanged().
     // HACK: Do this asynchronously, so other mixins have a chance to set up
     // before this call.
@@ -60,6 +61,7 @@ export default class ChildrenContent {
   // }
 
   contentChanged() {
+    if (super.contentChanged) { super.contentChanged(); }
     let outermost = this.outermostAttached;
     if (outermost) {
       let event = new CustomEvent('content-changed', {
@@ -78,8 +80,11 @@ export default class ChildrenContent {
   get content() {
     return expandContentElements(this.children);
   }
+  set content(value) {
+    if ('content' in base.prototype) { super.content = value; }
+  }
 
-}
+};
 
 
 /*

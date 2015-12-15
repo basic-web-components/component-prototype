@@ -2,8 +2,22 @@
  * Mixin which allows a component to provide aggregate behavior with other
  * elements, e.g., for keyboard handling.
  *
- * @class Collective
+ * @class CollectiveElement
  */
+export default (base) => class CollectiveElement extends base {
+
+  createdCallback() {
+    if (super.createdCallback) { super.createdCallback(); }
+    this.collective = new Collective(this);
+  }
+
+  set target(element) {
+    if ('target' in base.prototype) { super.target = element; }
+    this.collective.assimilate(element);
+  }
+
+};
+
 
 class Collective {
 
@@ -40,23 +54,6 @@ class Collective {
 
   get outermostElement() {
     return this.elements[0];
-  }
-
-}
-
-
-/**
- * @class CollectiveElement
- */
-
-export default class CollectiveElement {
-
-  createdCallback() {
-    this.collective = new Collective(this);
-  }
-
-  set target(element) {
-    this.collective.assimilate(element);
   }
 
 }

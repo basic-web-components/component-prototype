@@ -20,15 +20,18 @@
  * @param detail.selectedIndex The new selected index.
  */
 
-export default class ItemSelection {
+export default (base) => class ItemSelection extends base {
 
   // Default implementation. This will typically be handled by other mixins.
-  applySelection(item, selected) {}
+  applySelection(item, selected) {
+    if (super.applySelection) { super.applySelection(item, selected); }
+  }
 
   get canSelectNext() {
     return this._canSelectNext;
   }
   set canSelectNext(canSelectNext) {
+    if ('canSelectNext' in base.prototype) { super.canSelectNext = canSelectNext; }
     this._canSelectNext = canSelectNext;
   }
 
@@ -36,14 +39,17 @@ export default class ItemSelection {
     return this._canSelectPrevious;
   }
   set canSelectPrevious(canSelectPrevious) {
+    if ('canSelectPrevious' in base.prototype) { super.canSelectPrevious = canSelectPrevious; }
     this._canSelectPrevious = canSelectPrevious;
   }
 
   itemAdded(item) {
+    if (super.itemAdded) { super.itemAdded(item); }
     this.applySelection(item, item === this.selectedItem);
   }
 
   itemsChanged() {
+    if (super.itemsChanged) { super.itemsChanged(); }
     let index = this.items.indexOf(this.selectedItem);
     if (index < 0) {
       // Selected item is no longer in the current set of items.
@@ -83,8 +89,8 @@ export default class ItemSelection {
     // TODO: Once we track content changes, turn this into an exception.
     return index;
   }
-
   set selectedIndex(index) {
+    if ('selectedIndex' in base.prototype) { super.selectedIndex = index; }
     let items = this.items;
     let item;
     if (index < 0 || items.length === 0) {
@@ -107,10 +113,6 @@ export default class ItemSelection {
     }
   }
 
-  get selectedItem() {
-    return this._selectedItem;
-  }
-
   /**
    * The currently selected item, or null if there is no selection.
    *
@@ -118,7 +120,11 @@ export default class ItemSelection {
    * @type Object
    */
   // TODO: Confirm item is in items before selecting.
+  get selectedItem() {
+    return this._selectedItem;
+  }
   set selectedItem(item) {
+    if ('selectedItem' in base.prototype) { super.selectedItem = item; }
     let previousItem = this._selectedItem;
     if (previousItem) {
       // Remove previous selection.
@@ -154,6 +160,7 @@ export default class ItemSelection {
    * @method selectFirst
    */
   selectFirst() {
+    if (super.selectFirst) { super.selectFirst(); }
     return selectIndex(this, 0);
   }
 
@@ -167,6 +174,7 @@ export default class ItemSelection {
     return this._selectionRequired;
   }
   set selectionRequired(selectionRequired) {
+    if ('selectionRequired' in base.prototype) { super.selectionRequired = selectionRequired; }
     this._selectionRequired = selectionRequired;
     ensureSelection(this);
   }
@@ -177,6 +185,7 @@ export default class ItemSelection {
    * @method selectLast
    */
   selectLast() {
+    if (super.selectLast) { super.selectLast(); }
     return selectIndex(this, this.items.length - 1);
   }
 
@@ -186,6 +195,7 @@ export default class ItemSelection {
    * @method selectNext
    */
   selectNext() {
+    if (super.selectNext) { super.selectNext(); }
     return selectIndex(this, this.selectedIndex + 1);
   }
 
@@ -195,10 +205,11 @@ export default class ItemSelection {
    * @method selectPrevious
    */
   selectPrevious() {
+    if (super.selectPrevious) { super.selectPrevious(); }
     return selectIndex(this, this.selectedIndex - 1);
   }
 
-}
+};
 
 
 // If no item is selected, select a default item.

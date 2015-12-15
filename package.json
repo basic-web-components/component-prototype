@@ -9,8 +9,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "Composable": "ComponentKitchen/Composable#master",
-    "core-component-mixins": "ComponentKitchen/core-component-mixins#master",
+    "Composable": "ComponentKitchen/Composable#functions",
+    "core-component-mixins": "ComponentKitchen/core-component-mixins#functions",
     "webcomponents.js": "^0.7.2"
   },
   "devDependencies": {

@@ -25,9 +25,10 @@
  * @class Generic
  */
 
-export default class Generic {
+export default (base) => class Generic extends base {
 
   createdCallback() {
+    if (super.createdCallback) { super.createdCallback(); }
     this.generic = this.getAttribute('generic') || true;
   }
 
@@ -45,10 +46,10 @@ export default class Generic {
   get generic() {
     return this._generic;
   }
-
-  // We roll our own attribute setting so that an explicitly false value shows
-  // up as generic="false".
   set generic(value) {
+    if ('generic' in base.prototype) { super.generic = value; }
+    // We roll our own attribute setting so that an explicitly false value shows
+    // up as generic="false".
     if (typeof value === 'string') {
       value = (value !== 'false');
     }

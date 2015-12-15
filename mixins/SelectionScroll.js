@@ -4,9 +4,13 @@
  * @class SelectionScroll
  */
 
-export default class SelectionScroll {
+export default (base) => class SelectionScroll extends base {
 
+  get selectedItem() {
+    return super.selectedItem;
+  }
   set selectedItem(item) {
+    if ('selectedItem' in base.prototype) { super.selectedItem = item; }
     if (item) {
       // Keep the selected item in view.
       this.scrollItemIntoView(item);
@@ -24,6 +28,7 @@ export default class SelectionScroll {
    * @method scrollItemIntoView
    */
   scrollItemIntoView(item) {
+    if (super.scrollItemIntoView) { super.scrollItemIntoView(); }
     // Get the relative position of the item with respect to the top of the
     // list's scrollable canvas. An item at the top of the list will have a
     // elementTop of 0.
@@ -47,4 +52,4 @@ export default class SelectionScroll {
     }
   }
 
-}
+};

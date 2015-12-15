@@ -5,12 +5,10 @@
  */
 
 
-import CollectiveElement from './CollectiveElement';
-
-
-export default class ItemsAccessible extends CollectiveElement {
+export default (base) => class ItemsAccessible extends base {
 
   applySelection(item, selected) {
+    if (super.applySelection) { super.applySelection(item, selected); }
     item.setAttribute('aria-selected', selected);
     var itemId = item.getAttribute('id');
     if (itemId) {
@@ -19,6 +17,7 @@ export default class ItemsAccessible extends CollectiveElement {
   }
 
   collectiveChanged() {
+    if (super.collectiveChanged) { super.collectiveChanged(); }
 
     // Ensure the outermost aspect has an ARIA role.
     let outermostElement = this.collective.outermostElement;
@@ -47,6 +46,8 @@ export default class ItemsAccessible extends CollectiveElement {
   }
 
   createdCallback() {
+    if (super.createdCallback) { super.createdCallback(); }
+
     // Determine a base item ID based on this component's host's own ID. This
     // will be combined with a unique integer to assign IDs to items that don't
     // have an explicit ID. If the basic-list-box has ID "foo", then its items
@@ -61,6 +62,8 @@ export default class ItemsAccessible extends CollectiveElement {
   }
 
   itemAdded(item) {
+    if (super.itemAdded) { super.itemAdded(item); }
+
     item.setAttribute('role', 'option');
 
     // Ensure each item has an ID so we can set aria-activedescendant on the
@@ -70,14 +73,18 @@ export default class ItemsAccessible extends CollectiveElement {
     }
   }
 
+  get selectedItem() {
+    return super.selectedItem;
+  }
   set selectedItem(item) {
+    if ('selectedItem' in base.prototype) { super.selectedItem = item; }
     // Catch the case where the selection is removed.
     if (item == null) {
       this.collective.outermostElement.removeAttribute('aria-activedescendant');
     }
   }
 
-}
+};
 
 
 // Used to assign unique IDs to item elements without IDs.

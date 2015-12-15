@@ -4,9 +4,10 @@
  * @class ClickSelection
  */
 
-export default class ClickSelection {
+export default (base) => class ClickSelection extends base {
 
   createdCallback() {
+    if (super.createdCallback) { super.createdCallback(); }
     /*
      * REVIEW: Which event should we listen to here?
      *
@@ -24,9 +25,14 @@ export default class ClickSelection {
   }
 
   // Default implementation. This will typically be handled by other mixins.
-  // set selectedIndex(index) {}
+  get selectedIndex() {
+    return super.selectedIndex;
+  }
+  set selectedIndex(index) {
+    if ('selectedIndex' in base.prototype) { super.selectedIndex = index; }
+  }
 
-}
+};
 
 // TODO: Handle the case where a list item has subelements. Walk up the DOM
 // hierarchy until we find an item in the list, or come back to this element,

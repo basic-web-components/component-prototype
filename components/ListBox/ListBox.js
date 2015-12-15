@@ -43,6 +43,7 @@
 import ElementBase from 'core-component-mixins/src/ElementBase';
 import ChildrenContent from '../../mixins/ChildrenContent';
 import ClickSelection from '../../mixins/ClickSelection';
+import CollectiveElement from '../../mixins/CollectiveElement';
 import ContentItems from '../../mixins/ContentItems';
 import DirectionSelection from '../../mixins/DirectionSelection';
 import Generic from '../../mixins/Generic';
@@ -59,6 +60,7 @@ import SelectionScroll from '../../mixins/SelectionScroll';
 export default class ListBox extends ElementBase.compose(
     ChildrenContent,
     ClickSelection,
+    CollectiveElement,
     ContentItems,
     DirectionSelection,
     Generic,
