@@ -8,17 +8,15 @@
  * @class AutoSizeTextArea
  */
 
-
 import ElementBase from 'core-component-mixins/src/ElementBase';
 import ChildrenContent from '../../mixins/ChildrenContent';
 import Generic from '../../mixins/Generic';
 
-let base = ElementBase.compose(
+
+export default class AutoSizeTextArea extends ElementBase.compose(
   ChildrenContent,
   Generic
-);
-
-export default class AutoSizeTextArea extends base {
+) {
 
   get ariaLabel() {
     return this.$.textBox.getAttribute('aria-label');
@@ -48,6 +46,9 @@ export default class AutoSizeTextArea extends base {
       // Raise our own change event (since change events aren't automatically
       // retargetted).
       this.dispatchEvent(new CustomEvent('change'));
+    });
+    this.$.textBox.addEventListener('input', event => {
+      valueChanged(this);
     });
     this.$.textBox.addEventListener('keypress', event => {
       keypress(this, event);
@@ -106,7 +107,7 @@ export default class AutoSizeTextArea extends base {
   set minimumRows(value) {
     this._minimumRows = parseInt(value);
     if (this._lineHeight) {
-      this._setMinimumHeight();
+      setMinimumHeight(this);
     }
   }
 
@@ -203,7 +204,7 @@ export default class AutoSizeTextArea extends base {
       need its light DOM content, and will throw it away.
       -->
       <div id="autoSizeContainer">
-        <textarea id="textBox" on-keypress="_keypress" placeholder="{{placeholder}}" value="{{value::input}}"></textarea>
+        <textarea id="textBox"></textarea>
         <div id="copyContainer"><span id="textCopy"></span><span id="extraSpace">&thinsp;</span><div id="extraLine">&nbsp;</div></div>
       </div>
       <div id="contentContainer">
@@ -219,12 +220,11 @@ export default class AutoSizeTextArea extends base {
    * @type string
    */
   get value() {
-    return this._value;
+    return this.$.textBox.value;
   }
   set value(text) {
-    this._value = text;
-    this.autoSize();
-    this.dispatchEvent(new CustomEvent('value-changed'));
+    this.$.textBox.value = text;
+    valueChanged(this);
   }
 
 }
@@ -238,11 +238,11 @@ export default class AutoSizeTextArea extends base {
 
 
 function getTextContent(element) {
-  let text = element.flattenTextContent;
+  let text = element.distributedTextContent;
 
   // Trim the text.
   // This is non-standard textarea behavior. A standard textarea will trim the
-  // first character if it's a newline, but that's it. However,  authors will
+  // first character if it's a newline, but that's it. However, authors will
   // want to be able to place the opening and closing tags on their own lines.
   // So it seems more helpful to trim whitespace on either side.
   text = text.trim();
@@ -266,7 +266,7 @@ function initializeWhenRendered(element) {
     return;
   }
 
-  // If we reach element point, the component's elements should by styled.
+  // If we reach this point, the component's elements should by styled.
 
   // For auto-sizing to work, we need the text copy to have the same border,
   // padding, and other relevant characteristics as the original text area.
@@ -343,6 +343,15 @@ function unescapeHtml(html) {
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '\"')
     .replace(/&#039;/g, '\'');
+}
+
+
+/*
+ * Handle a change in the element's value property.
+ */
+function valueChanged(element) {
+  element.autoSize();
+  element.dispatchEvent(new CustomEvent('value-changed'));
 }
 
 

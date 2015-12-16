@@ -84,6 +84,37 @@ export default (base) => class ChildrenContent extends base {
     if ('content' in base.prototype) { super.content = value; }
   }
 
+  /*
+   * Returns an in-order collection of children, expanding any content nodes.
+   * Like the standard children property, this skips text nodes.
+   *
+   * TODO: This walks the whole content tree every time the list is requested.
+   * It'd be nice to cache the answer and invalidate it only when content
+   * actually changes.
+   */
+  get distributedChildren() {
+    return expandContentElements(this.children, false);
+  }
+
+  /*
+   * Returns an in-order collection of child nodes, expanding any content nodes.
+   * Like the standard childNodes property, this includes text nodes.
+   */
+  get distributedChildNodes() {
+    return expandContentElements(this.childNodes, true);
+  }
+
+  /*
+   * Returns the concatenated text content of all child nodes, expanding any
+   * content nodes.
+   */
+  get distributedTextContent() {
+    let strings = this.distributedChildNodes.map(function(child) {
+      return child.textContent;
+    });
+    return strings.join('');
+  }
+
 };
 
 
