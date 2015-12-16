@@ -150,7 +150,7 @@ function createDots(element) {
   } else if (existingDotCount > newDotCount) {
     // Remove extra dots.
     while (dotContainer.children.length > newDotCount) {
-      Polymer.dom(dotContainer).removeChild(dotContainer.children[0]);
+      dotContainer.removeChild(dotContainer.children[0]);
     }
   } else {
     // Create needed dots.
