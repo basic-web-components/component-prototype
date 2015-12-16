@@ -51,7 +51,7 @@ import ItemSelection from '../../mixins/ItemSelection';
 import ItemsAccessible from '../../mixins/ItemsAccessible';
 import Keyboard from '../../mixins/Keyboard';
 import KeyboardDirection from '../../mixins/KeyboardDirection';
-import KeyboardPaging from '../../mixins/KeyboardPaging';
+import KeyboardPagedSelection from '../../mixins/KeyboardPagedSelection';
 import KeyboardPrefixSelection from '../../mixins/KeyboardPrefixSelection';
 import SelectionHighlight from '../../mixins/SelectionHighlight';
 import SelectionScroll from '../../mixins/SelectionScroll';
@@ -68,7 +68,7 @@ export default class ListBox extends ElementBase.compose(
     ItemsAccessible,
     Keyboard,
     KeyboardDirection,
-    KeyboardPaging,
+    KeyboardPagedSelection,
     KeyboardPrefixSelection,
     SelectionHighlight,
     SelectionScroll

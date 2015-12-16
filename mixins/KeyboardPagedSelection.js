@@ -17,10 +17,10 @@
  * To ensure the selected item is in view following use of Page Up/Down, use the
  * related SelectionScroll mixin.
  *
- * @class KeyboardPaging
+ * @class KeyboardPagedSelection
  */
 
-export default (base) => class KeyboardPaging extends base {
+export default (base) => class KeyboardPagedSelection extends base {
 
   keydown(event) {
     let handled;
