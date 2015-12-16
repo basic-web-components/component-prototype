@@ -1,8 +1,12 @@
 /**
- * Mixin that lets a component treat its content as list items.
+ * Mixin that maps content semantics (children) to list item semantics.
  *
- * Auxiliary elements which are not normally visible are filtered out. For now,
- * For now, these are: link, script, style, and template.
+ * Items different from children in several ways:
+ *
+ * * They can be referenced via index.
+ * * Auxiliary invisible child elements are filtered out and not counted as
+ *   items. Auxiliary elements include link, script, style, and template
+ *   elements.
  *
  * @class ContentItems
  */

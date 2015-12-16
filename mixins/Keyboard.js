@@ -1,5 +1,5 @@
 /**
- * Mixin which manages the keyboard focus and keydown handling for a component.
+ * Mixin which manages the keydown handling for a component.
  *
  * TODO: Document collective behavior.
  * TODO: Provide baseline behavior outside of a collective.
