@@ -5,6 +5,7 @@
  *
  */
 
+// TODO: Factor content change tracking into its own mixin.
 // TODO: Don't respond to changes in attributes, or at least offer that as an
 // option.
 
@@ -16,59 +17,14 @@ export default (base) => class ChildrenContent extends base {
     // HACK: Do this asynchronously, so other mixins have a chance to set up
     // before this call.
     setTimeout(() => this.contentChanged());
-  }
 
-  // TODO: Wait to observe changes until we have a shadow DOM host. Right
-  // now, the initial collectiveChanged call can happen too early.
-  // TODO: Handle case where component is instantiated out of DOM, then
-  // attached.
-  // collectiveChanged() {
-  //   // console.log(this.localName + " collectiveChanged: " + this.collective.aspects.length);
-  //   let innermost = this.collective.innermostElement;
-  //   let innermostHost = Basic.ContentHelpers.getHost(innermost);
-  //
-  //   // Optimize for the case where the collective's changed, but its
-  //   // innermost aspect is still the same. In that case, we don't want to
-  //   // bother tearing down and then recreating our contentChanged handler.
-  //   // TODO: This currently only tracks one level of host. For robustness,
-  //   // this should track the chain of hosts.
-  //   if (innermost === this._previousInnermostAspect
-  //       && innermostHost === this._previousInnermostHost) {
-  //     // We should already be observing changes on the innermost aspect.
-  //     // Even though the content hasn't actually changed, we want to give the
-  //     // new aspects a chance to respond to contentChanged.
-  //     this.collective.contentChanged();
-  //     return;
-  //   }
-  //
-  //   // A new aspect is now innermost.
-  //   if (this._previousInnermostAspect && this._previousInnermostAspect._contentChangeObserver) {
-  //     // Stop observing changes on the old innermost aspect.
-  //     // console.log("stopping observation of changes on old innermost aspect");
-  //     Basic.ContentHelpers.observeContentChanges(this._previousInnermostAspect, null);
-  //   }
-  //
-  //   Basic.ContentHelpers.observeContentChanges(innermost, function() {
-  //     // Reset memoized content.
-  //     this._content = null;
-  //
-  //     // Let collective know content has changed.
-  //     this.collective.contentChanged();
-  //   }.bind(this));
-  //
-  //   this._previousInnermostAspect = innermost;
-  //   this._previousInnermostHost = innermostHost;
-  // }
+    observeContentChanges(this);
+  }
 
   contentChanged() {
     if (super.contentChanged) { super.contentChanged(); }
-    let outermost = this.outermostAttached;
-    if (outermost) {
-      let event = new CustomEvent('content-changed', {
-        bubbles: true
-      });
-      outermost.dispatchEvent(event);
-    }
+    let event = new CustomEvent('content-changed');
+    this.dispatchEvent(event);
   }
 
   /**
@@ -152,4 +108,17 @@ function expandContentElements(nodes, includeTextNodes) {
   });
   let flattened = [].concat(...expanded);
   return flattened;
+}
+
+
+function observeContentChanges(element) {
+  element._contentChangeObserver = new MutationObserver(() =>
+    element.contentChanged()
+  );
+  element._contentChangeObserver.observe(element, {
+    // attributes: true,
+    characterData: true,
+    childList: true,
+    subtree: true
+  });
 }

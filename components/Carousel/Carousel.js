@@ -92,12 +92,13 @@
  */
 
 import ElementBase from 'core-component-mixins/src/ElementBase';
-import ContentItems from '../../mixins/ContentItems';
+import ChildrenContent from '../../mixins/ChildrenContent';
 import CollectiveElement from '../../mixins/CollectiveElement';
+import ContentItems from '../../mixins/ContentItems';
 import DirectionSelection from '../../mixins/DirectionSelection';
 import Generic from '../../mixins/Generic';
-import ItemSelection from '../../mixins/ItemSelection';
 import ItemsAccessible from '../../mixins/ItemsAccessible';
+import ItemSelection from '../../mixins/ItemSelection';
 import Keyboard from '../../mixins/Keyboard';
 import KeyboardDirection from '../../mixins/KeyboardDirection';
 import SlidingViewport from '../SlidingViewport/SlidingViewport';
@@ -105,6 +106,7 @@ import SwipeDirection from '../../mixins/SwipeDirection';
 import TrackpadDirection from '../../mixins/TrackpadDirection';
 
 let base = ElementBase.compose(
+  ChildrenContent,
   CollectiveElement,
   ContentItems,
   DirectionSelection,
@@ -124,10 +126,6 @@ export default class Carousel extends base {
     // HACK
     this.itemsChanged();
     this.selectionRequired = true;
-  }
-
-  get content() {
-    return this.$.viewport.content;
   }
 
   get position() {
